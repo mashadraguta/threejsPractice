@@ -138,23 +138,53 @@ RGBT.rotation.y = Math.PI / 2;
 // scene.add(torusKnot);
 scene.add(RGBT);
 
-function dogWalking() {
-  console.log(`walking the dog...`);
-  dogWalked();
-}
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.addEventListener("change", function () {
   renderer.render(scene, camera); // render whenever the OrbitControls changes
 });
 
-const tick = (time) => {
-  let string = `tick tack toe`;
-  console.log(`${string}${time}`);
+// is less with ONE day
+let past = Date.now();
 
+// autoStart
+// elapsedTime
+// oldTime
+// running
+// startTime
+
+//getDelta()
+// getElapsedTime()
+// start()
+// stop()
+const clock = new THREE.Clock();
+function threeTick() {
+  // console.log(`clock.getElapsedTime()`, clock.getElapsedTime());
+  // console.log(`clock.elapsedTime`, clock.elapsedTime);
+
+  const elapsedTime = clock.getElapsedTime();
+
+  //  RGBT.rotation.y = elapsedTime * Math.PI * 2;
+  RGBT.position.y = Math.cos(elapsedTime) * 20;
+  RGBT.position.z = Math.sin(elapsedTime) * 20;
+
+  renderer.render(scene, camera);
+  window.requestAnimationFrame(threeTick);
+}
+
+threeTick();
+
+function nativeTick() {
+  // is bigger with ONE day more
+  const present = Date.now();
+  // prevent different speed depending on framerates
+  const delta = present - past;
+  past = present;
+  RGBT.position.z += 0.01 * delta;
+  renderer.render(scene, camera);
   window.requestAnimationFrame(tick);
-};
+}
 
-//tick();
+//nativeTick();
 
 function animate(t) {
   //cube.rotateZ(t * 0.000000001);
@@ -179,3 +209,6 @@ console.log(`TORUSKNOT.POSITION========>`, torusKnot.position);
 camera.lookAt(RGBT.position);
 // Magic to make scene appear
 renderer.render(scene, camera);
+
+// RGBT.position.x = Math.sin(elapsedTime) * 20;
+// RGBT.position.y = Math.cos(elapsedTime) * 20;
