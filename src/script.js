@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import gsap from "gsap";
 import { OrbitControls } from "three-addons";
 // SCENE
 const scene = new THREE.Scene();
@@ -26,7 +27,14 @@ const near = 0.4;
 const far = 2000;
 
 const camera = new THREE.PerspectiveCamera(fieldOfView, aspect, near, far);
-
+// const camera = new THREE.OrthographicCamera(
+//   window.innerWidth / -1,
+//   window.innerWidth / 2,
+//   window.innerHeight / 2,
+//   window.innerHeight / -2,
+//   0.4,
+//   2000
+// );
 // PREV
 // camera.position.x = 7;
 // camera.position.y = 6;
@@ -60,12 +68,7 @@ const cubeGeometry = new THREE.BoxGeometry(3, 3, 3);
 const cubeMaterial = new THREE.MeshNormalMaterial();
 const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
-//cube.scale.set(0.5, 0.5, 0.5);
-cube.position.set(5, 10, 10);
-//cube.rotateZ(1);
-// cube.rotateY(1);
-// cube.rotateX(2);
-// cube.rotateZ(2);
+cube.position.set(0, 0, 0);
 
 const cubeVector3 = cube.position.length();
 console.log(`cubeVector3<=====`, cubeVector3);
@@ -77,6 +80,7 @@ const material = new THREE.MeshNormalMaterial();
 const torusKnot = new THREE.Mesh(geometry, material);
 
 torusKnot.position.set(-15, 10, 20);
+// torusKnot.scale.set(30, 30, 30);
 
 const knotVector3 = torusKnot.position.length();
 console.log(`knotVector3<=====`, knotVector3);
@@ -128,6 +132,7 @@ RGBT.add(pyramidT);
 
 RGBT.position.set(6, 6, 6);
 RGBT.rotation.y = Math.PI / 2;
+//RGBT.scale.set(20, 20, 20);
 // const center = new THREE.Box3()
 //   .setFromObject(RGBT)
 //   .getCenter(RGBT.position)
@@ -137,77 +142,31 @@ RGBT.rotation.y = Math.PI / 2;
 //scene.add(cube);
 // scene.add(torusKnot);
 scene.add(RGBT);
+scene.add(cube);
+scene.add(torusKnot);
+// //window.requestAnimationFrame();
+gsap.to(torusKnot.position, { z: -30, duration: 5 });
+// gsap.to(cube.rotation, { y: Math.sin(1) * 20, duration: 20 });
+// gsap.to(cube.scale, {
+//   y: Math.sin(1) * 20,
+//   z: Math.sin(1) * 20,
+//   x: Math.sin(1) * 20,
+//   duration: 20,
+// });
+
+// gsap.to(RGBT.position, { x: 30, duration: 20 });
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.addEventListener("change", function () {
   renderer.render(scene, camera); // render whenever the OrbitControls changes
 });
 
-// is less with ONE day
-let past = Date.now();
-
-// autoStart
-// elapsedTime
-// oldTime
-// running
-// startTime
-
-//getDelta()
-// getElapsedTime()
-// start()
-// stop()
-const clock = new THREE.Clock();
-function threeTick() {
-  // console.log(`clock.getElapsedTime()`, clock.getElapsedTime());
-  // console.log(`clock.elapsedTime`, clock.elapsedTime);
-
-  const elapsedTime = clock.getElapsedTime();
-
-  //  RGBT.rotation.y = elapsedTime * Math.PI * 2;
-  RGBT.position.y = Math.cos(elapsedTime) * 20;
-  RGBT.position.z = Math.sin(elapsedTime) * 20;
-
+//camera.lookAt(RGBT.position);
+function render() {
+  requestAnimationFrame(render);
   renderer.render(scene, camera);
-  window.requestAnimationFrame(threeTick);
 }
-
-threeTick();
-
-function nativeTick() {
-  // is bigger with ONE day more
-  const present = Date.now();
-  // prevent different speed depending on framerates
-  const delta = present - past;
-  past = present;
-  RGBT.position.z += 0.01 * delta;
-  renderer.render(scene, camera);
-  window.requestAnimationFrame(tick);
-}
-
-//nativeTick();
-
-function animate(t) {
-  //cube.rotateZ(t * 0.000000001);
-  // cube.rotation.x = Math.PI * 0.0003 * t;
-  //cube.rotation.y = Math.PI * 0.0003 * t;
-  // cube.rotation.z = Math.PI * 0.0003 * t;
-  //torusKnot.rotation.x = Math.PI * 0.0003 * t;
-  //torusKnot.rotation.y = Math.PI * 0.0003 * t;
-  RGBT.rotation.y = Math.PI * 0.0003 * t;
-  RGBT.rotation.x = Math.PI * 0.0003 * t;
-  //RGBT.rotation.z = Math.PI * 0.0003 * t;
-  //cube.position.y = Math.sin(t / 70000) * 55;
-  // torusKnot.position.y = Math.sin(t / 700) * 550;
-  // RGBT.position.y = Math.sin(t / 700) * 550;
-  renderer.render(scene, camera);
-  window.requestAnimationFrame(animate, renderer.domElement);
-}
-//animate();
-console.log(`TORUSKNOT.POSITION========>`, torusKnot.position);
-//camera.lookAt(torusKnot.position);
-//camera.lookAt(cube.position);
-camera.lookAt(RGBT.position);
-// Magic to make scene appear
+render();
 renderer.render(scene, camera);
 
 // RGBT.position.x = Math.sin(elapsedTime) * 20;
