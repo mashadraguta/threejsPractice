@@ -202,3 +202,133 @@ function animate(t) {
 //scene.add(referencePoint);
 // scene.add(bufferFormMesh);
 //scene.add(particles);
+
+// left —>   -X
+// right —>  X
+// top —> Y
+// bottom —> -Y
+// near — Camera frustum near plane.
+// far — Camera frustum far plane.
+
+//TRYING TO UNDERSTAND
+
+// RGBT.position.x = Math.sin(elapsedTime) * 20;
+// RGBT.position.y = Math.cos(elapsedTime) * 20;
+// gsap.to(cube.rotation, { x: Math.PI * 20, y: 0, duration: 20 });
+
+// Adding OBJS to the SCENE
+//scene.add(referencePoint);
+// ???
+// for ortographic camera
+// const viewSize = 900;
+// const aspectRatio = sizes.width / sizes.height;
+
+// window.addEventListener("mousemove", (e) => {
+//   //console.log(`e.clientY`, e.clientY);
+
+//   if (e.clientX > 1000) {
+//     return;
+//   } else if (e.clientY < 50) {
+//     return;
+//   } else if (e.clientY > 600) {
+//     return;
+//   } else if (e.clientX < 200) {
+//     return;
+//   } else {
+//     camera.lookAt(-e.clientX * 2, e.clientY * 2, 50);
+//   }
+//   // if (e.x && e.clientY > 1000)  return;
+//   // camera.lookAt(e.x * 2, e.clientY * 2, 30);
+// });
+
+// const controls = new OrbitControls(camera, renderer.domElement);
+// controls.addEventListener("change", function (e) {
+//   console.log(e);
+//   renderer.render(scene, camera);
+// });
+// controls.enableZoom = true;
+
+// const camera = new THREE.OrthographicCamera(
+//   -window.innerWidth,
+//   window.innerWidth,
+//   window.innerHeight,
+//   -window.innerHeight,
+//   1,
+//   1000
+// );
+// PREV
+// camera.position.x = 7;
+// camera.position.y = 6;
+// camera.position.z = 20;
+
+// ORTHOGRAPHIC CAMERA
+// render a CUBE without distorsion on X
+// const camera = new THREE.OrthographicCamera(
+//   -aspectRatio,
+//   aspectRatio,
+//   1,
+//   -1,
+//   0.1,
+//   1000
+// );
+
+//const elapsedTime = clock.getElapsedTime();
+// console.log(elapsedTime);
+//camera.position.set(-Math.sin(cursor.x) * 5, Math.sin(cursor.y) * 5, 10);
+
+// camera.position.set(
+//   10,
+//   Math.sin(cursor.y) * 10,
+//   Math.sin(cursor.x * Math.PI) * 10
+// );
+// console.log(`elapsedTime======>`, elapsedTime);
+// RGBT.position.x = Math.sin(elapsedTime) * 20;
+// RGBT.position.y = Math.cos(elapsedTime) * 20;
+// RGBT.position.z = Math.sin (elapsedTime) * 20;
+// camera.position.set(
+//   Math.sin(cursor.x * 10) * 2,
+//   cursor.y * 10,
+//   -Math.cos(cursor.x * 5) * 2 * Math.PI
+// );
+// (camera.position.x = Math.sin(cursor.x * 10) * 10),
+//   (camera.position.y = Math.sin(cursor.x * 10) * 10),
+//   (camera.position.z = Math.cos(cursor.x * 10) * 10),
+// mine
+
+// console.group();
+
+// console.log(`MATH.SIN(ELAPSEDTIME) X`, Math.sin(elapsedTime) * 2 * Math.PI);
+// console.log(`MATH.COS(ELAPSEDTIME) Z`, Math.cos(elapsedTime) * 2 * Math.PI);
+// console.log(`CURSOR.X`, cursor.x);
+// console.log(`CURSOR.Y`, cursor.y);
+
+// console.groupEnd();
+//console.log(`CURSOR.X`, Math.sin(cursor.x) * Math.PI * 10);
+// console.log(`CURSOR.Y`, cursor.y);
+
+// camera.position.set(
+//   Math.sin(cursor.x * Math.PI * 2) * 10,
+//   cursor.y * 10,
+//   -Math.cos(cursor.x * Math.PI * 2) * 10
+// );
+// camera.lookAt(0, 0, 0);
+
+// 26/10/24 TODO
+// setup webpack to recognize three-addons
+// https://discourse.threejs.org/t/how-to-use-addons-in-threejs/57514
+// https://stackoverflow.com/questions/73062236/three-js-three-nodes-showing-module-not-found-error
+// three/addons/controls/[].js
+// three/examples/jsm/controls/[].js
+
+// DRAG CONTROLS
+//const controls = new DragControls([cube, RGBT], camera, renderer.domElement);
+// controls.addEventListener("dragstart", function (event) {
+//   console.log(event.cube);
+
+//   renderer.render(scene, camera);
+// });
+
+// controls.addEventListener("dragend", function (event) {
+//   renderer.render(scene, camera);
+// });
+// controls.rotateSpeed = 2;
