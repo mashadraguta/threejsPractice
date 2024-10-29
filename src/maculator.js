@@ -5,37 +5,37 @@
 //     align-items: center;
 //   } */
 
-function animate(t) {
-  //Move sphere left and right
-  // sphere.position.x = Math.sin(t / 900) * 250;
-  // sphere.position.z = Math.sin(t / 700) * 550;
-  // sphere.position.y = Math.sin(t / 700) * 550;
-  // whiteBox.position.x = Math.sin(t / 700) * 150;
-  // whiteBox.position.x = 300;
-  // whiteBox.position.y = 200;
-  // whiteBox.position.z = Math.sin(t / 1000) * 350;
-  // whiteBox.position.x = Math.sin(t / 1000) * 350;
-  //whiteBox.position.y = Math.sin(t / 1000) * 350;
-  // blackBox.position.x = Math.sin(t / 900) * 100
-  // blackBox.position.y = 500
-  //blackBox.position.z -= Math.sin(t / 1000) * 150;
-  //console.log(`TIME======>`, t)
-  //cone.rotateX((Math.sin(t / 800000) * 20))
-  //cone.position.z = 0
-  // cone.position.x = Math.sin(t / 500) * 200
-  //cone.position.x += 2
-  // cone.position.y -= Math.sin(t / 300) * 25;
-  //cone.position.z += 1
-  //cone.position.x = 700 * Math.cos(90);
-  //	cone.position.y = 700 * Math.cos(180);
-  //cone.position.z = Math.sin(t / 1000) * 50;
-  //console.log(`time======>`, t)
-  // blackBox.position.y -= Math.sin(t / 70);
-  // whiteBox.position.z += 0.1
-  //renderer automatically clears unless autoClear = false
-  // renderer.render(scene, camera);
-  //window.requestAnimationFrame(animate, renderer.domElement);
-}
+//function animate(t) {
+//Move sphere left and right
+// sphere.position.x = Math.sin(t / 900) * 250;
+// sphere.position.z = Math.sin(t / 700) * 550;
+// sphere.position.y = Math.sin(t / 700) * 550;
+// whiteBox.position.x = Math.sin(t / 700) * 150;
+// whiteBox.position.x = 300;
+// whiteBox.position.y = 200;
+// whiteBox.position.z = Math.sin(t / 1000) * 350;
+// whiteBox.position.x = Math.sin(t / 1000) * 350;
+//whiteBox.position.y = Math.sin(t / 1000) * 350;
+// blackBox.position.x = Math.sin(t / 900) * 100
+// blackBox.position.y = 500
+//blackBox.position.z -= Math.sin(t / 1000) * 150;
+//console.log(`TIME======>`, t)
+//cone.rotateX((Math.sin(t / 800000) * 20))
+//cone.position.z = 0
+// cone.position.x = Math.sin(t / 500) * 200
+//cone.position.x += 2
+// cone.position.y -= Math.sin(t / 300) * 25;
+//cone.position.z += 1
+//cone.position.x = 700 * Math.cos(90);
+//	cone.position.y = 700 * Math.cos(180);
+//cone.position.z = Math.sin(t / 1000) * 50;
+//console.log(`time======>`, t)
+// blackBox.position.y -= Math.sin(t / 70);
+// whiteBox.position.z += 0.1
+//renderer automatically clears unless autoClear = false
+// renderer.render(scene, camera);
+//window.requestAnimationFrame(animate, renderer.domElement);
+//}
 //camera.lookAt(-100, 1200, -10000);
 
 // console.group(`cone`);
@@ -332,3 +332,38 @@ function animate(t) {
 //   renderer.render(scene, camera);
 // });
 // controls.rotateSpeed = 2;
+
+// prevent from perf issues on devices with high pixel ratio
+
+// renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+// SQUARES
+// let squares = [];
+// for (let i = 0; i < 100; i++) {
+//   const cubeGeometry = new THREE.BoxGeometry(5, 5, 5);
+//   const cubeMaterial = new THREE.MeshNormalMaterial();
+//   const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+//   squares.push(cube);
+//   cube.position.set(0, 0, 0);
+// }
+// console.log(squares);
+
+// squares.map((square, i) => {
+//   console.log(square);
+//   square.position.set(
+//     Math.random() * 10,
+//     Math.random() * 10,
+//     Math.random() * 100
+//   );
+//   scene.add(square);
+// });
+// const cursor = {
+//   x: 0,
+//   y: 0,
+// };
+// const controls = new DragControls(squares, camera, renderer.domElement);
+// window.addEventListener("mousemove", (e) => {
+//   cursor.x = e.clientX / sizes.width - 0.5;
+//   cursor.y = e.clientY / sizes.height - 0.5;
+// });
+// controls.enableZoom = true;

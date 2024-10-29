@@ -8,6 +8,7 @@ const infoColor = (_message) => {
   return `\u001b[1m\u001b[34m${_message}\u001b[39m\u001b[22m`;
 };
 console.log(`portFinderSync------>`, portFinderSync);
+console.log(`portFinderSync------>`, ip);
 module.exports = merge(commonConfiguration, {
   stats: "errors-warnings",
   mode: "development",

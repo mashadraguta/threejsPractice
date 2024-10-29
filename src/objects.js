@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-// IV. TORUSKNOT
+// TORUSKNOT
 
 const geometry = new THREE.TorusKnotGeometry(7, 2, 23, 8, 6, 3);
 const material = new THREE.MeshNormalMaterial();
@@ -10,7 +10,7 @@ const torusKnot = new THREE.Mesh(geometry, material);
 torusKnot.position.set(20, 20, 3);
 export { torusKnot };
 
-// I. Axes Helper Util
+// AXES HELPER UTIL
 const axesHelper = new THREE.AxesHelper(2000);
 axesHelper.setColors("green", "purple", "blue");
 export { axesHelper };
@@ -28,19 +28,18 @@ referencePoint.position.z = 0;
 
 export { referencePointWireframe };
 
-// III. Cube
-const cubeGeometry = new THREE.BoxGeometry(2, 2, 2);
-const cubeMaterial = new THREE.MeshNormalMaterial();
+// CUBE
+const cubeGeometry = new THREE.BoxGeometry(2, 2, 2, 4, 5, 9);
+const cubeMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
 const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
-cube.position.set(0, 0, 0);
+cube.position.set(5, 6, 10);
 //cube.scale.set(0, 0, 0);
 
 const cubeVector3 = cube.position.length();
-console.log(`ITS WORKING YEYEYEYEYEYEY<=====`, cubeVector3);
 export { cube };
 
-// V. Group object
+// GROUP OBJECT
 
 const pyramidGeom = new THREE.ConeGeometry(3, 16, 16);
 const pyramidMatR = new THREE.MeshBasicMaterial({
