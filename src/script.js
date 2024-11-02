@@ -16,63 +16,50 @@ import gsap from "gsap";
 scene.add(axesHelper);
 scene.add(cube);
 
-const positionsArray = new Float32Array(9);
+// prettier-ignore
+// RED SQUARE
+// const vertices = new Float32Array( [
+//   -1.0, -1.0,  1.0, // v0
+//    1.0, -1.0,  1.0, // v1
+//    1.0,  1.0,  1.0, // v2
+//   -1.0,  1.0,  1.0, // v3
+// ] );
 
-positionsArray[0] = 0;
-positionsArray[1] = 0;
-positionsArray[2] = 0;
+const count= 100
 
-positionsArray[3] = 0;
-positionsArray[4] = 1;
-positionsArray[5] = 0;
+const positions = new Float32Array(count * 3 * 3);
 
-positionsArray[6] = 1;
-positionsArray[7] = 0;
-positionsArray[8] = 0;
+for (let i = 0; i <= count * 3 * 3; i++) {
+  positions[i] = (Math.random() - 0.5) * 40;
+}
 
-const vertices = new Float32Array([
-  // 0, 0, 0, 0, 1, 0, 1, 0, 0,
-
-  10, 10, 0, 0, 10, 10, 2, 2, 2, 4, 4, -4,
-]);
+const triangleGeometryBuffer = new THREE.BufferGeometry();
 
 // prettier-ignore
-const vertices1 = new Float32Array([
-  -1, -1, 1, //v1
-  1, -1, 1,   //v2
-  2,2,2    //v3
 
-  // 1, 1, 1,    //v4
-  -1, 1, 1,   //v5
-  -1, -1, 1,  //v6
-]);
+triangleGeometryBuffer.setAttribute(
+"position",
+new THREE.BufferAttribute(positions , 3)
+);
 
-const count = 50;
+const triangleMaterial = new THREE.MeshBasicMaterial({
+  wireframe: true,
+});
 
-let meshTriangle;
-const triangles = new THREE.Group();
-for (let i = 0; i < count; i++) {
-  // prettier-ignore
-  const verticlesTrianglePos = new Float32Array([
-    i * (Math.random() - 0.5), i, -Math.random() * 10,
-    -i, i, Math.random() * 5,
-    i * Math.random(), -i * 2, (Math.random() - 0.5) * -5,
-  ]);
-  const triangleGeom = new THREE.BufferGeometry();
-  triangleGeom.setAttribute(
-    "position",
-    new THREE.BufferAttribute(verticlesTrianglePos, 3)
-  );
-  const materialTriangle = new THREE.MeshBasicMaterial({
-    color: 0xff0000,
-    wireframe: true,
-  });
-  meshTriangle = new THREE.Mesh(triangleGeom, materialTriangle);
-  triangles.add(meshTriangle);
-}
-console.log(triangles);
+const triangleMesh = new THREE.Mesh(triangleGeometryBuffer, triangleMaterial);
 
-scene.add(triangles);
+scene.add(triangleMesh);
+const points = [];
+points.push(new THREE.Vector3(-5, 0, 5));
+points.push(new THREE.Vector3(5, 0, 0));
+points.push(new THREE.Vector3(4, 0, 4));
+points.push(new THREE.Vector3(-5, 0, 5));
+let geometry = new THREE.BufferGeometry().setFromPoints(points);
+let line = new THREE.Line(
+  geometry,
+  new THREE.LineBasicMaterial({ color: 0x888888 })
+);
+scene.add(line);
 
 window.addEventListener("resize", (e) => {
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -108,3 +95,8 @@ function render() {
 }
 
 render();
+
+// -1, -1,  // v0
+// 1, -1,  // v1
+// 1,  1,   // v2
+// -1,  1,   // v3

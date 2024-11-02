@@ -367,3 +367,28 @@
 //   cursor.y = e.clientY / sizes.height - 0.5;
 // });
 // controls.enableZoom = true;
+
+
+
+
+// DOCS FOR CREATING A SQUARE
+// prettier-ignore
+// const geometry = new THREE.BufferGeometry();
+
+// // prettier-ignore
+// const vertices = new Float32Array( [
+//   -1.0, -1.0,  1.0, // v0
+//    1.0, -1.0,  1.0, // v1
+//    1.0,  1.0,  1.0, // v2
+//   -1.0,  1.0,  1.0, // v3
+// ] );
+// geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
+
+// const indices = [0, 1, 2, 2, 3, 0];
+
+// geometry.setIndex(indices);
+// geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
+
+// const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+// const mesh = new THREE.Mesh(geometry, material);
+// scene.add(mesh);
