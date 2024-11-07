@@ -29,18 +29,8 @@ referencePoint.position.z = 0;
 export { referencePointWireframe };
 
 // CUBE
-const cubeGeometry = new THREE.BoxGeometry(2, 2, 2, 4, 5, 9);
-const cubeMaterial = new THREE.MeshBasicMaterial({ wireframe: true });
-const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-
-cube.position.set(5, 6, 10);
-//cube.scale.set(0, 0, 0);
-
-const cubeVector3 = cube.position.length();
-export { cube };
 
 // GROUP OBJECT
-
 const pyramidGeom = new THREE.ConeGeometry(3, 16, 16);
 const pyramidMatR = new THREE.MeshBasicMaterial({
   wireframe: true,
@@ -76,4 +66,6 @@ RGBT.add(pyramidT);
 
 RGBT.position.set(6, 6, 6);
 RGBT.rotation.y = Math.PI / 2;
+RGBT.visible = false;
+
 export { RGBT };

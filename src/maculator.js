@@ -392,3 +392,93 @@
 // const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
 // const mesh = new THREE.Mesh(geometry, material);
 // scene.add(mesh);
+
+
+
+
+// const numberOfSquares = 4
+// const squareGeometryBuffer = new THREE.BufferGeometry();
+// for (let i = 0; i <= 10; i++) {
+//   // prettier-ignore
+//   const positionsOfSquares = new Float32Array(
+//   [  
+//     -i, -i -5,  Math.random() * 10, // v0
+//    i, -i,  Math.random() * 10, // v1
+//    i,  i,  Math.random() * 10, // v2
+//   -i,  i,  Math.random() * 10, // v3
+
+//     -i, -i +5,  Math.random() * 10, // v0
+//    i, -i,  Math.random() * 10, // v1
+//    i,  i,  Math.random() * 10, // v2
+//   -i,  i,  Math.random() * 10, // v3
+
+//     -i, -i,  Math.random() * 10, // v0
+//    i, -i,  Math.random() * 10, // v1
+//    i,  i,  Math.random() * 10, // v2
+//   -i,  i,  Math.random() * 10, // v3
+
+//     -i, -i,  Math.random() * 10, // v0
+//    i, -i,  Math.random() * 10, // v1
+//    i,  i,  Math.random() * 10, // v2
+//   -i,  i,  Math.random() * 10, // v3
+//   ]
+//   );
+//   squareGeometryBuffer.setAttribute(
+//     "position",
+//     new THREE.BufferAttribute(positionsOfSquares, 3)
+//   );
+
+//   const squareMaterial = new THREE.MeshBasicMaterial({
+//     wireframe: true,
+//   });
+
+//   const squareMesh = new THREE.Mesh(squareGeometryBuffer, squareMaterial);
+
+//   scene.add(squareMesh);
+// }
+
+
+
+// const points = [];
+// points.push(new THREE.Vector3(-5, 0, 5));
+// points.push(new THREE.Vector3(5, 0, 0));
+// points.push(new THREE.Vector3(4, 0, 4));
+// points.push(new THREE.Vector3(-5, 0, 5));
+// let geometry = new THREE.BufferGeometry().setFromPoints(points);
+// let line = new THREE.Line(
+//   geometry,
+//   new THREE.LineBasicMaterial({ color: 0x888888 })
+// );
+// scene.add(line);
+
+
+
+
+
+
+//  BUNCH OF ARRAYS
+// const count = 10
+
+// const positions = new Float32Array(count * 3 * 5);
+
+// // numberOfDesiredObjs * numberOfCoordsXY[Z] * numberOfVertices[PointsInSpace]
+// for (let i = 0; i <= count * 3 * 5; i++) {
+//   positions[i] = (Math.random() - 0.5) * 4;
+// }
+
+// const triangleGeometryBuffer = new THREE.BufferGeometry();
+
+// // prettier-ignore
+
+// triangleGeometryBuffer.setAttribute(
+// "position",
+// new THREE.BufferAttribute(positions , 3)
+// );
+
+// const triangleMaterial = new THREE.MeshBasicMaterial({
+//   wireframe: true,
+// });
+
+// const triangleMesh = new THREE.Mesh(triangleGeometryBuffer, triangleMaterial);
+
+// scene.add(triangleMesh);
