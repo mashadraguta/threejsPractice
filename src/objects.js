@@ -1,15 +1,5 @@
 import * as THREE from "three";
 
-// TORUSKNOT
-
-const geometry = new THREE.TorusKnotGeometry(7, 2, 23, 8, 6, 3);
-const material = new THREE.MeshNormalMaterial();
-
-const torusKnot = new THREE.Mesh(geometry, material);
-
-torusKnot.position.set(20, 20, 3);
-export { torusKnot };
-
 // AXES HELPER UTIL
 const axesHelper = new THREE.AxesHelper(2000);
 axesHelper.setColors("green", "purple", "blue");

@@ -482,3 +482,20 @@
 // const triangleMesh = new THREE.Mesh(triangleGeometryBuffer, triangleMaterial);
 
 // scene.add(triangleMesh);
+
+
+  //this function should push meshes in the torusArray
+  //this function should add last element and remove the previous one
+  //this function should mantain the array at length 2 or 3
+
+  //const meshMaterial = new THREE.MeshNormalMaterial({});
+//meshMaterial.side = THREE.DoubleSide;
+
+// torusKnot = THREE.SceneUtils.createMultiMaterialObject(geometry, [
+//   meshMaterial,
+// ]);
+
+
+//import { SceneUtils } from "three/examples/jsm/utils/SceneUtils.js";
+
+//

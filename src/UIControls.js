@@ -3,13 +3,15 @@ import { GUI } from "dat.gui";
 import { camera, scene } from "./basics";
 import { RGBT } from "./objects.js";
 import gsap from "gsap";
+
 const gui = new GUI();
-// ADDING OBJS TO THE SCENE
 const cameraFolder = gui.addFolder("Camera");
 cameraFolder.add(camera.position, "z", 0, 10);
-cameraFolder.open();
 
 scene.add(RGBT);
+
+// CONE CONTROLS
+
 const RGBTFolder = gui.addFolder("CONES");
 RGBTFolder.add(RGBT, "visible");
 
@@ -23,14 +25,14 @@ const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 cube.position.set(1, 1, 1);
 cube.visible = true;
 scene.add(cube);
+
+// CUBE CONTROLS
 const params = {
   meshColor: "#0056ff",
   rotate: () => {
     gsap.to(cube.rotation, { x: Math.PI * 20, y: 0, duration: 20 });
   },
 };
-
-//https://jsfiddle.net/ikatyang/182ztwao/
 
 const cubeFolder = gui.addFolder("CUBE");
 cubeFolder.add(cube.rotation, "x", 0, Math.PI * 2);
@@ -53,7 +55,108 @@ cubeFolder
   .onChange(function () {
     cubeMaterial.color.set(params.meshColor);
   });
-cubeFolder.open();
+
+// TORUS KNOT CONTROLS
+// TODO:  make material same as in docs
+
+const torusFolder = gui.addFolder("TORUS KNOT");
+let torusKnot;
+let geometry;
+
+const paramsTorusKnot = {
+  geometry: {
+    radius: 1,
+    tube: 0.4,
+    tubularSegments: 64,
+    radialSegments: 8,
+    p: 2,
+    q: 3,
+  },
+
+  createGeom: () => {
+    if (torusKnot) {
+      scene.remove(torusKnot);
+    }
+    geometry = new THREE.TorusKnotGeometry(
+      paramsTorusKnot.geometry.radius,
+      paramsTorusKnot.geometry.tube,
+      paramsTorusKnot.geometry.tubularSegments,
+      paramsTorusKnot.geometry.radialSegments,
+      paramsTorusKnot.geometry.p,
+      paramsTorusKnot.geometry.q
+    );
+
+    torusKnot = new THREE.Mesh(geometry, material);
+
+    scene.add(torusKnot);
+  },
+};
+
+geometry = new THREE.TorusKnotGeometry(
+  paramsTorusKnot.geometry.radius,
+  paramsTorusKnot.geometry.tube,
+  paramsTorusKnot.geometry.tubularSegments,
+  paramsTorusKnot.geometry.radialSegments,
+  paramsTorusKnot.geometry.p,
+  paramsTorusKnot.geometry.q
+);
+
+const material = new THREE.MeshBasicMaterial({
+  color: "blue",
+  wireframe: true,
+});
+
+torusKnot = new THREE.Mesh(geometry, material);
+
+torusFolder
+  .add(paramsTorusKnot.geometry, "radius")
+  .min(1)
+  .max(20)
+  .step(0.1)
+  .onChange(function () {
+    paramsTorusKnot.createGeom();
+  });
+torusFolder
+  .add(paramsTorusKnot.geometry, "tube")
+  .min(0.1)
+  .max(10)
+  .step(0.1)
+  .onChange(function () {
+    paramsTorusKnot.createGeom();
+  });
+torusFolder
+  .add(paramsTorusKnot.geometry, "tubularSegments")
+  .min(3)
+  .max(300)
+  .step(1)
+  .onChange(function () {
+    paramsTorusKnot.createGeom();
+  });
+torusFolder
+  .add(paramsTorusKnot.geometry, "radialSegments")
+  .min(3)
+  .max(20)
+  .step(1)
+  .onChange(function () {
+    paramsTorusKnot.createGeom();
+  });
+torusFolder
+  .add(paramsTorusKnot.geometry, "p")
+  .min(1)
+  .max(20)
+  .step(1)
+  .onChange(function () {
+    paramsTorusKnot.createGeom();
+  });
+torusFolder
+  .add(paramsTorusKnot.geometry, "q")
+  .min(1)
+  .max(20)
+  .step(1)
+  .onChange(function () {
+    paramsTorusKnot.createGeom();
+  });
+torusFolder.add(torusKnot, "visible");
+scene.add(torusKnot);
 
 export { gui };
-export { params };
