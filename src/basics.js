@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color("#e69138");
+scene.background = new THREE.Color("black");
 
 // window =~ viewport
 const sizes = {

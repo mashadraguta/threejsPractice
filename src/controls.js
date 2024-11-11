@@ -6,7 +6,7 @@ import { FlyControls } from "three/examples/jsm/controls/FlyControls.js";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
 import { DragControls } from "three/examples/jsm/controls/DragControls.js";
 import { camera, renderer } from "./basics";
-
+import { sphere } from "./script";
 //const controls = new TrackballControls(camera, renderer.domElement);
 //const controls = new FlyControls(camera, renderer.domElement);
 // controls.addEventListener("change", function (e) {

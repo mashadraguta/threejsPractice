@@ -23,7 +23,7 @@ let cubeMaterial = new THREE.MeshBasicMaterial({
 const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
 cube.position.set(1, 1, 1);
-cube.visible = true;
+cube.visible = false;
 scene.add(cube);
 
 // CUBE CONTROLS
@@ -156,6 +156,7 @@ torusFolder
   .onChange(function () {
     paramsTorusKnot.createGeom();
   });
+torusKnot.visible = false;
 torusFolder.add(torusKnot, "visible");
 scene.add(torusKnot);
 

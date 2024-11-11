@@ -499,3 +499,23 @@
 //import { SceneUtils } from "three/examples/jsm/utils/SceneUtils.js";
 
 //
+// const sphere2 = new THREE.Mesh(geometry, material2);
+// const sphere3 = new THREE.Mesh(geometry, material3);
+
+// const material2 = new THREE.MeshBasicMaterial({
+//   map: texture2,
+//   texture2,
+// });
+// const material3 = new THREE.MeshBasicMaterial({
+//   map: texture3,
+//   texture2,
+// });
+// sphere2.position.set(1, -1, 1);
+// sphere3.position.set(-1, 1, 1);
+// scene.add(sphere2);
+// scene.add(sphere3);
+
+// const texture2 = loader.load("textures/SGambientOcclusion.png");
+// const texture3 = loader.load("textures/SGheight.png");
+// const texture4 = loader.load("textures/SGmetallic.png");
+// const texture5 = loader.load("textures/SGnormal.png");
