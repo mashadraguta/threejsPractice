@@ -2,6 +2,16 @@ import * as THREE from "three";
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color("black");
+// scene.background = new THREE.CubeTextureLoader()
+//   .setPath("textures/Stairs/")
+//   .load([
+//     "posx.jpg",
+//     "negx.jpg",
+//     "posy.jpg",
+//     "negy.jpg",
+//     "posz.jpg",
+//     "negz.jpg",
+//   ]);
 
 // window =~ viewport
 const sizes = {
@@ -18,7 +28,7 @@ const far = 2000;
 const aspectRatio = sizes.width / sizes.height;
 const camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, near, far);
 
-camera.position.set(5, 5, 2);
+camera.position.set(0, 0, 5);
 
 export { camera };
 

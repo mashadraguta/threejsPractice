@@ -519,3 +519,65 @@
 // const texture3 = loader.load("textures/SGheight.png");
 // const texture4 = loader.load("textures/SGmetallic.png");
 // const texture5 = loader.load("textures/SGnormal.png");
+
+
+
+// TEXTURES 
+
+
+// const manager = new THREE.LoadingManager();
+// //1
+// manager.onStart = function (url, itemsLoaded, itemsTotal) {
+//   console.log(
+//     "Started loading file: " +
+//       url +
+//       ".\nLoaded " +
+//       itemsLoaded +
+//       " of " +
+//       itemsTotal +
+//       " files."
+//   );
+// };
+// //2
+// manager.onLoad = function () {
+//   console.log("Loading complete!");
+// };
+// //3
+// manager.onProgress = function (url, itemsLoaded, itemsTotal) {
+//   console.log(
+//     "Loading file: " +
+//       url +
+//       ".\nLoaded " +
+//       itemsLoaded +
+//       " of " +
+//       itemsTotal +
+//       " files."
+//   );
+// };
+// //4
+// manager.onError = function (url) {
+//   console.log("There was an error loading " + url);
+// };
+
+// const loader = new THREE.TextureLoader(manager);
+// const texture1 = loader.load("textures/earth.jpg");
+// //texture1.generateMipmaps = false;
+// texture1.magFilter = THREE.NearestFilter;
+// texture1.transparency;
+// const geometry = new THREE.SphereGeometry(3, 32, 16);
+// const material1 = new THREE.MeshBasicMaterial({
+//   map: { texture: texture1, transparency: 1 },
+// });
+
+// const textureCube = loader.load("textures/dino2.png");
+// const textureCubeAlpha = loader.load("textures/SGopacity.png");
+// textureCubeAlpha.transparency = "white";
+// textureCube.magFilter = THREE.NearestFilter;
+// const cubeMaterial = new THREE.MeshBasicMaterial({
+//   // map: textureCube,
+//   alphaMap: textureCube,
+//   transparent: true,
+// });
+// const cubeGeometry = new THREE.BoxGeometry(5, 5, 5);
+
+// const cubeObj = new THREE.Mesh(cubeGeometry, cubeMaterial);
