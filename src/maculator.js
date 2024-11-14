@@ -133,7 +133,7 @@
 //   wireframe: true,
 // });
 // const cone = new THREE.Mesh(coneWireframe, coneMaterial);
-
+// testing 2 github accounts
 //cone.up = new THREE.Vector3(0, 1, 0);
 
 // cone.rotateX(3)
@@ -484,11 +484,11 @@
 // scene.add(triangleMesh);
 
 
-  //this function should push meshes in the torusArray
-  //this function should add last element and remove the previous one
-  //this function should mantain the array at length 2 or 3
+//this function should push meshes in the torusArray
+//this function should add last element and remove the previous one
+//this function should mantain the array at length 2 or 3
 
-  //const meshMaterial = new THREE.MeshNormalMaterial({});
+//const meshMaterial = new THREE.MeshNormalMaterial({});
 //meshMaterial.side = THREE.DoubleSide;
 
 // torusKnot = THREE.SceneUtils.createMultiMaterialObject(geometry, [
