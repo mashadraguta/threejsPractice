@@ -581,3 +581,19 @@
 // const cubeGeometry = new THREE.BoxGeometry(5, 5, 5);
 
 // const cubeObj = new THREE.Mesh(cubeGeometry, cubeMaterial);
+
+
+// const texture = new THREE.TextureLoader().load("textures/earth.jpg");
+
+// MTorusMat.map = texture;
+// texture.transparent = 0.1;
+// const envTexture = new THREE.CubeTextureLoader().load([
+//   "textures/SanFrancisco3/posx.jpg",
+//   "textures/SanFrancisco3/negx.jpg",
+//   "textures/SanFrancisco3/posy.jpg",
+//   "textures/SanFrancisco3/negy.jpg",
+//   "textures/SanFrancisco3/posz.jpg",
+//   "textures/SanFrancisco3/negz.jpg",
+// ]);
+// envTexture.mapping = THREE.CubeRefractionMapping;
+// MTorusMat.envMap = envTexture;

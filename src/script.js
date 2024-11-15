@@ -1,22 +1,30 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { gui } from "./UIControls";
+//import { guiEx } from "./UIControls";
 import { axesHelper, MTorus, MPlane, MSphere } from "./objects";
-//import image from "../static/textures/untitled6.png";
-// import { controls } from "./controls";
 import { camera, scene, canvas, renderer } from "./basics";
+import { MapControls } from "three/examples/jsm/controls/OrbitControls.js";
 
-scene.add(gui);
+
+
+//scene.add(gui);
 scene.add(axesHelper);
 
 scene.add(MSphere, MPlane, MTorus);
-
-//console.log(textureCube);
-
-const controls = new OrbitControls(camera, renderer.domElement);
+const controls = new MapControls(camera, renderer.domElement);
 
 controls.enableZoom = true;
 controls.enableDamping = true;
+controls.mouseButtons = {
+  LEFT: THREE.MOUSE.PAN,
+  MIDDLE: THREE.MOUSE.DOLLY,
+  RIGHT: THREE.MOUSE.ROTATE
+}
+//console.log(textureCube);
+
+// const controls = new OrbitControls(camera, renderer.domElement);
+
+// controls.enableZoom = true;
+// controls.enableDamping = true;
 window.addEventListener("resize", (e) => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();

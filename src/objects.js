@@ -1,6 +1,6 @@
 import * as THREE from "three";
+import { GUI } from "dat.gui";
 
-// AXES HELPER UTIL
 const axesHelper = new THREE.AxesHelper(2000);
 axesHelper.setColors("green", "purple", "blue");
 export { axesHelper };
@@ -18,9 +18,6 @@ referencePoint.position.z = 0;
 
 export { referencePointWireframe };
 
-// CUBE
-
-// GROUP OBJECT
 const pyramidGeom = new THREE.ConeGeometry(3, 16, 16);
 const pyramidMatR = new THREE.MeshBasicMaterial({
   wireframe: true,
@@ -60,9 +57,7 @@ RGBT.visible = false;
 
 export { RGBT };
 
-// MATERIAL PART
 
-//TEXTURES
 const manager = new THREE.LoadingManager();
 
 manager.onError = function (url) {
@@ -79,72 +74,87 @@ const Tnormal = loader.load("SGnormal.png");
 const Topacity = loader.load("SGopacity.png");
 const Troughness = loader.load("SGroughness.png");
 
+
 loader.setPath("textures/matcaps/");
 const matCapTexture = loader.load("3.png");
 loader.setPath("textures/gradients/");
 const gradientTexture = loader.load("2.jpg");
 
-// const material = new THREE.MeshBasicMaterial();
-// material.side = THREE.DoubleSide;
-// material.alphaMap = TambientOcclusion;
-// material.map = Tbasecolor;
-// material.color.set(new THREE.Color("green"));
-// material.opacity = 0.3;
-// material.transparent = true;
-// material.wireframe = true;
+gradientTexture.minFilter = THREE.NearestFilter
+gradientTexture.magFilter = THREE.NearestFilter
+gradientTexture.generateMipmaps = false
 
-// const material = new THREE.MeshMatcapMaterial();
-// material.matcap = matCapTexture;
-// material.side = THREE.DoubleSide;
 
-const material = new THREE.MeshDepthMaterial();
-material.alphaMap = gradientTexture;
-material.transparent = true;
-material.opacity = 0.9;
-material.side = THREE.DoubleSide;
-//material.flatShading = true;
+const materialStandard = new THREE.MeshStandardMaterial();
 
-// SPHERE OBJECT
+const gui = new GUI();
+
+const params = {
+  baseColor: '#ffffff',
+  emissiveColor: '#000000',
+}
+
+
+const meshStandardMaterial = gui.addFolder('Mesh Standard Material')
+meshStandardMaterial.open()
+meshStandardMaterial.addColor(params, 'baseColor').onChange(() => {
+  materialStandard.color = new THREE.Color(params.baseColor)
+})
+
+meshStandardMaterial.add(materialStandard, 'metalness').min(0).max(1).step(0.001);
+meshStandardMaterial.add(materialStandard, 'roughness').min(0).max(1).step(0.001);
+meshStandardMaterial.add(materialStandard, 'wireframe')
+// meshStandardMaterial.addColor(params, 'emissiveColor').onChange(() => {
+//   materialStandard.emissive = new THREE.Color(params.emissiveColor)
+// })
+// materialStandard.map = Tbasecolor
+// materialStandard.aoMap = TambientOcclusion
+//materialStandard.displacementMap = Theight
+
+
+console.log(`Theight====>`, Theight);
+
+//meshStandardMaterial.add(materialStandard, 'aoMapIntensity').min(0).max(10).step(0.001);
+
 
 const MSphereGeom = new THREE.SphereGeometry(
-  1,
-  32,
-  16,
-  0,
-  Math.PI * 2,
-  0,
-  Math.PI
+  5,
+  64,
+  32
 );
 
-const MSphere = new THREE.Mesh(MSphereGeom, material);
-MSphere.position.set(-5, 0, 0);
+const MSphere = new THREE.Mesh(MSphereGeom, materialStandard);
+
+MSphere.geometry.setAttribute('uv2', new THREE.BufferAttribute(MSphere.geometry.attributes.uv.array, 2))
+
+MSphere.position.set(-10, 0, 0);
 export { MSphere };
-// PLANE OBJECT
 
-const MPlaneGeom = new THREE.PlaneGeometry(2, 2);
 
-const MPlane = new THREE.Mesh(MPlaneGeom, material);
+const MPlaneGeom = new THREE.PlaneGeometry(
+  5,
+  5,
+  30,
+  30
+);
+
+const MPlane = new THREE.Mesh(MPlaneGeom, materialStandard);
+
+MPlane.geometry.setAttribute('uv2', new THREE.BufferAttribute(MPlane.geometry.attributes.uv.array, 2))
+
 MPlane.position.set(0, 0, 0);
 export { MPlane };
 
-// TORUS OBJECT
 
-const MTorusGeom = new THREE.TorusGeometry(1, 0.6, 16, 50);
+const MTorusGeom = new THREE.TorusGeometry(
+  5,
+  2,
+  30,
+  100
+);
+const MTorus = new THREE.Mesh(MTorusGeom, materialStandard);
 
-// const texture = new THREE.TextureLoader().load("textures/earth.jpg");
+MTorus.geometry.setAttribute('uv2', new THREE.BufferAttribute(MTorus.geometry.attributes.uv.array, 2))
 
-// MTorusMat.map = texture;
-// texture.transparent = 0.1;
-// const envTexture = new THREE.CubeTextureLoader().load([
-//   "textures/SanFrancisco3/posx.jpg",
-//   "textures/SanFrancisco3/negx.jpg",
-//   "textures/SanFrancisco3/posy.jpg",
-//   "textures/SanFrancisco3/negy.jpg",
-//   "textures/SanFrancisco3/posz.jpg",
-//   "textures/SanFrancisco3/negz.jpg",
-// ]);
-// envTexture.mapping = THREE.CubeRefractionMapping;
-// MTorusMat.envMap = envTexture;
-const MTorus = new THREE.Mesh(MTorusGeom, material);
-MTorus.position.set(5, 0, 0);
+MTorus.position.set(10, 0, 0);
 export { MTorus };

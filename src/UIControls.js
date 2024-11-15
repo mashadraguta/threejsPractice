@@ -4,15 +4,15 @@ import { camera, scene } from "./basics";
 import { RGBT } from "./objects.js";
 import gsap from "gsap";
 
-const gui = new GUI();
-const cameraFolder = gui.addFolder("Camera");
-cameraFolder.add(camera.position, "z", 0, 10);
+const guiEx = new GUI();
+const cameraFolder = guiEx.addFolder("Camera");
+//cameraFolder.add(camera.position, "z", 0, 10);
 
 scene.add(RGBT);
 
 // CONE CONTROLS
 
-const RGBTFolder = gui.addFolder("CONES");
+const RGBTFolder = guiEx.addFolder("CONES");
 RGBTFolder.add(RGBT, "visible");
 
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1, 2, 2, 2);
@@ -34,7 +34,7 @@ const params = {
   },
 };
 
-const cubeFolder = gui.addFolder("CUBE");
+const cubeFolder = guiEx.addFolder("CUBE");
 cubeFolder.add(cube.rotation, "x", 0, Math.PI * 2);
 cubeFolder.add(cube.rotation, "y", 0, Math.PI * 2);
 cubeFolder.add(cube.rotation, "z", 0, 100);
@@ -59,7 +59,7 @@ cubeFolder
 // TORUS KNOT CONTROLS
 // TODO:  make material same as in docs
 
-const torusFolder = gui.addFolder("TORUS KNOT");
+const torusFolder = guiEx.addFolder("TORUS KNOT");
 let torusKnot;
 let geometry;
 
@@ -157,7 +157,7 @@ torusFolder
     paramsTorusKnot.createGeom();
   });
 torusKnot.visible = false;
-torusFolder.add(torusKnot, "visible");
+//torusFolder.add(torusKnot, "visible");
 scene.add(torusKnot);
 
-export { gui };
+export { guiEx };

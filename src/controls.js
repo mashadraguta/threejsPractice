@@ -5,6 +5,7 @@ import { TrackballControls } from "three/examples/jsm/controls/TrackballControls
 import { FlyControls } from "three/examples/jsm/controls/FlyControls.js";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
 import { DragControls } from "three/examples/jsm/controls/DragControls.js";
+//import { MapControls } from "three/examples/jsm/controls/MapControls.js";
 import { camera, renderer } from "./basics";
 import { sphere } from "./script";
 //const controls = new TrackballControls(camera, renderer.domElement);
@@ -23,10 +24,7 @@ import { sphere } from "./script";
 // controls.autoForward = false;
 // controls.dragToLook = true;
 
-const controls = new OrbitControls(camera, renderer.domElement);
 
-controls.enableZoom = true;
-controls.enableDamping = true;
 // add event listener to highlight dragged objects
 
 // controls.addEventListener("change", function () {
