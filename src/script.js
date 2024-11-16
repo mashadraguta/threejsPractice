@@ -3,25 +3,48 @@ import * as THREE from "three";
 import { axesHelper, MTorus, MPlane, MSphere } from "./objects";
 import { camera, scene, canvas, renderer } from "./basics";
 import { MapControls } from "three/examples/jsm/controls/OrbitControls.js";
-
-
-
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
+import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 //scene.add(gui);
-scene.add(axesHelper);
+//scene.add(axesHelper);
 
-scene.add(MSphere, MPlane, MTorus);
+//scene.add(MSphere, MPlane, MTorus);
+
+const loader = new FontLoader();
+
+loader.load("fonts/Geist Mono_Regular.json", function (font) {
+  const geometry = new TextGeometry(
+    `they were friendly,
+    good natured, 
+    easy-going, 
+    and uninvolved
+    `,
+
+    {
+      font: font,
+      steps: 2,
+      size: 80,
+      depth: 10,
+      curveSegments: 12,
+    }
+  );
+  const texture = new THREE.MeshNormalMaterial();
+  const text = new THREE.Mesh(geometry, texture);
+  text.position.set(-10, 20, -10);
+  scene.add(text);
+});
+
 const controls = new MapControls(camera, renderer.domElement);
-
+//const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableZoom = true;
 controls.enableDamping = true;
-controls.mouseButtons = {
-  LEFT: THREE.MOUSE.PAN,
-  MIDDLE: THREE.MOUSE.DOLLY,
-  RIGHT: THREE.MOUSE.ROTATE
-}
+// controls.mouseButtons = {
+//   LEFT: THREE.MOUSE.PAN,
+//   MIDDLE: THREE.MOUSE.DOLLY,
+//   RIGHT: THREE.MOUSE.ROTATE,
+// };
 //console.log(textureCube);
-
-// const controls = new OrbitControls(camera, renderer.domElement);
 
 // controls.enableZoom = true;
 // controls.enableDamping = true;

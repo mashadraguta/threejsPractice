@@ -597,3 +597,26 @@
 // ]);
 // envTexture.mapping = THREE.CubeRefractionMapping;
 // MTorusMat.envMap = envTexture;
+
+
+// MATERIAL AND GENERATING POINTS
+// const vertices = [];
+
+// for (let i = 0; i < 10000; i++) {
+//   const x = THREE.MathUtils.randFloatSpread(200);
+//   const y = THREE.MathUtils.randFloatSpread(200);
+//   const z = THREE.MathUtils.randFloatSpread(200);
+
+//   vertices.push(x, y, z);
+// }
+
+// const geometry = new THREE.BufferGeometry();
+// geometry.setAttribute(
+//   "position",
+//   new THREE.Float32BufferAttribute(vertices, 3)
+// );
+// const material = new THREE.PointsMaterial({
+//   color: 0x888888,
+// });
+// const points = new THREE.Points(geometry, material);
+// scene.add(points);
