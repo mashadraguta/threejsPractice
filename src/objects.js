@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { GUI } from "dat.gui";
 import { scene } from "./basics";
 const axesHelper = new THREE.AxesHelper(2000);
-axesHelper.setColors("green", "purple", "blue");
+axesHelper.setColors("green", "purple", "orange");
 export { axesHelper };
 
 const referencePointWireframe = new THREE.SphereGeometry(0.5);
@@ -120,7 +120,7 @@ const params = {
 };
 
 const meshStandardMaterial = gui.addFolder("Mesh Standard Material");
-meshStandardMaterial.open();
+//meshStandardMaterial.open();
 meshStandardMaterial.addColor(params, "baseColor").onChange(() => {
   materialStandard.color = new THREE.Color(params.baseColor);
 });

@@ -50,7 +50,7 @@ const far = 2000;
 const aspectRatio = sizes.width / sizes.height;
 const camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, near, far);
 
-camera.position.set(0, 0, 10);
+camera.position.set(10, 0, 10);
 
 export { camera };
 
