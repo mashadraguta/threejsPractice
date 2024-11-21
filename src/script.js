@@ -10,88 +10,61 @@ import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 scene.add(axesHelper);
 
 //scene.add(MSphere, MPlane, MTorus);
-
+const matCapTexture = new THREE.TextureLoader().load("/textures/matcaps/1.png");
 const loader = new FontLoader();
-let text
-let geometry
-let texture
-loader.load("fonts/Oswald_Regular.json", function (font) {
+let text;
+let geometry;
+let texture;
+loader.load("fonts/Harry P_Regular.json", function (font) {
   geometry = new TextGeometry(
     ` 
-      ai grija la
-      inima omului;
-      ea este unica
-      care-l poate incapea
-      pe Dumnezeu
+    I mean, 
+    it's sort of exciting,
+    isn't it, 
+    breaking the rules?
     `,
-
     {
       font,
       size: 1,
       height: 1,
-
       curveSegments: 1,
-      // bevelEnabled: true,
-      // bevelSize: 0.03,
-      // bevelThickness: 0.02,
-      // bevelOffset: 0,
-      // bevelSegments: 5
     }
   );
-  texture = new THREE.MeshNormalMaterial();
+  texture = new THREE.MeshMatcapMaterial({ matcap: matCapTexture });
+
   text = new THREE.Mesh(geometry, texture);
-  geometry.computeBoundingBox()
+  geometry.computeBoundingBox();
+  // const box = new THREE.Box3();
+  // box.copy(text.geometry.boundingBox).applyMatrix4(text.matrixWorld);
+  console.log(`geometry ONE======>`, geometry.boundingBox);
 
-  console.log(`boundingBox OBJ 1----->`, geometry.boundingBox);
-  text.position.set(-10, 2, -1);
+  // text.position.set(-10, 2, -1);
   scene.add(text);
-
 });
-loader.load("fonts/Geist Mono_Regular.json", function (font) {
-  geometry = new TextGeometry(
-    `another quote
-    another font
-    `,
-    {
-      font: font,
+// loader.load("fonts/Geist Mono_Regular.json", function (font) {
+//   geometry = new TextGeometry(
+//     `another quote
+//     another font
+//     `,
+//     {
+//       font: font,
+//       size: 1,
+//       height: 1,
+//       curveSegments: 1,
+//     }
+//   );
 
-      size: 1,
-      height: 1,
-      // depth: 10,
-      curveSegments: 1,
-      // depth: 0.01,
-      // curveSegments: 1,
-      // bevelEnabled: true,
-      // bevelThickness: 0.1,
-      // bevelSize: 0.01,
-      // bevelOffset: 0,
-      // bevelSegments: 1
-    }
-  );
-  texture = new THREE.MeshNormalMaterial({ wireframe: true });
-  text = new THREE.Mesh(geometry, texture);
-  geometry.computeBoundingBox()
-  console.log(`boundingBox OBJ 2----->`, geometry.boundingBox);
+//   text = new THREE.Mesh(geometry, texture);
+//   // geometry.computeBoundingBox();
+//   console.log(`geometry TWO======>`, geometry);
 
-  scene.add(text);
+//   scene.add(text);
+// });
 
-});
-
-console.log(text);
-
-//const controls = new MapControls(camera, renderer.domElement);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableZoom = true;
 controls.enableDamping = true;
-// controls.mouseButtons = {
-//   LEFT: THREE.MOUSE.PAN,
-//   MIDDLE: THREE.MOUSE.DOLLY,
-//   RIGHT: THREE.MOUSE.ROTATE,
-// };
-//console.log(textureCube);
 
-// controls.enableZoom = true;
-// controls.enableDamping = true;
 window.addEventListener("resize", (e) => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();

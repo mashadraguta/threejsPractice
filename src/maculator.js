@@ -620,3 +620,12 @@
 // });
 // const points = new THREE.Points(geometry, material);
 // scene.add(points);
+
+
+ // depth: 0.01,
+      // curveSegments: 1,
+      // bevelEnabled: true,
+      // bevelThickness: 0.1,
+      // bevelSize: 0.01,
+      // bevelOffset: 0,
+      // bevelSegments: 1
