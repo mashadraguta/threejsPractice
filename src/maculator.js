@@ -622,10 +622,19 @@
 // scene.add(points);
 
 
- // depth: 0.01,
-      // curveSegments: 1,
-      // bevelEnabled: true,
-      // bevelThickness: 0.1,
-      // bevelSize: 0.01,
-      // bevelOffset: 0,
-      // bevelSegments: 1
+// depth: 0.01,
+// curveSegments: 1,
+// bevelEnabled: true,
+// bevelThickness: 0.1,
+// bevelSize: 0.01,
+// bevelOffset: 0,
+// bevelSegments: 1
+
+
+
+//  geometry.computeBoundingBox();
+// geometry.translate(
+//   - geometry.boundingBox.max.x * 0.5,
+//   - geometry.boundingBox.min.y * 0.5,
+//   - geometry.boundingBox.max.z * 0.5,
+// )

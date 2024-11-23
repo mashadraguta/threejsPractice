@@ -30,7 +30,7 @@ const material = new THREE.PointsMaterial({
   color: 0x888888,
 });
 const points = new THREE.Points(geometry, material);
-scene.add(points);
+//scene.add(points);
 // scene.background = new THREE.CubeTextureLoader()
 //   .setPath("textures/starry-night/")
 //   .load(["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"]);
