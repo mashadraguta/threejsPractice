@@ -638,3 +638,12 @@
 //   - geometry.boundingBox.min.y * 0.5,
 //   - geometry.boundingBox.max.z * 0.5,
 // )
+
+
+ // MSphere.rotation.x = 0.5 * elapsedTime;
+  // MPlane.rotation.x = 0.5 * -elapsedTime;
+  // MTorus.rotation.x = 0.5 * elapsedTime;
+  // MSphere.rotation.y = 0.5 * elapsedTime;
+  // MPlane.rotation.y = 0.5 * -elapsedTime;
+  // MTorus.rotation.y = 0.5 * elapsedTime;
+  // text.rotation.y = 0.5 * -elapsedTime;

@@ -10,8 +10,10 @@ import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 //scene.add(axesHelper);
 
 //scene.add(MSphere, MPlane, MTorus);
-const matCapTexture1 = new THREE.TextureLoader().load("/textures/matcaps/3.png");
-const matCapTexture2 = new THREE.TextureLoader().load("/textures/matcaps/gold.jpg");
+const matCapTexture1 = new THREE.TextureLoader().load(
+  "/textures/matcaps/3.png"
+);
+const matCapTexture2 = new THREE.TextureLoader().load("/textures/donut1.png");
 const loader = new FontLoader();
 let text;
 let textGeometry;
@@ -34,33 +36,39 @@ loader.load("fonts/Harry P_Regular.json", function (font) {
       bevelThickness: 0.1,
       bevelSize: 0.01,
       bevelOffset: 0.01,
-      bevelSegments: 2
+      bevelSegments: 2,
     }
   );
   texture = new THREE.MeshMatcapMaterial({ matcap: matCapTexture1 });
   text = new THREE.Mesh(textGeometry, texture);
 
-
   console.log(`geometry ONE======>`, textGeometry.boundingBox);
-  textGeometry.center()
+  textGeometry.center();
 
   scene.add(text);
 });
+console.time("rendering scene");
 
+const geometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
+const material = new THREE.MeshStandardMaterial({ map: matCapTexture2 });
 for (let i = 0; i < 1000; i++) {
-  // const geometry = new THREE.SphereGeometry(0.1, 12, 36);
-  const geometry = new THREE.TorusGeometry(1, 0.1, 8, 45, 6.7);
-  geometry.rotateX((Math.random() - 0.5) * 100)
-  geometry.rotateY((Math.random() - 0.5) * 100)
-  const material = new THREE.MeshMatcapMaterial({ matcap: matCapTexture2 });
-  const sphere = new THREE.Mesh(geometry, material);
-  sphere.position.set((Math.random() - 0.5) * 200, (Math.random() - 0.5) * 100, -(Math.random() - 0.5) * 100)
-  scene.add(sphere);
+  const donut = new THREE.Mesh(geometry, material);
+  const randomValue = Math.max((Math.random() - 0.5) * 15, 1);
+  donut.rotateX((Math.random() - 0.5) * 100);
+  donut.rotateY((Math.random() - 0.5) * 100);
+  donut.position.set(
+    (Math.random() - 0.5) * 200,
+    (Math.random() - 0.5) * 100,
+    -(Math.random() - 0.5) * 100
+  );
+
+  donut.scale.set(randomValue, randomValue, randomValue);
+
+  scene.add(donut);
 }
-
-
-console.log(`THREE.MathUtils======>`, THREE.MathUtils)
-const controls = new OrbitControls(camera, renderer.domElement);
+console.timeEnd("rendering scene");
+//const controls = new OrbitControls(camera, renderer.domElement);
+const controls = new MapControls(camera, renderer.domElement);
 controls.enableZoom = true;
 controls.enableDamping = true;
 
@@ -91,13 +99,6 @@ window.addEventListener("dblclick", (e) => {
 const clock = new THREE.Clock();
 function render(t) {
   const elapsedTime = clock.getElapsedTime();
-  // MSphere.rotation.x = 0.5 * elapsedTime;
-  // MPlane.rotation.x = 0.5 * -elapsedTime;
-  // MTorus.rotation.x = 0.5 * elapsedTime;
-  // MSphere.rotation.y = 0.5 * elapsedTime;
-  // MPlane.rotation.y = 0.5 * -elapsedTime;
-  // MTorus.rotation.y = 0.5 * elapsedTime;
-  // text.rotation.y = 0.5 * -elapsedTime;
 
   controls.update();
   window.requestAnimationFrame(render);
@@ -105,8 +106,3 @@ function render(t) {
 }
 
 render();
-
-// -1, -1,  // v0
-// 1, -1,  // v1
-// 1,  1,   // v2
-// -1,  1,   // v3
