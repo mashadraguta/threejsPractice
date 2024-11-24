@@ -23,10 +23,7 @@ let texture;
 loader.load("fonts/Harry P_Regular.json", function (font) {
   textGeometry = new TextGeometry(
     ` 
-    HHHHHHH YYYYYYYYYY    Y y y y y y 
-    You have everything but one thing: madness. 
-    A man needs a little madness or else - 
-    he never dares cut the rope and be free.
+    Succesfully deployed project
     `,
     {
       font,
