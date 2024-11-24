@@ -13,7 +13,9 @@ import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 const matCapTexture1 = new THREE.TextureLoader().load(
   "/textures/matcaps/3.png"
 );
-const matCapTexture2 = new THREE.TextureLoader().load("/textures/donut1.png");
+const matCapTexture2 = new THREE.TextureLoader().load(
+  "/textures/pinkdonut.png"
+);
 const loader = new FontLoader();
 let text;
 let textGeometry;
@@ -21,6 +23,7 @@ let texture;
 loader.load("fonts/Harry P_Regular.json", function (font) {
   textGeometry = new TextGeometry(
     ` 
+    HHHHHHH YYYYYYYYYY    Y y y y y y 
     You have everything but one thing: madness. 
     A man needs a little madness or else - 
     he never dares cut the rope and be free.
@@ -50,7 +53,9 @@ loader.load("fonts/Harry P_Regular.json", function (font) {
 console.time("rendering scene");
 
 const geometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
-const material = new THREE.MeshStandardMaterial({ map: matCapTexture2 });
+const material = new THREE.MeshBasicMaterial({
+  map: matCapTexture2,
+});
 for (let i = 0; i < 1000; i++) {
   const donut = new THREE.Mesh(geometry, material);
   const randomValue = Math.max((Math.random() - 0.5) * 15, 1);
