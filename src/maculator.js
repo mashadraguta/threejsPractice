@@ -647,3 +647,30 @@
   // MPlane.rotation.y = 0.5 * -elapsedTime;
   // MTorus.rotation.y = 0.5 * elapsedTime;
   // text.rotation.y = 0.5 * -elapsedTime;
+
+// DONUTS PARTICLES 
+//   console.time("rendering scene");
+
+// const geometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
+// const material = new THREE.MeshBasicMaterial({
+//   map: matCapTexture2,
+// });
+// for (let i = 0; i < 1000; i++) {
+//   const donut = new THREE.Mesh(geometry, material);
+//   const randomValue = Math.max((Math.random() - 0.5) * 15, 1);
+//   donut.rotateX((Math.random() - 0.5) * 100);
+//   donut.rotateY((Math.random() - 0.5) * 100);
+//   donut.position.set(
+//     (Math.random() - 0.5) * 200,
+//     (Math.random() - 0.5) * 100,
+//     -(Math.random() - 0.5) * 100
+//   );
+
+//   donut.scale.set(randomValue, randomValue, randomValue);
+
+//   scene.add(donut);
+// }
+// console.timeEnd("rendering scene");
+
+
+

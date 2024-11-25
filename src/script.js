@@ -13,9 +13,7 @@ import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 const matCapTexture1 = new THREE.TextureLoader().load(
   "/textures/matcaps/3.png"
 );
-const matCapTexture2 = new THREE.TextureLoader().load(
-  "/textures/pinkdonut.png"
-);
+
 const loader = new FontLoader();
 let text;
 let textGeometry;
@@ -47,28 +45,7 @@ loader.load("fonts/Harry P_Regular.json", function (font) {
 
   scene.add(text);
 });
-console.time("rendering scene");
 
-const geometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
-const material = new THREE.MeshBasicMaterial({
-  map: matCapTexture2,
-});
-for (let i = 0; i < 1000; i++) {
-  const donut = new THREE.Mesh(geometry, material);
-  const randomValue = Math.max((Math.random() - 0.5) * 15, 1);
-  donut.rotateX((Math.random() - 0.5) * 100);
-  donut.rotateY((Math.random() - 0.5) * 100);
-  donut.position.set(
-    (Math.random() - 0.5) * 200,
-    (Math.random() - 0.5) * 100,
-    -(Math.random() - 0.5) * 100
-  );
-
-  donut.scale.set(randomValue, randomValue, randomValue);
-
-  scene.add(donut);
-}
-console.timeEnd("rendering scene");
 //const controls = new OrbitControls(camera, renderer.domElement);
 const controls = new MapControls(camera, renderer.domElement);
 controls.enableZoom = true;

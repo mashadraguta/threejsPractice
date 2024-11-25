@@ -1,16 +1,16 @@
 import * as THREE from "three";
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color("black");
-const pointLight = new THREE.PointLight(0xffffff, 1, 100);
-const posX = -10;
-const posY = -10;
-const posZ = 10;
-pointLight.position.set(posX, posY, posZ);
-scene.add(pointLight);
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+scene.background = new THREE.Color("purple");
+// const pointLight = new THREE.PointLight(0xffffff, 1, 100);
+// const posX = -10;
+// const posY = -10;
+// const posZ = 10;
+// pointLight.position.set(posX, posY, posZ);
+// scene.add(pointLight);
+// const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
 
-scene.add(ambientLight);
+// scene.add(ambientLight);
 const vertices = [];
 
 for (let i = 0; i < 10000; i++) {
@@ -50,7 +50,7 @@ const far = 2000;
 const aspectRatio = sizes.width / sizes.height;
 const camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, near, far);
 
-camera.position.set(0, 0, 10);
+camera.position.set(5, 15, 5);
 
 export { camera };
 
