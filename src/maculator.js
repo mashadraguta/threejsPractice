@@ -640,13 +640,13 @@
 // )
 
 
- // MSphere.rotation.x = 0.5 * elapsedTime;
-  // MPlane.rotation.x = 0.5 * -elapsedTime;
-  // MTorus.rotation.x = 0.5 * elapsedTime;
-  // MSphere.rotation.y = 0.5 * elapsedTime;
-  // MPlane.rotation.y = 0.5 * -elapsedTime;
-  // MTorus.rotation.y = 0.5 * elapsedTime;
-  // text.rotation.y = 0.5 * -elapsedTime;
+// MSphere.rotation.x = 0.5 * elapsedTime;
+// MPlane.rotation.x = 0.5 * -elapsedTime;
+// MTorus.rotation.x = 0.5 * elapsedTime;
+// MSphere.rotation.y = 0.5 * elapsedTime;
+// MPlane.rotation.y = 0.5 * -elapsedTime;
+// MTorus.rotation.y = 0.5 * elapsedTime;
+// text.rotation.y = 0.5 * -elapsedTime;
 
 // DONUTS PARTICLES 
 //   console.time("rendering scene");
@@ -673,4 +673,151 @@
 // console.timeEnd("rendering scene");
 
 
+// // POINT LIGHT CONTROLS
+// const paramsPoint = lightParamsPoint.position
+// pointLight.position.set(
+//   paramsPoint.x,
+//   paramsPoint.y,
+//   paramsPoint.z
+// );
+// const pointLightFolder = gui.addFolder("POINT LIGHT")
 
+// pointLightFolder.add(pointLight, "intensity").min(0.1).max(10).step(0.01);
+// pointLightFolder.add(pointLight, "visible")
+// pointLightFolder.add(lightParamsPoint.position, "x").onChange(() => {
+//   pointLight.position.set(
+//     paramsPoint.x,
+//     paramsPoint.y,
+//     paramsPoint.z
+//   );
+// });
+// pointLightFolder.add(lightParamsPoint.position, "y").onChange(() => {
+//   pointLight.position.set(
+//     paramsPoint.x,
+//     paramsPoint.y,
+//     paramsPoint.z
+//   );
+// });
+// pointLightFolder.add(lightParamsPoint.position, "z").onChange(() => {
+//   pointLight.position.set(
+//     paramsPoint.x,
+//     paramsPoint.y,
+//     paramsPoint.z
+//   );
+// });
+// pointLightFolder.open()
+// // DIRECTIONAL LIGHT CONTROLS
+// const paramsDirectional = lightParamsDir.position
+// directionalLight.position.set(
+//   paramsDirectional.x,
+//   paramsDirectional.y,
+//   paramsDirectional.z
+// );
+// const directionalLightFolder = gui.addFolder("DIRECTIONAL LIGHT");
+// directionalLightFolder.add(directionalLight, "intensity").min(0.1).max(10).step(0.01);
+// directionalLightFolder.add(directionalLight, "visible")
+// directionalLightFolder.add(lightParamsDir.position, "x").onChange(() => {
+//   directionalLight.position.set(
+//     paramsDirectional.x,
+//     paramsDirectional.y,
+//     paramsDirectional.z
+//   );
+// });
+// directionalLightFolder.add(lightParamsDir.position, "y").onChange(() => {
+//   directionalLight.position.set(
+//     paramsDirectional.x,
+//     paramsDirectional.y,
+//     paramsDirectional.z
+//   );
+// });
+// directionalLightFolder.add(lightParamsDir.position, "z").onChange(() => {
+//   directionalLight.position.set(
+//     paramsDirectional.x,
+//     paramsDirectional.y,
+//     paramsDirectional.z
+//   );
+// });
+// directionalLightFolder.open()
+
+// // SPOT LIGHT CONTROLS
+// const paramsSpot = lightParamsSpot.position
+// spotLight.position.set(
+//   paramsSpot.x,
+//   paramsSpot.y,
+//   paramsSpot.z
+// );
+// const spotLightFolder = gui.addFolder("SPOT LIGHT");
+// spotLightFolder.add(spotLight, "intensity").min(0.1).max(10).step(0.01);
+// spotLightFolder.add(spotLight, "visible")
+
+// spotLightFolder.add(lightParamsSpot.position, "x").onChange(() => {
+//   spotLight.position.set(
+//     paramsSpot.x,
+//     paramsSpot.y,
+//     paramsSpot.z
+//   );
+// });
+// spotLightFolder.add(lightParamsSpot.position, "y").onChange(() => {
+//   spotLight.position.set(
+//     paramsSpot.x,
+//     paramsSpot.y,
+//     paramsSpot.z
+//   );
+// });
+// spotLightFolder.add(lightParamsSpot.position, "z").onChange(() => {
+//   spotLight.position.set(
+//     paramsSpot.x,
+//     paramsSpot.y,
+//     paramsSpot.z
+//   );
+// });
+// spotLightFolder.open()
+// // RECT LIGHT CONTROLS
+// const paramsRect = lightParamsRect.position
+// rectLight.position.set(
+//   paramsRect.x,
+//   paramsRect.y,
+//   paramsRect.z
+// );
+// const rectLightFolder = gui.addFolder("RECTANGULAR LIGHT");
+// rectLightFolder.add(rectLight, "intensity").min(0.1).max(10).step(0.01);
+// rectLightFolder.add(rectLight, "visible")
+
+// rectLightFolder.add(paramsRect, "x").onChange(() => {
+//   rectLight.position.set(
+//     paramsRect.x,
+//     paramsRect.y,
+//     paramsRect.z
+//   );
+// });
+// rectLightFolder.add(paramsRect, "y").onChange(() => {
+//   rectLight.position.set(
+//     paramsRect.x,
+//     paramsRect.y,
+//     paramsRect.z
+//   );
+// });
+// rectLightFolder.add(paramsRect, "z").onChange(() => {
+//   rectLight.position.set(
+//     paramsRect.x,
+//     paramsRect.y,
+//     paramsRect.z
+//   );
+// });
+// rectLightFolder.open()
+
+
+
+/**
+ * GUI CONTROLS
+ */
+
+// const params = {
+//         color: "#ffffff",
+//       };
+//       gui.addFolder("Plane roughness");
+//       gui.add(material, "roughness").min(0.01).max(1).step(0.01);
+//       gui.add(material, "metalness").min(0.01).max(1).step(0.01);
+//       gui.addColor(params, "color").onChange(() => {
+//         material.color = new THREE.Color(params.color);
+//       });
