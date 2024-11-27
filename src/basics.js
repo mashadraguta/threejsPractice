@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color('black');
+scene.background = new THREE.Color("black");
 //0xff6F21 ->orange
 // const pointLight = new THREE.PointLight(0xffffff, 1, 100);
 // const posX = -10;
@@ -51,7 +51,7 @@ const far = 2000;
 const aspectRatio = sizes.width / sizes.height;
 const camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, near, far);
 
-camera.position.set(5, 15, 5);
+camera.position.set(-9, 5, 10);
 
 export { camera };
 
