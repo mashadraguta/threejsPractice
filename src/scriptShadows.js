@@ -16,7 +16,7 @@ const lightParamsPoint = {
   position: { x: 4, y: 2, z: 3 },
 };
 
-// TURN ON shadows in the renderer
+
 
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
