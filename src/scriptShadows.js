@@ -21,9 +21,7 @@ const lightParamsPoint = {
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-// const fieldOfView = 95;
-// const near = 0.4;
-// const far = 2000;
+
 
 /**
  * LIGHTS
