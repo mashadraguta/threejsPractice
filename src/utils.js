@@ -34,5 +34,14 @@ const getGUIforLights = (params, folderName, object, helper) => {
     .onChange(() => {
       object.position.set(paramsFn.x, paramsFn.y, paramsFn.z);
     });
+  if (object.isDirectionalLight) {
+    console.log(object)
+    // folderNameFn
+    //   .add(object, "angle")
+    //   .min(Math.PI * 0.1)
+    //   .max(Math.PI * 2)
+    //   .step(0.01);
+    // folderNameFn.add(object, "distance").min(0).max(10).step(0.01);
+  }
 };
 export { getGUIforLights };
