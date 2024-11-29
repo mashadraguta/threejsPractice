@@ -821,3 +821,9 @@
 //       gui.addColor(params, "color").onChange(() => {
 //         material.color = new THREE.Color(params.color);
 //       });
+
+
+// const directionalHelper = new THREE.DirectionalLightHelper(directionalLight);
+// // const directionalHelper = new THREE.DirectionalLightHelper(directionalLight);
+// directionalHelper.visible = false;
+// scene.add(directionalHelper);

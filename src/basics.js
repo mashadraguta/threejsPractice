@@ -50,6 +50,7 @@ const near = 0.4;
 const far = 2000;
 const aspectRatio = sizes.width / sizes.height;
 const camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, near, far);
+//const camera = new THREE.OrthographicCamera();
 
 camera.position.set(-9, 5, 10);
 
