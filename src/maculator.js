@@ -827,3 +827,29 @@
 // // const directionalHelper = new THREE.DirectionalLightHelper(directionalLight);
 // directionalHelper.visible = false;
 // scene.add(directionalHelper);
+
+// optional
+// renderer.shadowMap.type = THREE.PCFShadowMap;
+// renderer.shadowMap.type = THREE.BasicShadowMap;
+// renderer.shadowMap.type = THREE.VSMShadowMap;
+// renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+
+// folderNameFn
+//   .add(params, "near")
+//   .min(0.1)
+//   .max(100)
+//   .step(0.01)
+//   .onChange(() => {
+//     object.shadow.camera.near = params.near;
+//     object.shadow.camera.updateProjectionMatrix();
+//   });
+// folderNameFn
+//   .add(params, "far")
+//   .min(0.1)
+//   .max(2000)
+//   .step(0.01)
+//   .onChange(() => {
+//     object.shadow.camera.far = params.far;
+//     object.shadow.camera.updateProjectionMatrix();
+//   });

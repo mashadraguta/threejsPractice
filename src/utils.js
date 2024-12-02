@@ -1,26 +1,26 @@
-import { GUI } from "dat.gui";
 
 const getGUIforLights = (
+
   params,
   folderName,
   object,
+  helperLight,
   helperShadow,
-  helperLight
+  guiFn
 ) => {
-  const gui = new GUI();
 
   const paramsFn = params.position;
-
   object.position.set(paramsFn.x, paramsFn.y, paramsFn.z);
-  const folderNameFn = gui.addFolder(folderName);
+  const folderNameFn = guiFn.addFolder(folderName);
   folderNameFn.add(object, "intensity").min(0.01).max(2).step(0.01);
-  folderNameFn.add(object, "visible");
+  folderNameFn.add(object, "visible").name("on/off light");
   if (helperLight) {
-    folderNameFn.add(helperLight, "visible").name(`HELPER LIGHT`);
+    folderNameFn.add(helperLight, "visible").name(`helper light`);
   }
   if (helperShadow) {
-    folderNameFn.add(helperShadow, "visible").name(`SHADOW HELPER`);
+    folderNameFn.add(helperShadow, "visible").name(`helper shadow`);
   }
+
 
   folderNameFn
     .add(paramsFn, "x")
@@ -132,24 +132,9 @@ const getGUIforLights = (
         object.shadow.radius = params.radius;
         object.shadow.camera.updateProjectionMatrix();
       });
-    // folderNameFn
-    //   .add(params, "near")
-    //   .min(0.1)
-    //   .max(100)
-    //   .step(0.01)
-    //   .onChange(() => {
-    //     object.shadow.camera.near = params.near;
-    //     object.shadow.camera.updateProjectionMatrix();
-    //   });
-    // folderNameFn
-    //   .add(params, "far")
-    //   .min(0.1)
-    //   .max(2000)
-    //   .step(0.01)
-    //   .onChange(() => {
-    //     object.shadow.camera.far = params.far;
-    //     object.shadow.camera.updateProjectionMatrix();
-    //   });
+
   }
 };
+
+
 export { getGUIforLights };
