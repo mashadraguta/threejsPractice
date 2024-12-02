@@ -1,6 +1,12 @@
 import { GUI } from "dat.gui";
 
-const getGUIforLights = (params, folderName, object, helperShadow) => {
+const getGUIforLights = (
+  params,
+  folderName,
+  object,
+  helperShadow,
+  helperLight
+) => {
   const gui = new GUI();
 
   const paramsFn = params.position;
@@ -9,9 +15,11 @@ const getGUIforLights = (params, folderName, object, helperShadow) => {
   const folderNameFn = gui.addFolder(folderName);
   folderNameFn.add(object, "intensity").min(0.01).max(2).step(0.01);
   folderNameFn.add(object, "visible");
-
+  if (helperLight) {
+    folderNameFn.add(helperLight, "visible").name(`HELPER LIGHT`);
+  }
   if (helperShadow) {
-    folderNameFn.add(helperShadow, "visible").name(`helper shadow`);
+    folderNameFn.add(helperShadow, "visible").name(`SHADOW HELPER`);
   }
 
   folderNameFn
