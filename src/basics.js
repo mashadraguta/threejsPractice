@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color("black");
+scene.background = new THREE.Color("#8cacca");
 //0xff6F21 ->orange
 // const pointLight = new THREE.PointLight(0xffffff, 1, 100);
 // const posX = -10;
@@ -28,7 +28,7 @@ geometry.setAttribute(
   new THREE.Float32BufferAttribute(vertices, 3)
 );
 const material = new THREE.PointsMaterial({
-  color: 0x888888,
+  color: "black",
 });
 const points = new THREE.Points(geometry, material);
 //scene.add(points);
