@@ -2,267 +2,348 @@ import * as THREE from "three";
 import { GUI } from "dat.gui";
 import { scene } from "./basics";
 
-export { axesHelper };
 
-const referencePointWireframe = new THREE.SphereGeometry(0.5);
 
-const referenceMaterial = new THREE.MeshBasicMaterial({ color: "black" });
-const referencePoint = new THREE.Mesh(
-  referencePointWireframe,
-  referenceMaterial
-);
-referencePoint.position.x = 0;
-referencePoint.position.y = 0;
-referencePoint.position.z = 0;
+// const referencePointWireframe = new THREE.SphereGeometry(0.5);
 
-export { referencePointWireframe };
+// const referenceMaterial = new THREE.MeshBasicMaterial({ color: "black" });
+// const referencePoint = new THREE.Mesh(
+//   referencePointWireframe,
+//   referenceMaterial
+// );
+// referencePoint.position.x = 0;
+// referencePoint.position.y = 0;
+// referencePoint.position.z = 0;
 
-const pyramidGeom = new THREE.ConeGeometry(3, 16, 16);
-const pyramidMatR = new THREE.MeshBasicMaterial({
-  wireframe: true,
-});
-const pyramidMatG = new THREE.MeshBasicMaterial({
-  wireframe: true,
-});
-const pyramidMatB = new THREE.MeshBasicMaterial({
-  wireframe: true,
-});
-const pyramidMatT = new THREE.MeshBasicMaterial({
-  wireframe: true,
-});
-const pyramidR = new THREE.Mesh(pyramidGeom, pyramidMatR);
-const pyramidG = new THREE.Mesh(pyramidGeom, pyramidMatG);
-const pyramidB = new THREE.Mesh(pyramidGeom, pyramidMatB);
-const pyramidT = new THREE.Mesh(pyramidGeom, pyramidMatT);
+// export { referencePointWireframe };
 
-pyramidR.position.set(2, 2, 2);
-pyramidG.position.set(2, 16, 2);
-pyramidB.position.set(2, 8, -6);
-pyramidT.position.set(2, 8, 8);
+// const pyramidGeom = new THREE.ConeGeometry(3, 16, 16);
+// const pyramidMatR = new THREE.MeshBasicMaterial({
+//   wireframe: true,
+// });
+// const pyramidMatG = new THREE.MeshBasicMaterial({
+//   wireframe: true,
+// });
+// const pyramidMatB = new THREE.MeshBasicMaterial({
+//   wireframe: true,
+// });
+// const pyramidMatT = new THREE.MeshBasicMaterial({
+//   wireframe: true,
+// });
+// const pyramidR = new THREE.Mesh(pyramidGeom, pyramidMatR);
+// const pyramidG = new THREE.Mesh(pyramidGeom, pyramidMatG);
+// const pyramidB = new THREE.Mesh(pyramidGeom, pyramidMatB);
+// const pyramidT = new THREE.Mesh(pyramidGeom, pyramidMatT);
 
-pyramidG.rotation.x = Math.PI;
-pyramidB.rotation.x = Math.PI / 2.2;
-pyramidT.rotation.x = -Math.PI / 2.2;
+// pyramidR.position.set(2, 2, 2);
+// pyramidG.position.set(2, 16, 2);
+// pyramidB.position.set(2, 8, -6);
+// pyramidT.position.set(2, 8, 8);
 
-const RGBT = new THREE.Group();
-RGBT.add(pyramidR);
-RGBT.add(pyramidG);
-RGBT.add(pyramidB);
-RGBT.add(pyramidT);
+// pyramidG.rotation.x = Math.PI;
+// pyramidB.rotation.x = Math.PI / 2.2;
+// pyramidT.rotation.x = -Math.PI / 2.2;
 
-RGBT.position.set(6, 6, 6);
-RGBT.rotation.y = Math.PI / 2;
-RGBT.visible = false;
+// const RGBT = new THREE.Group();
+// RGBT.add(pyramidR);
+// RGBT.add(pyramidG);
+// RGBT.add(pyramidB);
+// RGBT.add(pyramidT);
 
-export { RGBT };
+// RGBT.position.set(6, 6, 6);
+// RGBT.rotation.y = Math.PI / 2;
+// RGBT.visible = false;
 
-const manager = new THREE.LoadingManager();
+// export { RGBT };
 
-manager.onError = function (url) {
-  console.log("There was an error loading " + url);
-};
+// const manager = new THREE.LoadingManager();
 
-const loader = new THREE.TextureLoader(manager);
-loader.setPath("textures/");
-const TambientOcclusion = loader.load("SGambientOcclusion.png");
-const Tbasecolor = loader.load("SGbasecolor.png");
-const Theight = loader.load("SGheight.png");
-const Tnormal = loader.load("SGnormal.png");
-const Topacity = loader.load("SGopacity.png");
-const Tmetallic = loader.load("SGmetallic.png");
-const Troughness = loader.load("SGroughness.png");
+// manager.onError = function (url) {
+//   console.log("There was an error loading " + url);
+// };
 
-loader.setPath("textures/matcaps/");
-const matCapTexture = loader.load("3.png");
-loader.setPath("textures/gradients/");
-const gradientTexture = loader.load("2.jpg");
+// const loader = new THREE.TextureLoader(manager);
+// loader.setPath("textures/testTextures/");
+// const TambientOcclusion = loader.load("SGambientOcclusion.png");
+// const Tbasecolor = loader.load("SGbasecolor.png");
+// const Theight = loader.load("SGheight.png");
+// const Tnormal = loader.load("SGnormal.png");
+// const Topacity = loader.load("SGopacity.png");
+// const Tmetallic = loader.load("SGmetallic.png");
+// const Troughness = loader.load("SGroughness.png");
 
-gradientTexture.minFilter = THREE.NearestFilter;
-gradientTexture.magFilter = THREE.NearestFilter;
-gradientTexture.generateMipmaps = false;
+// loader.setPath("textures/matcaps/");
+// const matCapTexture = loader.load("3.png");
+// loader.setPath("textures/gradients/");
+// const gradientTexture = loader.load("2.jpg");
 
-const materialStandard = new THREE.MeshStandardMaterial();
+// gradientTexture.minFilter = THREE.NearestFilter;
+// gradientTexture.magFilter = THREE.NearestFilter;
+// gradientTexture.generateMipmaps = false;
 
-const gui = new GUI();
-let MSphere;
-let MSphereGeom;
-const params = {
-  baseColor: "#ffffff",
-  emissiveColor: "#000000",
-  geometry: {
-    radius: 1,
-    widthSegments: 64,
-    heightSegments: 32,
-    phiStart: 0,
-    phiLength: Math.PI * 2,
-    thetaStart: 0,
-    thetaLength: Math.PI,
-  },
-  createGeom: () => {
-    if (MSphere) {
-      scene.remove(MSphere);
-    }
-    MSphereGeom = new THREE.SphereGeometry(
-      params.geometry.radius,
-      params.geometry.widthSegments,
-      params.geometry.heightSegments,
-      params.geometry.phiStart,
-      params.geometry.phiLength,
-      params.geometry.thetaStart,
-      params.geometry.thetaLength
-    );
+// const materialStandard = new THREE.MeshStandardMaterial();
 
-    MSphere = new THREE.Mesh(MSphereGeom, materialStandard);
-    MSphere.position.set(-10, 0, 0);
-    scene.add(MSphere);
-  },
-};
+// const gui = new GUI();
+// let MSphere;
+// let MSphereGeom;
+// const params = {
+//   baseColor: "#ffffff",
+//   emissiveColor: "#000000",
+//   geometry: {
+//     radius: 1,
+//     widthSegments: 64,
+//     heightSegments: 32,
+//     phiStart: 0,
+//     phiLength: Math.PI * 2,
+//     thetaStart: 0,
+//     thetaLength: Math.PI,
+//   },
+//   createGeom: () => {
+//     if (MSphere) {
+//       scene.remove(MSphere);
+//     }
+//     MSphereGeom = new THREE.SphereGeometry(
+//       params.geometry.radius,
+//       params.geometry.widthSegments,
+//       params.geometry.heightSegments,
+//       params.geometry.phiStart,
+//       params.geometry.phiLength,
+//       params.geometry.thetaStart,
+//       params.geometry.thetaLength
+//     );
 
-const meshStandardMaterial = gui.addFolder("Mesh Standard Material");
-//meshStandardMaterial.open();
-meshStandardMaterial.addColor(params, "baseColor").onChange(() => {
-  materialStandard.color = new THREE.Color(params.baseColor);
-});
+//     MSphere = new THREE.Mesh(MSphereGeom, materialStandard);
+//     MSphere.position.set(-10, 0, 0);
+//     scene.add(MSphere);
+//   },
+// };
 
-meshStandardMaterial
-  .add(materialStandard, "metalness")
-  .min(0)
-  .max(1)
-  .step(0.001);
-meshStandardMaterial
-  .add(materialStandard, "roughness")
-  .min(0)
-  .max(1)
-  .step(0.001);
-meshStandardMaterial.add(materialStandard, "wireframe");
-meshStandardMaterial.addColor(params, "emissiveColor").onChange(() => {
-  materialStandard.emissive = new THREE.Color(params.emissiveColor);
-});
-materialStandard.map = Tbasecolor;
-materialStandard.alphaMap = Topacity;
-materialStandard.transparent = true;
+// const meshStandardMaterial = gui.addFolder("Mesh Standard Material");
+// //meshStandardMaterial.open();
+// meshStandardMaterial.addColor(params, "baseColor").onChange(() => {
+//   materialStandard.color = new THREE.Color(params.baseColor);
+// });
 
-materialStandard.aoMap = TambientOcclusion;
-materialStandard.displacementMap = Theight;
-materialStandard.metalnessMap = Tmetallic;
-materialStandard.roughnessMap = Troughness;
-materialStandard.normalMap = Tnormal;
-//materialStandard.normalScale.set(5, 5, 5);
-materialStandard.wrapS = THREE.RepeatWrapping;
-materialStandard.wrapT = THREE.RepeatWrapping;
-materialStandard.needsUpdate = true;
-meshStandardMaterial
-  .add(materialStandard, "displacementScale")
-  .min(0)
-  .max(10)
-  .step(0.1);
-console.log(`Theight====>`, Theight);
+// meshStandardMaterial
+//   .add(materialStandard, "metalness")
+//   .min(0)
+//   .max(1)
+//   .step(0.001);
+// meshStandardMaterial
+//   .add(materialStandard, "roughness")
+//   .min(0)
+//   .max(1)
+//   .step(0.001);
+// meshStandardMaterial.add(materialStandard, "wireframe");
+// meshStandardMaterial.addColor(params, "emissiveColor").onChange(() => {
+//   materialStandard.emissive = new THREE.Color(params.emissiveColor);
+// });
+// materialStandard.map = Tbasecolor;
+// materialStandard.alphaMap = Topacity;
+// materialStandard.transparent = true;
 
-meshStandardMaterial
-  .add(materialStandard, "aoMapIntensity")
-  .min(0)
-  .max(10)
-  .step(0.001);
+// materialStandard.aoMap = TambientOcclusion;
+// materialStandard.displacementMap = Theight;
+// materialStandard.metalnessMap = Tmetallic;
+// materialStandard.roughnessMap = Troughness;
+// materialStandard.normalMap = Tnormal;
+// //materialStandard.normalScale.set(5, 5, 5);
+// materialStandard.wrapS = THREE.RepeatWrapping;
+// materialStandard.wrapT = THREE.RepeatWrapping;
+// materialStandard.needsUpdate = true;
+// meshStandardMaterial
+//   .add(materialStandard, "displacementScale")
+//   .min(0)
+//   .max(10)
+//   .step(0.1);
+// console.log(`Theight====>`, Theight);
 
-// SPHERE
+// meshStandardMaterial
+//   .add(materialStandard, "aoMapIntensity")
+//   .min(0)
+//   .max(10)
+//   .step(0.001);
 
-const sphereFolder = gui.addFolder("SPHERE");
-sphereFolder
-  .add(params.geometry, "radius")
-  .min(1)
-  .max(30)
-  .step(0.1)
-  .onChange(function () {
-    params.createGeom();
-  });
-sphereFolder
-  .add(params.geometry, "widthSegments")
-  .min(3)
-  .max(64)
-  .step(0.1)
-  .onChange(function () {
-    params.createGeom();
-  });
-sphereFolder
-  .add(params.geometry, "heightSegments")
-  .min(2)
-  .max(32)
-  .step(1)
-  .onChange(function () {
-    params.createGeom();
-  });
-sphereFolder
-  .add(params.geometry, "phiStart")
-  .min(0)
-  .max(6)
-  .step(0.1)
-  .onChange(function () {
-    params.createGeom();
-  });
-sphereFolder
-  .add(params.geometry, "phiLength")
-  .min(0)
-  .max(6)
-  .step(0.1)
-  .onChange(function () {
-    params.createGeom();
-  });
-sphereFolder
-  .add(params.geometry, "thetaStart")
-  .min(0)
-  .max(6)
-  .step(0.1)
-  .onChange(function () {
-    params.createGeom();
-  });
-sphereFolder
-  .add(params.geometry, "thetaLength")
-  .min(0)
-  .max(6)
-  .step(0.1)
-  .onChange(function () {
-    params.createGeom();
-  });
+// // SPHERE
 
-MSphereGeom = new THREE.SphereGeometry(
-  params.geometry.radius,
-  params.geometry.widthSegments,
-  params.geometry.heightSegments,
-  params.geometry.phiStart,
-  params.geometry.phiLength,
-  params.geometry.thetaStart,
-  params.geometry.thetaLength
-);
+// const sphereFolder = gui.addFolder("SPHERE");
+// sphereFolder
+//   .add(params.geometry, "radius")
+//   .min(1)
+//   .max(30)
+//   .step(0.1)
+//   .onChange(function () {
+//     params.createGeom();
+//   });
+// sphereFolder
+//   .add(params.geometry, "widthSegments")
+//   .min(3)
+//   .max(64)
+//   .step(0.1)
+//   .onChange(function () {
+//     params.createGeom();
+//   });
+// sphereFolder
+//   .add(params.geometry, "heightSegments")
+//   .min(2)
+//   .max(32)
+//   .step(1)
+//   .onChange(function () {
+//     params.createGeom();
+//   });
+// sphereFolder
+//   .add(params.geometry, "phiStart")
+//   .min(0)
+//   .max(6)
+//   .step(0.1)
+//   .onChange(function () {
+//     params.createGeom();
+//   });
+// sphereFolder
+//   .add(params.geometry, "phiLength")
+//   .min(0)
+//   .max(6)
+//   .step(0.1)
+//   .onChange(function () {
+//     params.createGeom();
+//   });
+// sphereFolder
+//   .add(params.geometry, "thetaStart")
+//   .min(0)
+//   .max(6)
+//   .step(0.1)
+//   .onChange(function () {
+//     params.createGeom();
+//   });
+// sphereFolder
+//   .add(params.geometry, "thetaLength")
+//   .min(0)
+//   .max(6)
+//   .step(0.1)
+//   .onChange(function () {
+//     params.createGeom();
+//   });
 
-MSphere = new THREE.Mesh(MSphereGeom, materialStandard);
+// MSphereGeom = new THREE.SphereGeometry(
+//   params.geometry.radius,
+//   params.geometry.widthSegments,
+//   params.geometry.heightSegments,
+//   params.geometry.phiStart,
+//   params.geometry.phiLength,
+//   params.geometry.thetaStart,
+//   params.geometry.thetaLength
+// );
 
-MSphere.geometry.setAttribute(
-  "uv2",
-  new THREE.BufferAttribute(MSphere.geometry.attributes.uv.array, 2)
-);
+// MSphere = new THREE.Mesh(MSphereGeom, materialStandard);
 
-MSphere.position.set(-10, 0, 0);
-export { MSphere };
+// MSphere.geometry.setAttribute(
+//   "uv2",
+//   new THREE.BufferAttribute(MSphere.geometry.attributes.uv.array, 2)
+// );
 
-const MPlaneGeom = new THREE.PlaneGeometry(5, 5, 30, 30);
+// MSphere.position.set(-10, 0, 0);
+// export { MSphere };
 
-const MPlane = new THREE.Mesh(MPlaneGeom, materialStandard);
+// const MPlaneGeom = new THREE.PlaneGeometry(5, 5, 30, 30);
 
-MPlane.geometry.setAttribute(
-  "uv2",
-  new THREE.BufferAttribute(MPlane.geometry.attributes.uv.array, 2)
-);
+// const MPlane = new THREE.Mesh(MPlaneGeom, materialStandard);
 
-MPlane.position.set(0, 0, 0);
-export { MPlane };
+// MPlane.geometry.setAttribute(
+//   "uv2",
+//   new THREE.BufferAttribute(MPlane.geometry.attributes.uv.array, 2)
+// );
 
-const MTorusGeom = new THREE.TorusGeometry(5, 2, 30, 100);
-const MTorus = new THREE.Mesh(MTorusGeom, materialStandard);
+// MPlane.position.set(0, 0, 0);
+// export { MPlane };
 
-MTorus.geometry.setAttribute(
-  "uv2",
-  new THREE.BufferAttribute(MTorus.geometry.attributes.uv.array, 2)
-);
+// const MTorusGeom = new THREE.TorusGeometry(5, 2, 30, 100);
+// const MTorus = new THREE.Mesh(MTorusGeom, materialStandard);
 
-MTorus.position.set(10, 0, 0);
-export { MTorus };
+// MTorus.geometry.setAttribute(
+//   "uv2",
+//   new THREE.BufferAttribute(MTorus.geometry.attributes.uv.array, 2)
+// );
+
+// MTorus.position.set(10, 0, 0);
+// export { MTorus };
+
+
+// CADRANS HELPER
+
+const num = 128
+const canvas = document.createElement("canvas");
+const canvas1 = document.createElement("canvas");
+const canvas2 = document.createElement("canvas");
+const canvas3 = document.createElement("canvas");
+const canvas4 = document.createElement("canvas");
+const canvasArr = [canvas, canvas1, canvas2, canvas3, canvas4]
+canvasArr.forEach((canvas) => {
+  canvas.width = num;
+  canvas.height = num;
+})
+
+const ctx = canvas.getContext("2d");
+const ctx1 = canvas1.getContext("2d");
+const ctx2 = canvas2.getContext("2d");
+const ctx3 = canvas3.getContext("2d");
+const ctx4 = canvas4.getContext("2d");
+const texture = new THREE.CanvasTexture(canvas);
+const texture1 = new THREE.CanvasTexture(canvas1);
+const texture2 = new THREE.CanvasTexture(canvas2);
+const texture3 = new THREE.CanvasTexture(canvas3);
+const texture4 = new THREE.CanvasTexture(canvas4);
+
+
+const ctxArr = [ctx, ctx1, ctx2, ctx3, ctx4]
+ctxArr.map((context) => context.fillStyle = 'orange')
+ctxArr.map((context) => context.fillRect(0, 0, num, num))
+ctxArr.map((context) => context.fillStyle = 'black')
+ctxArr.map((context) => context.font = "40px sans-serif")
+ctx.fillText(`DEMO`, 50, 50, 70)
+ctx1.fillText(`+X  -Z`, 10, 50, 100)
+ctx2.fillText(`-X  -Z`, 10, 50, 100)
+ctx3.fillText(`-X  +Z`, 10, 50, 100)
+ctx4.fillText(`+X  +Z`, 10, 50, 100)
+
+
+texture.needsUpdate = true;
+
+
+const DEMOBOX = new THREE.Mesh(
+  new THREE.BoxGeometry(5, 5, 5),
+  new THREE.MeshBasicMaterial({ map: texture })
+
+)
+const DEMOBOX1 = new THREE.Mesh(
+  new THREE.BoxGeometry(5, 5, 5),
+  new THREE.MeshBasicMaterial({ map: texture1 })
+)
+const DEMOBOX2 = new THREE.Mesh(
+  new THREE.BoxGeometry(5, 5, 5),
+  new THREE.MeshBasicMaterial({ map: texture2 })
+)
+const DEMOBOX3 = new THREE.Mesh(
+  new THREE.BoxGeometry(5, 5, 5),
+  new THREE.MeshBasicMaterial({ map: texture3 })
+)
+const DEMOBOX4 = new THREE.Mesh(
+  new THREE.BoxGeometry(5, 5, 5),
+  new THREE.MeshBasicMaterial({ map: texture4 })
+)
+
+
+
+const NUMBER = 15
+DEMOBOX.position.set(5, 5, 5)
+DEMOBOX1.position.set(NUMBER, 1, -NUMBER)
+DEMOBOX2.position.set(-NUMBER, 1, -NUMBER)
+DEMOBOX3.position.set(-NUMBER, 1, NUMBER)
+DEMOBOX4.position.set(NUMBER, 1, NUMBER)
+
+export {
+  DEMOBOX,
+  DEMOBOX1,
+  DEMOBOX2,
+  DEMOBOX3,
+  DEMOBOX4,
+}

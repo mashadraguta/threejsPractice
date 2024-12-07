@@ -821,3 +821,28 @@
 //       gui.addColor(params, "color").onChange(() => {
 //         material.color = new THREE.Color(params.color);
 //       });
+
+
+//CADRAN 1 => +X  -Z
+//CADRAN 2 => -X  -Z
+//CADRAN 3 => -X  +Z
+//CADRAN 4 => +X  +Z
+// MIN = 15
+// MAX = 50
+
+
+
+// const bigBoundingSphere = demoCircleBig.geometry.boundingSphere
+// const smallBoundingSphere = demoCircleSmall.geometry.boundingSphere
+// if (graveRandomBB.intersectsSphere(bigBoundingSphere)
+//   && !graveRandomBB.intersectsSphere(smallBoundingSphere)) {
+//   goodPos.push(graveRandom)
+// } else {
+//   badPos.push(graveRandom)
+// }
+
+
+//   const graveRandomBB = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
+//   graveRandomBB.setFromObject(graveRandom);
+
+// door.position.set(-5.1, -1, 0);
