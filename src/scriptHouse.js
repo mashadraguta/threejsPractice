@@ -1,15 +1,10 @@
 import * as THREE from "three";
 import { camera, scene, renderer } from "./basics";
-import {
 
-  DEMOBOX1,
-  DEMOBOX2,
-  DEMOBOX3,
-  DEMOBOX4,
-} from "./objects";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GUI } from "dat.gui";
 import { changeObjPos } from "./utils";
+
 
 const axesHelper = new THREE.AxesHelper(2000);
 
@@ -18,18 +13,21 @@ const gui = new GUI();
 
 renderer.shadowMap.enabled = true
 
+
+/* 
+  TEXTURES 
+*/
+
 const textureLoader = new THREE.TextureLoader()
 const textureGhost = textureLoader.load(
   "textures/testTextures/SGroughness.png"
 );
+
 textureLoader.setPath('textures/haunted-house/')
-const textureWall = textureLoader.load(
-  "bricks/color.jpg"
-);
+
 const textureGrave = textureLoader.load(
   "grave/1.jpg"
 );
-
 
 textureLoader.setPath('textures/haunted-house/door/')
 
@@ -70,24 +68,21 @@ const TGrassNormal = textureLoader.load('normal.jpg')
 const TGrassRoughness = textureLoader.load('roughness.jpg')
 
 
-TGrassAO.wrapS = THREE.RepeatWrapping
+
 TGrassColor.wrapS = THREE.RepeatWrapping
 TGrassNormal.wrapS = THREE.RepeatWrapping
-TGrassRoughness.wrapS = THREE.RepeatWrapping
 
-
-TGrassAO.wrapT = THREE.RepeatWrapping
 TGrassColor.wrapT = THREE.RepeatWrapping
 TGrassNormal.wrapT = THREE.RepeatWrapping
-TGrassRoughness.wrapT = THREE.RepeatWrapping
-
 
 
 const number = 10
 TGrassAO.repeat.set(number, number)
 TGrassColor.repeat.set(number, number)
-TGrassNormal.repeat.set(number, number)
-TGrassRoughness.repeat.set(number, number)
+
+/* 
+  GUI INIT PARAMS
+*/
 
 const initParams = {
   position: {
@@ -116,17 +111,43 @@ const initParamsFarol = {
   intensity: .8
 
 };
+
+
+/* 
+  LIGHTS
+*/
+
 const farolLight = new THREE.PointLight('#ff7d46', .5, 20);
-const moonLight = new THREE.DirectionalLight('#506886', .5);
+const moonLight = new THREE.PointLight('#506886', .5);
 const ambientLight = new THREE.AmbientLight('#506886', .2);
 
-const farolLightHelper = new THREE.PointLightHelper(farolLight)
-const moonLightHelper = new THREE.PointLightHelper(moonLight)
-scene.add(moonLightHelper)
-// scene.add(farolLightHelper)
+const farolLightHelper = new THREE.CameraHelper(farolLight.shadow.camera)
+const moonLightHelper = new THREE.CameraHelper(moonLight.shadow.camera)
 
-farolLight.castShadow = true
-moonLight.castShadow = true
+
+
+// farolLight.castShadow = true
+// moonLight.castShadow = true
+
+
+
+// farolLight.shadow.mapSize.width = 128
+// farolLight.shadow.mapSize.height = 128
+// farolLight.shadow.camera.near = 0.5; // default 0.5
+// farolLight.shadow.camera.far = 5; // default 500
+
+// moonLight.shadow.mapSize.width = 128
+// moonLight.shadow.mapSize.height = 128
+// moonLight.shadow.camera.near = 0.5; // default 0.5
+// moonLight.shadow.camera.far = 50; // default 500
+
+// scene.add(farolLightHelper)
+// scene.add(moonLightHelper)
+
+// console.log(farolLight);
+// console.log(moonLight);
+
+
 moonLight.position.set(
   initParamsMoon.position.x,
   initParamsMoon.position.y,
@@ -137,32 +158,42 @@ farolLight.position.set(
   initParamsFarol.position.y,
   initParamsFarol.position.z
 );
-scene.add(ambientLight, moonLight)
+
+
 changeObjPos(moonLight, initParamsMoon, gui, 'moon light')
 changeObjPos(farolLight, initParamsFarol, gui, 'farol light')
 
-// GHOST STORY
+// GHOSTS
 
-const ghost1Light = new THREE.PointLight('#9ca5e1', 2, 10)
-const ghost1LightHelper = new THREE.PointLightHelper(ghost1Light)
+const ghost1Light = new THREE.PointLight('white', 0.3, 20)
+const ghost2Light = new THREE.PointLight('white', 0.2, 20)
+const ghost3Light = new THREE.PointLight('white', 0.5, 10)
 
-const ghost2Light = new THREE.PointLight('green', 2, 15)
-const ghost2LightHelper = new THREE.PointLightHelper(ghost2Light)
+ghost1Light.shadow.mapSize.width = 128
+ghost1Light.shadow.mapSize.height = 128
 
 
-// ghost2Light.position.set(20, 10, 4)
+ghost2Light.shadow.mapSize.width = 128
+ghost2Light.shadow.mapSize.height = 128
+
+
+ghost3Light.shadow.mapSize.width = 128
+ghost3Light.shadow.mapSize.height = 128
+
+ghost1Light.castShadow = true
+ghost2Light.castShadow = true
+ghost3Light.castShadow = true
 
 
 const ghostShape1 = new THREE.Mesh(
-  // new THREE.CapsuleGeometry(1, 1, 4, 8),   ???
   new THREE.BoxGeometry(3, 3),
   new THREE.MeshStandardMaterial({
     map: textureGhost,
     transparent: true,
-    color: 'red',
     opacity: 0.3,
   })
 )
+
 const ghostShape2 = new THREE.Mesh(
   new THREE.SphereGeometry(1, 16, 32),
   new THREE.MeshStandardMaterial({
@@ -172,99 +203,107 @@ const ghostShape2 = new THREE.Mesh(
   })
 )
 
+const ghostShape3 = new THREE.Mesh(
+  new THREE.OctahedronGeometry(2.5, 2),
+  new THREE.MeshStandardMaterial({
+    map: textureGhost,
+    transparent: true,
+    opacity: 0.7,
+  })
+)
+
 const ghost1 = new THREE.Group()
 const ghost2 = new THREE.Group()
+const ghost3 = new THREE.Group()
+
 ghost1.add(ghost1Light, ghostShape1)
 ghost2.add(ghost2Light, ghostShape2)
+ghost3.add(ghost3Light, ghostShape3)
+
 ghost1.position.set(10, 10, 2)
 ghost2.position.set(-25, 3, 5)
+ghost3.position.set(-15, 7, 5)
 
+scene.add(ghost1, ghost2, ghost3)
 
-scene.add(ghost1, ghost2)
-
-
-
-//0x506886
-const fog = new THREE.Fog(0x262837, 0, 50);
-console.log(`FOG =======>`, fog);
-
-scene.fog = fog
-
-//scene.fog = new THREE.FogExp2(0x506886, 0.05);
-
-
+/* MATERIALS */
 
 const wallMat = new THREE.MeshStandardMaterial({
   map: TBrickColor,
   aoMap: TBrickAO,
   normalMap: TBrickNormal,
-  roughnessMap: TBrickRoughness,
   transparent: true,
 });
+
 const grassMat = new THREE.MeshStandardMaterial({
   map: TGrassColor,
   aoMap: TGrassAO,
   normalMap: TGrassNormal,
-  roughnessMap: TGrassRoughness,
   transparent: true,
 });
 
-
 const doorMat = new THREE.MeshStandardMaterial({
-  map: TDoorColor,
+  // map: TDoorColor,
   alphaMap: TDoorAlpha,
+  color: '#543200',
   aoMap: TDoorAmbientOcclusion,
   displacementMap: TDoorHeight,
   displacementScale: 0.1,
   normalMap: TDoorNormal,
-  metalnessMap: TDoorMetalness,
-  roughnessMap: TDoorRoughness,
+  opacity: 0.7,
   transparent: true
 });
+
 const roofMat = new THREE.MeshStandardMaterial({ color: '#148785' });
-const bushMat = new THREE.MeshStandardMaterial({ color: '#148731' });
+const bushMat = new THREE.MeshStandardMaterial({ color: '#ae9cff', transparent: true, opacity: 0.9 });
 
+/* OBJECTS */
 const hauntedHouse = new THREE.Group();
-const walls = new THREE.Mesh(new THREE.BoxGeometry(10, 5, 10, 100, 100), wallMat);
-const roof = new THREE.Mesh(new THREE.ConeGeometry(8, 2.5, 4), roofMat);
-const door = new THREE.Mesh(new THREE.PlaneGeometry(3.3, 3.3, 16, 16), doorMat);
-const bush = new THREE.Mesh(new THREE.SphereGeometry(.5, 16, 32), bushMat);
+const walls = new THREE.Mesh(new THREE.BoxGeometry(7, 8, 7, 100, 100), wallMat);
+const roof = new THREE.Mesh(new THREE.ConeGeometry(6, 5, 8), roofMat);
+//const door = new THREE.Mesh(new THREE.PlaneGeometry(3.3, 3.3, 16, 16), doorMat);
+const bush = new THREE.Mesh(new THREE.ConeGeometry(.5, 5, 4), bushMat);
 
-door.geometry.setAttribute(
-  "uv2",
-  new THREE.BufferAttribute(door.geometry.attributes.uv.array, 2)
-)
+
 walls.geometry.setAttribute(
   "uv2",
   new THREE.BufferAttribute(walls.geometry.attributes.uv.array, 2)
 )
 
 
+walls.position.set(0, -.5, 0)
 const bush1 = bush.clone()
 const bush2 = bush.clone()
 const bush3 = bush.clone()
 const bush4 = bush.clone()
 
 
-bush1.position.set(-5.5, -2, 4)
-bush2.position.set(-5.5, -2, -3)
-bush4.position.set(-5.5, -2, -4)
-bush3.position.set(-5.5, -2, 2.5)
+const bushes = new THREE.Group()
 
+bush1.position.set(-4.5, -2, -2)
+bush2.position.set(-4.5, -2, 2)
+bush4.position.set(-4.5, -2, -3)
+bush3.position.set(-4.5, -2, .5)
 bush2.scale.set(1.75, 1.75, 1.75)
-bush4.scale.set(2.5, 2.5, 2.5)
-bush1.scale.set(2.5, 2.5, 2.5)
+bush4.scale.set(1.5, 1.5, 1.5)
+bush1.scale.set(1.5, 1.5, 1.5)
+
+bushes.add(bush1, bush2, bush3, bush4)
+
+const bushes2 = bushes.clone()
+bushes2.castShadow = true
+bushes2.rotateY(Math.PI * .5)
+bushes2.scale.set(5, 5, 5)
+bushes2.position.set(0, 0, 2)
+roof.position.set(0, 5.1, 0);
+
+const house = new THREE.Group()
+house.rotateX(Math.PI * .05);
+house.add(walls, roof)
 
 
 
-roof.rotateY(Math.PI * .25);
-roof.position.set(0, 3.5, 0);
-
-door.rotateY(-Math.PI * .5);
-door.position.set(-5.1, -1, 0);
-
-
-// GRAVES
+/* GRAVES */
 
 const graves = new THREE.Group()
 
@@ -283,19 +322,20 @@ demoCircleBig.rotateX(-Math.PI * 0.5)
 demoCircleSmall.rotateX(-Math.PI * 0.5)
 demoCircleBig.visible = false
 demoCircleSmall.visible = false
-
-
 demoCircleBig.geometry.computeBoundingSphere()
 demoCircleSmall.geometry.computeBoundingSphere()
 
-scene.add(demoCircleBig)
-scene.add(demoCircleSmall)
+
 const graveGeom = new THREE.BoxGeometry(1, 3, 1.3)
 const graveMat = new THREE.MeshStandardMaterial({ map: textureGrave })
+const bigBoundingSphere = demoCircleBig.geometry.boundingSphere
+const smallBoundingSphere = demoCircleSmall.geometry.boundingSphere
+
 
 for (let i = 0; i <= 100; i++) {
   const goodPos = []
   const badPos = []
+
   const graveRandom = new THREE.Mesh(
     graveGeom,
     graveMat
@@ -307,8 +347,6 @@ for (let i = 0; i <= 100; i++) {
     THREE.MathUtils.randFloatSpread(100)
   )
 
-  const bigBoundingSphere = demoCircleBig.geometry.boundingSphere
-  const smallBoundingSphere = demoCircleSmall.geometry.boundingSphere
   if (bigBoundingSphere.containsPoint(graveRandom.position)
     && !smallBoundingSphere.containsPoint(graveRandom.position)) {
     goodPos.push(graveRandom)
@@ -322,12 +360,14 @@ for (let i = 0; i <= 100; i++) {
 
 }
 
-
 hauntedHouse.add(
-  walls, roof, door,
-  bush1, bush2, bush3, bush4,
+  house,
+  bushes,
+  // bushes2,
   graves,
-  farolLight
+  farolLight,
+  moonLight,
+  ambientLight
 );
 
 hauntedHouse.position.set(
@@ -337,8 +377,10 @@ hauntedHouse.position.set(
 );
 hauntedHouse.rotateX(initParams.rotateX)
 hauntedHouse.rotateY(initParams.rotateY)
-changeObjPos(hauntedHouse, initParams, gui, "group position");
-changeObjPos(roof, initParams, gui, "roof position");
+
+// changeObjPos(hauntedHouse, initParams, gui, "group position");
+// changeObjPos(roof, initParams, gui, "roof position");
+
 const plane = new THREE.Mesh(
   new THREE.PlaneGeometry(100, 100, 50, 50),
   grassMat
@@ -349,34 +391,47 @@ plane.geometry.setAttribute(
 )
 
 plane.geometry.rotateX(-Math.PI * .5);
+
 plane.receiveShadow = true
-roof.castShadow = true
 walls.castShadow = true
-hauntedHouse.castShadow = true
-scene.add(axesHelper);
+
 scene.add(plane);
-scene.add(moonLight);
 scene.add(hauntedHouse);
 
 
+const fog = new THREE.Fog(0x262837, 0, 50);
+scene.fog = fog
 
-window.addEventListener("resize", (e) => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-});
+walls.geometry.computeBoundingSphere()
+const BShouse = walls.geometry.boundingSphere
 
-const clock = new THREE.Clock();
+console.log(BShouse);
+
+
+
+
+const clock = new THREE.Clock()
 function render(t) {
-  const elapsedTime = clock.getElapsedTime();
-  ghost1.position.x = Math.sin(elapsedTime) * 10
-  ghost1.position.z = Math.cos(elapsedTime) * 10
-  ghost2.position.x -= Math.sin(elapsedTime) * .3
-  // ghost2.position.x = Math.sin(elapsedTime) * 5
-  // ghost2.position.z = -Math.cos(elapsedTime) * 5
-  farolLightHelper.update()
-  moonLightHelper.update()
+  const elapsedTime = clock.getElapsedTime()
+
+  // moveGhost(ghost2, elapsedTime)
+
+  ghost2.position.x = Math.sin(elapsedTime * .5) * 34
+  ghost2.position.y = Math.tan(Math.cos(elapsedTime * .5)) * 3 + 5
+  ghost2.position.z = Math.cos(elapsedTime * .5) * 34
+
+
+  ghost1.position.x = Math.sin(elapsedTime * .5) * 25 + (10 + Math.sin(elapsedTime * .7) * 24)
+  ghost1.position.y = Math.tan(Math.cos(elapsedTime * .5)) * 3 + 5
+  ghost1.position.z = -Math.cos(elapsedTime * .5) * 25
+
+  ghost3.position.x = Math.sin(elapsedTime * .5) * 25
+  ghost3.position.y = Math.tan(Math.cos(elapsedTime * .5)) * 3
+  ghost3.position.z = Math.sin(elapsedTime * .5) * 25 + (2 + Math.sin(elapsedTime * .7) * 24)
+
+  camera.position.x = Math.sin(elapsedTime * .5) * 25
+  camera.position.y = 5
+  camera.position.z = Math.cos(elapsedTime * .5) * 15 + 2 + Math.sin(elapsedTime * .5) * 15
   controls.update();
   window.requestAnimationFrame(render);
   renderer.render(scene, camera);

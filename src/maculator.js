@@ -846,3 +846,51 @@
 //   graveRandomBB.setFromObject(graveRandom);
 
 // door.position.set(-5.1, -1, 0);
+
+
+// const getHelperBox = (valueX, valueZ) => {
+
+//         if (DEMOBOX) {
+//           scene.remove(DEMOBOX)
+//         }
+//         const num = 128
+//         const canvas = document.createElement("canvas");
+//         const ctx = canvas.getContext("2d");
+//         canvas.width = num;
+//         canvas.height = num;
+//         const texture = new THREE.CanvasTexture(canvas);
+//         ctx.fillStyle = 'orange'
+//         ctx.fillRect(0, 0, num, num)
+//         ctx.fillStyle = 'black'
+//         ctx.font = "50px bold sans-serif"
+//         ctx.fillText(`
+//           ${valueX},
+      
+//           ${valueZ}`,
+//           10, 50, 100)
+//         DEMOBOX = new THREE.Mesh(
+//           new THREE.BoxGeometry(50, 10, 10),
+//           new THREE.MeshBasicMaterial({ map: texture })
+      
+//         )
+//         DEMOBOX.position.set(valueX, 3, valueZ)
+//         scene.add(DEMOBOX)
+      
+//       }
+
+// const num = 200
+// const canvas = document.createElement("canvas");
+// const ctx = canvas.getContext("2d");
+// canvas.width = num;
+// canvas.height = num;
+// const texture = new THREE.CanvasTexture(canvas);
+
+// ctx.fillRect(0, 0, num, num)
+// ctx.fillStyle = 'white'
+// ctx.font = "22px garamond"
+// ctx.fillText(
+//   `REST IN PEACE`,
+//   30, 50, 150)
+// ctx.fillText(
+//   `DEAR FRIEND OF MINE`,
+//   20, 100, 150)

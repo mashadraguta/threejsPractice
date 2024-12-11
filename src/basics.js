@@ -55,6 +55,7 @@ const camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, near, far);
 //camera.position.set(-7, 1.5, -0.05);
 //camera.position.set(-8, 70, 0);
 camera.position.set(-25, 7, -2);
+//camera.position.set(0, 31, 1);
 
 export { camera };
 
