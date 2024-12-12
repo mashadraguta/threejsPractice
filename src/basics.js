@@ -46,12 +46,12 @@ export { scene };
 export { sizes };
 
 const fieldOfView = 95;
-const near = 0.4;
+const near = 0.1;
 const far = 2000;
 const aspectRatio = sizes.width / sizes.height;
 const camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, near, far);
 
-camera.position.set(-9, 5, 10);
+camera.position.set(3, 3, 3);
 
 export { camera };
 

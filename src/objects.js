@@ -1,7 +1,8 @@
 import * as THREE from "three";
 import { GUI } from "dat.gui";
 import { scene } from "./basics";
-
+const axesHelper = new THREE.AxesHelper(2000);
+axesHelper.setColors("red", "yellow", "blue");
 export { axesHelper };
 
 const referencePointWireframe = new THREE.SphereGeometry(0.5);

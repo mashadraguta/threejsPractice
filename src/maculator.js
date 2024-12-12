@@ -821,3 +821,23 @@
 //       gui.addColor(params, "color").onChange(() => {
 //         material.color = new THREE.Color(params.color);
 //       });
+
+
+// window.addEventListener("dblclick", (e) => {
+//         const fullscreenElement =
+//           document.fullscreenElement || document.webkitFullscreenElement;
+      
+//         if (!fullscreenElement) {
+//           if (canvas.requestFullscreen) {
+//             canvas.requestFullscreen();
+//           } else if (canvas.webkitRequestFullscreen) {
+//             canvas.webkitRequestFullscreen();
+//           }
+//         } else {
+//           if (document.exitFullscreen) {
+//             document.exitFullscreen();
+//           } else if (document.webkitExitFullscreen) {
+//             document.webkitExitFullscreen();
+//           }
+//         }
+//       });
