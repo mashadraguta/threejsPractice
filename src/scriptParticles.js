@@ -4,8 +4,6 @@ import { changeObjPos } from "./utils";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GUI } from "dat.gui";
 
-
-
 /* HELPERS */
 
 const axesHelper = new THREE.AxesHelper(2000);
@@ -32,7 +30,6 @@ const initParamsBMesh = {
   },
 };
 
-
 /* TEXTURES */
 
 const loader = new THREE.TextureLoader();
@@ -52,7 +49,6 @@ const mat9 = loader.load("9.png");
 const mat10 = loader.load("10.png");
 const mat11 = loader.load("11.png");
 const mat12 = loader.load("12.png");
-
 
 /* LIGHTS */
 
@@ -84,35 +80,26 @@ const boxGeo = new THREE.BoxGeometry(5, 5, 5);
 
 /* MATERIALS */
 
-const sphereM = new THREE.PointsMaterial({
-
-  alphaMap: mat3,
-  alphaTest: 0.001,
-  transparent: true,
-  size: 1,
-  sizeAttenuation: true,
-});
-
 // sphereM.depthTest = false
 // sphereM2.depthTest = false
-sphereM.depthWrite = false
+// sphereM.depthWrite = false;
 // sphereM2.depthWrite = false
-// THREE.NoBlending 
-// THREE.NormalBlending 
+// THREE.NoBlending
+// THREE.NormalBlending
 // THREE.AdditiveBlending
-// THREE.SubtractiveBlending 
-// THREE.MultiplyBlending 
+// THREE.SubtractiveBlending
+// THREE.MultiplyBlending
 // THREE.CustomBlending
 
 //scene.background = new THREE.Color("#f5deb3");
 // sphereM2.blending = THREE.AdditiveBlending
-const littleSphere = new THREE.Points(sphereG, sphereM);
-const littleTorus = new THREE.Points(torusG, sphereM);
-const littleBox = new THREE.Points(boxGeo, sphereM);
+// const littleSphere = new THREE.Points(sphereG, sphereM);
+// const littleTorus = new THREE.Points(torusG, sphereM);
+// const littleBox = new THREE.Points(boxGeo, sphereM);
 
-littleSphere.position.set(-10, 0, 0);
-littleTorus.position.set(0, 0, 0);
-littleBox.position.set(10, 0, 0);
+// littleSphere.position.set(-10, 0, 0);
+// littleTorus.position.set(0, 0, 0);
+// littleBox.position.set(10, 0, 0);
 
 // scene.add(littleSphere);
 // scene.add(littleTorus);
@@ -120,32 +107,34 @@ littleBox.position.set(10, 0, 0);
 
 /* BUFFER RANDOM GEOMETRY */
 
-const count = 10;
-const countColor = 3;
+const count = 100;
 const bufferArrPos = new Float32Array(3 * count);
-const bufferArrColor = new Float32Array(3);
-
+const bufferArrColor = new Float32Array(3 * count);
 const bufferGeom = new THREE.BufferGeometry();
 
-
 for (let i = 0; i < 3 * count; i++) {
-
-  bufferArrPos[i] = THREE.MathUtils.randFloatSpread(20)
-  bufferArrColor[i] = Math.round(200 + Math.random() * 10)
-
-
+  bufferArrPos[i] = THREE.MathUtils.randFloatSpread(20);
+  bufferArrColor[i] = THREE.MathUtils.randFloatSpread(10);
+  bufferGeom.setAttribute(
+    "position",
+    new THREE.BufferAttribute(bufferArrPos, 3)
+  );
+  bufferGeom.setAttribute(
+    "color",
+    new THREE.BufferAttribute(bufferArrColor, 3)
+  );
 }
 
-bufferGeom.setAttribute("position", new THREE.BufferAttribute(bufferArrPos, 3));
-const newColor = bufferGeom.setAttribute("color", new THREE.BufferAttribute(new THREE.Color(...bufferArrColor), 3));
-sphereM.color.set(newColor.attributes.color.array)
-console.log(`bufferGeom`, bufferGeom);
+const newMeshRandom = new THREE.Points(
+  bufferGeom,
+  new THREE.PointsMaterial({
+    alphaMap: mat4,
+    transparent: true,
+    vertexColors: true,
+  })
+);
 
-const newMeshRandom = new THREE.Points(bufferGeom, sphereM);
-
-
-scene.add(newMeshRandom,);
-
+scene.add(newMeshRandom);
 
 window.addEventListener("resize", (e) => {
   camera.aspect = window.innerWidth / window.innerHeight;
