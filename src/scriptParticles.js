@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { camera, scene, canvas, renderer } from "./basics";
 import { changeObjPos } from "./utils";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { VertexNormalsHelper } from 'three/examples/jsm/helpers/VertexNormalsHelper.js';
 import { GUI } from "dat.gui";
 
 /* HELPERS */
@@ -72,38 +73,9 @@ const covrig = new THREE.Mesh(
 );
 
 covrig.position.set(0, 2, 2);
-// scene.add(covrig);
+scene.add(covrig);
 
-const sphereG = new THREE.SphereGeometry(2.5, 32, 32);
-const torusG = new THREE.TorusGeometry();
-const boxGeo = new THREE.BoxGeometry(5, 5, 5);
 
-/* MATERIALS */
-
-// sphereM.depthTest = false
-// sphereM2.depthTest = false
-// sphereM.depthWrite = false;
-// sphereM2.depthWrite = false
-// THREE.NoBlending
-// THREE.NormalBlending
-// THREE.AdditiveBlending
-// THREE.SubtractiveBlending
-// THREE.MultiplyBlending
-// THREE.CustomBlending
-
-//scene.background = new THREE.Color("#f5deb3");
-// sphereM2.blending = THREE.AdditiveBlending
-// const littleSphere = new THREE.Points(sphereG, sphereM);
-// const littleTorus = new THREE.Points(torusG, sphereM);
-// const littleBox = new THREE.Points(boxGeo, sphereM);
-
-// littleSphere.position.set(-10, 0, 0);
-// littleTorus.position.set(0, 0, 0);
-// littleBox.position.set(10, 0, 0);
-
-// scene.add(littleSphere);
-// scene.add(littleTorus);
-// scene.add(littleBox);
 
 /* BUFFER RANDOM GEOMETRY */
 
@@ -113,8 +85,8 @@ const bufferArrColor = new Float32Array(3 * count);
 const bufferGeom = new THREE.BufferGeometry();
 
 for (let i = 0; i < 3 * count; i++) {
-  bufferArrPos[i] = THREE.MathUtils.randFloatSpread(20);
-  bufferArrColor[i] = THREE.MathUtils.randFloatSpread(10);
+  bufferArrPos[i] = THREE.MathUtils.randFloatSpread(10);
+  bufferArrColor[i] = Math.random()
   bufferGeom.setAttribute(
     "position",
     new THREE.BufferAttribute(bufferArrPos, 3)
@@ -131,8 +103,12 @@ const newMeshRandom = new THREE.Points(
     alphaMap: mat4,
     transparent: true,
     vertexColors: true,
+    depthWrite: false
   })
 );
+
+console.log(`NEWMESHRANDOM =====>`, newMeshRandom);
+console.log(`COVRIG =====>`, covrig);
 
 scene.add(newMeshRandom);
 
@@ -143,13 +119,37 @@ window.addEventListener("resize", (e) => {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
 
+
+
+const animateParticles = (elTime) => {
+  const newBuffGeomPos = bufferGeom.attributes.position.array.map((item) =>
+
+    // item = Math.sin(item) * 10
+    item += elTime * 0.002
+  )
+
+  bufferGeom.setAttribute(
+    "position",
+    new THREE.BufferAttribute(newBuffGeomPos, 3)
+  )
+}
+
 const clock = new THREE.Clock();
 function render(t) {
   const elapsedTime = clock.getElapsedTime();
+  // animateParticles(elapsedTime)
 
+  // bufferGeom.attributes.position.needsUpdate = true
+  // console.log(bufferGeom.attributes.position);
   controls.update();
   window.requestAnimationFrame(render);
   renderer.render(scene, camera);
 }
 
 render();
+
+
+// scene.add(new THREE.GridHelper(10, 10));
+// bufferGeom.computeVertexNormals()
+// const vertHelper1 = new VertexNormalsHelper(newMeshRandom, 0.5, 0x00ff00);
+// scene.add(vertHelper1);

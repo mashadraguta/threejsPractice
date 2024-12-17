@@ -841,3 +841,38 @@
 //           }
 //         }
 //       });
+
+
+
+// PARTICLES CHAPETER
+
+/* MATERIALS */
+
+// sphereM.depthTest = false
+// sphereM2.depthTest = false
+// sphereM.depthWrite = false;
+// sphereM2.depthWrite = false
+// THREE.NoBlending
+// THREE.NormalBlending
+// THREE.AdditiveBlending
+// THREE.SubtractiveBlending
+// THREE.MultiplyBlending
+// THREE.CustomBlending
+
+//scene.background = new THREE.Color("#f5deb3");
+// sphereM2.blending = THREE.AdditiveBlending
+// const littleSphere = new THREE.Points(sphereG, sphereM);
+// const littleTorus = new THREE.Points(torusG, sphereM);
+// const littleBox = new THREE.Points(boxGeo, sphereM);
+
+// littleSphere.position.set(-10, 0, 0);
+// littleTorus.position.set(0, 0, 0);
+// littleBox.position.set(10, 0, 0);
+
+// scene.add(littleSphere);
+// scene.add(littleTorus);
+// scene.add(littleBox);
+
+// const sphereG = new THREE.SphereGeometry(2.5, 32, 32);
+// const torusG = new THREE.TorusGeometry();
+// const boxGeo = new THREE.BoxGeometry(5, 5, 5);
