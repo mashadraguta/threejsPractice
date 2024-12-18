@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { camera, scene, canvas, renderer } from "./basics";
 import { changeObjPos } from "./utils";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { VertexNormalsHelper } from 'three/examples/jsm/helpers/VertexNormalsHelper.js';
+import { VertexNormalsHelper } from "three/examples/jsm/helpers/VertexNormalsHelper.js";
 import { GUI } from "dat.gui";
 
 /* HELPERS */
@@ -12,7 +12,9 @@ axesHelper.setColors("red", "yellow", "blue");
 
 scene.add(axesHelper);
 
-const gui = new GUI();
+const gui = new GUI({ name: "galaxy generator", width: 500 });
+console.log(gui);
+
 const controls = new OrbitControls(camera, renderer.domElement);
 
 const initParamsALight = {
@@ -59,7 +61,7 @@ ambientLight.position.set(
   initParamsALight.position.y,
   initParamsALight.position.z
 );
-changeObjPos(ambientLight, initParamsALight, gui, "point Light");
+//changeObjPos(ambientLight, initParamsALight, gui, "point Light");
 scene.add(ambientLight);
 
 /* OBJECTS */
@@ -73,46 +75,101 @@ const covrig = new THREE.Mesh(
 );
 
 covrig.position.set(0, 2, 2);
-scene.add(covrig);
 
+// GALAXY
 
+const GParams = {
+  count: 100,
+  size: 0.5,
+  color: true,
+  radius: 2,
+  branches: 3,
+};
 
-/* BUFFER RANDOM GEOMETRY */
+let stars;
+let starMat;
+let bufferGeomParts;
+// let partsPosArr;
+// let partsPosColorArr;
 
-const count = 100;
-const bufferArrPos = new Float32Array(3 * count);
-const bufferArrColor = new Float32Array(3 * count);
-const bufferGeom = new THREE.BufferGeometry();
+const generateGalaxy = (starNum, starSize, starColor) => {
+  console.log(`starMat====>`, starMat);
 
+  if (stars) {
+    bufferGeomParts.dispose();
+    starMat.dispose();
+    scene.remove(stars);
+  }
+  bufferGeomParts = new THREE.BufferGeometry();
+  let partsPosArr = new Float32Array(3 * starNum);
+  let partsPosColorArr = new Float32Array(3 * starNum);
 
-for (let i = 0; i < 3 * count; i++) {
-  bufferArrPos[i] = THREE.MathUtils.randFloatSpread(20);
-  bufferArrColor[i] = Math.random()
-  bufferGeom.setAttribute(
+  for (let i = 0; i < 3 * starNum; i++) {
+    // partsPosArr[i] = THREE.MathUtils.randFloatSpread(GParams.radius);
+    const i3 = i * 3;
+    partsPosArr[i3 + 0] =
+      THREE.MathUtils.randFloatSpread(GParams.radius * 10) / 3; //x
+    partsPosArr[i3 + 1] = 0; //y
+    partsPosArr[i3 + 2] = 3; //z
+    partsPosColorArr[i] = THREE.MathUtils.randFloatSpread(10);
+  }
+
+  bufferGeomParts.setAttribute(
     "position",
-    new THREE.BufferAttribute(bufferArrPos, 3)
+    new THREE.BufferAttribute(partsPosArr, 3)
   );
-  bufferGeom.setAttribute(
+  bufferGeomParts.setAttribute(
     "color",
-    new THREE.BufferAttribute(bufferArrColor, 3)
+    new THREE.BufferAttribute(partsPosColorArr, 3)
   );
-}
-
-const newMeshRandom = new THREE.Points(
-  bufferGeom,
-  new THREE.PointsMaterial({
-    alphaMap: mat5,
-    transparent: true,
-    vertexColors: true,
+  starMat = new THREE.PointsMaterial({
+    alphaMap: mat4,
+    vertexColors: starColor,
+    sizeAttenuation: true,
     depthWrite: false,
-    // size: 2
-  })
-);
-// newMeshRandom.material.side = THREE.DoubleSide
+    size: starSize,
+    transparent: true,
+  });
 
+  stars = new THREE.Points(bufferGeomParts, starMat);
+  stars.rotateY(Math.PI * 0.4);
+  scene.add(stars);
+};
 
-scene.add(newMeshRandom);
+generateGalaxy(GParams.count, GParams.size, GParams.color, GParams.radius);
 
+const numberOfStars = gui.addFolder("stars number");
+const sizeOfStars = gui.addFolder("stars size");
+const colorOfStars = gui.addFolder("color");
+const radiusOfStars = gui.addFolder("radius");
+
+numberOfStars
+  .add(GParams, "count")
+  .min(10)
+  .max(100000)
+  .step(10)
+  .onChange(() => {
+    generateGalaxy(GParams.count, GParams.size, GParams.color, GParams.radius);
+  });
+sizeOfStars
+  .add(GParams, "size")
+  .min(0.01)
+  .max(2)
+  .step(0.01)
+  .onChange(() => {
+    generateGalaxy(GParams.count, GParams.size, GParams.color, GParams.radius);
+  });
+radiusOfStars
+  .add(GParams, "radius")
+  .min(1)
+  .max(100)
+  .step(0.1)
+  .onChange(() => {
+    generateGalaxy(GParams.count, GParams.size, GParams.color, GParams.radius);
+  });
+colorOfStars.add(GParams, "color").onChange(() => {
+  generateGalaxy(GParams.count, GParams.size, GParams.color);
+});
 window.addEventListener("resize", (e) => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
@@ -120,60 +177,21 @@ window.addEventListener("resize", (e) => {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
 
-
-const animateParticles = (elTime) => {
-  const newBuffGeomPos = bufferGeom.attributes.position.array.map(item => {
-    return item += Math.sin(THREE.MathUtils.randFloatSpread(10) * elTime)
-    // THREE.MathUtils.randFloatSpread(10);
-  })
-
-  bufferGeom.setAttribute(
-    "position",
-    new THREE.BufferAttribute(newBuffGeomPos, 3)
-  )
-}
-
 const clock = new THREE.Clock();
 function render(t) {
   const elapsedTime = clock.getElapsedTime();
-  // Simons' animation
-  // for (let i = 0; i < count; i++) {
-  //   let i3 = i * 3
-  //   bufferGeom.attributes.position.array[i3 + 1] = Math.sin(elapsedTime)
-  //   newMeshRandom.geometry.attributes.position.needsUpdate = true
-  //   // bufferGeom.setAttribute(
-  //   //   "position",
-  //   //   new THREE.BufferAttribute(bufferGeom.attributes.position.array, 3)
-  //   // )
+  // for (let i = 0; i < GParams.count; i++) {
+  //   let i3 = i * 3;
+  //   let x = stars.geometry.attributes.position.array[i3 + 0];
+  //   stars.geometry.attributes.position.array[i3 + 1] = Math.sin(
+  //     elapsedTime - x
+  //   );
+  //   stars.geometry.attributes.position.needsUpdate = true;
   // }
-  animateParticles(elapsedTime)
+
   controls.update();
   window.requestAnimationFrame(render);
   renderer.render(scene, camera);
 }
 
 render();
-
-
-// scene.add(new THREE.GridHelper(10, 10));
-// bufferGeom.computeVertexNormals()
-// const vertHelper1 = new VertexNormalsHelper(newMeshRandom, 0.5, 0x00ff00);
-// scene.add(vertHelper1);
-
-
-// const newBuffGeomPos = bufferGeom.attributes.position.array.forEach((item, index) => {
-
-//   if (index % 3 === 0 && index != 0) {
-//     console.log(item[index]);
-
-//     //return item += Math.sin(0.0001 * THREE.MathUtils.randFloatSpread(50)) * 2
-//   }
-
-
-// }
-// )
-
-// bufferGeom.setAttribute(
-//   "position",
-//   new THREE.BufferAttribute(newBuffGeomPos, 3)
-// )

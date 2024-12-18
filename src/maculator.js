@@ -876,3 +876,73 @@
 // const sphereG = new THREE.SphereGeometry(2.5, 32, 32);
 // const torusG = new THREE.TorusGeometry();
 // const boxGeo = new THREE.BoxGeometry(5, 5, 5);
+
+
+// scene.add(new THREE.GridHelper(10, 10));
+// bufferGeom.computeVertexNormals()
+// const vertHelper1 = new VertexNormalsHelper(newMeshRandom, 0.5, 0x00ff00);
+// scene.add(vertHelper1);
+
+// const newBuffGeomPos = bufferGeom.attributes.position.array.forEach((item, index) => {
+
+//   if (index % 3 === 0 && index != 0) {
+//     console.log(item[index]);
+
+//     //return item += Math.sin(0.0001 * THREE.MathUtils.randFloatSpread(50)) * 2
+//   }
+
+// }
+// )
+
+// bufferGeom.setAttribute(
+//   "position",
+//   new THREE.BufferAttribute(newBuffGeomPos, 3)
+// )
+
+// const animateParticles = (elTime) => {
+//         const newBuffGeomPos = bufferGeom.attributes.position.array.map(
+//           (particle) =>
+//             Math.sin(THREE.MathUtils.randFloatSpread(10)) *
+//             THREE.MathUtils.randFloatSpread(10)
+//         );
+      
+//         bufferGeom.setAttribute(
+//           "position",
+//           new THREE.BufferAttribute(newBuffGeomPos, 3)
+//         );
+//       };
+
+/* BUFFER RANDOM GEOMETRY */
+
+// const count = 20000;
+// const bufferArrPos = new Float32Array(3 * count);
+// const bufferArrColor = new Float32Array(3 * count);
+// const bufferGeom = new THREE.BufferGeometry();
+
+// for (let i = 0; i < 3 * count; i++) {
+//   bufferArrPos[i] = THREE.MathUtils.randFloatSpread(10);
+//   bufferArrColor[i] = Math.random();
+//   bufferGeom.setAttribute(
+//     "position",
+//     new THREE.BufferAttribute(bufferArrPos, 3)
+//   );
+//   bufferGeom.setAttribute(
+//     "color",
+//     new THREE.BufferAttribute(bufferArrColor, 3)
+//   );
+// }
+
+// const newMeshRandom = new THREE.Points(
+//   bufferGeom,
+//   new THREE.PointsMaterial({
+//     alphaMap: mat5,
+//     transparent: true,
+//     vertexColors: true,
+//     depthWrite: false,
+//     size: 0.1,
+//   })
+// );
+
+
+// scene.add(newMeshRandom);
+      
