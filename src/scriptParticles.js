@@ -84,8 +84,9 @@ const bufferArrPos = new Float32Array(3 * count);
 const bufferArrColor = new Float32Array(3 * count);
 const bufferGeom = new THREE.BufferGeometry();
 
+
 for (let i = 0; i < 3 * count; i++) {
-  bufferArrPos[i] = THREE.MathUtils.randFloatSpread(10);
+  bufferArrPos[i] = THREE.MathUtils.randFloatSpread(20);
   bufferArrColor[i] = Math.random()
   bufferGeom.setAttribute(
     "position",
@@ -100,15 +101,15 @@ for (let i = 0; i < 3 * count; i++) {
 const newMeshRandom = new THREE.Points(
   bufferGeom,
   new THREE.PointsMaterial({
-    alphaMap: mat4,
+    alphaMap: mat5,
     transparent: true,
     vertexColors: true,
-    depthWrite: false
+    depthWrite: false,
+    // size: 2
   })
 );
+// newMeshRandom.material.side = THREE.DoubleSide
 
-console.log(`NEWMESHRANDOM =====>`, newMeshRandom);
-console.log(`COVRIG =====>`, covrig);
 
 scene.add(newMeshRandom);
 
@@ -120,13 +121,11 @@ window.addEventListener("resize", (e) => {
 });
 
 
-
 const animateParticles = (elTime) => {
-  const newBuffGeomPos = bufferGeom.attributes.position.array.map((item) =>
-
-    // item = Math.sin(item) * 10
-    item += elTime * 0.002
-  )
+  const newBuffGeomPos = bufferGeom.attributes.position.array.map(item => {
+    return item += Math.sin(THREE.MathUtils.randFloatSpread(10) * elTime)
+    // THREE.MathUtils.randFloatSpread(10);
+  })
 
   bufferGeom.setAttribute(
     "position",
@@ -137,10 +136,17 @@ const animateParticles = (elTime) => {
 const clock = new THREE.Clock();
 function render(t) {
   const elapsedTime = clock.getElapsedTime();
-  // animateParticles(elapsedTime)
-
-  // bufferGeom.attributes.position.needsUpdate = true
-  // console.log(bufferGeom.attributes.position);
+  // Simons' animation
+  // for (let i = 0; i < count; i++) {
+  //   let i3 = i * 3
+  //   bufferGeom.attributes.position.array[i3 + 1] = Math.sin(elapsedTime)
+  //   newMeshRandom.geometry.attributes.position.needsUpdate = true
+  //   // bufferGeom.setAttribute(
+  //   //   "position",
+  //   //   new THREE.BufferAttribute(bufferGeom.attributes.position.array, 3)
+  //   // )
+  // }
+  animateParticles(elapsedTime)
   controls.update();
   window.requestAnimationFrame(render);
   renderer.render(scene, camera);
@@ -153,3 +159,21 @@ render();
 // bufferGeom.computeVertexNormals()
 // const vertHelper1 = new VertexNormalsHelper(newMeshRandom, 0.5, 0x00ff00);
 // scene.add(vertHelper1);
+
+
+// const newBuffGeomPos = bufferGeom.attributes.position.array.forEach((item, index) => {
+
+//   if (index % 3 === 0 && index != 0) {
+//     console.log(item[index]);
+
+//     //return item += Math.sin(0.0001 * THREE.MathUtils.randFloatSpread(50)) * 2
+//   }
+
+
+// }
+// )
+
+// bufferGeom.setAttribute(
+//   "position",
+//   new THREE.BufferAttribute(newBuffGeomPos, 3)
+// )
