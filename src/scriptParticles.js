@@ -13,7 +13,7 @@ axesHelper.setColors("red", "yellow", "blue");
 scene.add(axesHelper);
 
 const gui = new GUI({ name: "galaxy generator", width: 500 });
-console.log(gui);
+
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
@@ -79,49 +79,57 @@ covrig.position.set(0, 2, 2);
 // GALAXY
 
 const GParams = {
-  count: 100,
+  count: 10,
   size: 0.5,
-  color: true,
+  color: false,
   radius: 2,
   branches: 3,
 };
 
 let stars;
 let starMat;
-let bufferGeomParts;
+let bufferGeometry;
+let numOfBranches = 3
+
 // let partsPosArr;
 // let partsPosColorArr;
 
 const generateGalaxy = (starNum, starSize, starColor) => {
-  console.log(`starMat====>`, starMat);
+
 
   if (stars) {
-    bufferGeomParts.dispose();
+    bufferGeometry.dispose();
     starMat.dispose();
     scene.remove(stars);
   }
-  bufferGeomParts = new THREE.BufferGeometry();
+  bufferGeometry = new THREE.BufferGeometry();
   let partsPosArr = new Float32Array(3 * starNum);
   let partsPosColorArr = new Float32Array(3 * starNum);
-
+  let xPositions = []
+  let zPositions = []
   for (let i = 0; i < 3 * starNum; i++) {
-    // partsPosArr[i] = THREE.MathUtils.randFloatSpread(GParams.radius);
+
     const i3 = i * 3;
     partsPosArr[i3 + 0] =
-      THREE.MathUtils.randFloatSpread(GParams.radius * 10) / 3; //x
+      THREE.MathUtils.randFloatSpread(GParams.radius * 10); //x
     partsPosArr[i3 + 1] = 0; //y
-    partsPosArr[i3 + 2] = 3; //z
+    //fill(value : Number, [start = 0 : Number, [end : Number]]) 
+    partsPosArr.fill(partsPosArr[i3 + 0] + 0.01, i3 + 2, i3 - 1)
     partsPosColorArr[i] = THREE.MathUtils.randFloatSpread(10);
+
   }
 
-  bufferGeomParts.setAttribute(
+  console.log(partsPosArr);
+  bufferGeometry.setAttribute(
     "position",
     new THREE.BufferAttribute(partsPosArr, 3)
   );
-  bufferGeomParts.setAttribute(
+  bufferGeometry.setAttribute(
     "color",
     new THREE.BufferAttribute(partsPosColorArr, 3)
   );
+
+
   starMat = new THREE.PointsMaterial({
     alphaMap: mat4,
     vertexColors: starColor,
@@ -130,9 +138,21 @@ const generateGalaxy = (starNum, starSize, starColor) => {
     size: starSize,
     transparent: true,
   });
+  bufferGeometry.computeBoundingSphere()
+  bufferGeometry.computeBoundingBox()
 
-  stars = new THREE.Points(bufferGeomParts, starMat);
-  stars.rotateY(Math.PI * 0.4);
+
+  let lengthOfParticles = bufferGeometry.boundingSphere.radius * 2
+
+
+  let branch = (bufferGeometry.boundingSphere.radius * 2) / numOfBranches
+  const line = new THREE.Line(branch, starMat);
+
+  stars = new THREE.Points(bufferGeometry, starMat);
+  // branches = 
+
+
+  // stars.rotateY(Math.PI * 0.4);
   scene.add(stars);
 };
 
@@ -180,6 +200,7 @@ window.addEventListener("resize", (e) => {
 const clock = new THREE.Clock();
 function render(t) {
   const elapsedTime = clock.getElapsedTime();
+  // stars.rotateY(Math.sin(elapsedTime / 1000))
   // for (let i = 0; i < GParams.count; i++) {
   //   let i3 = i * 3;
   //   let x = stars.geometry.attributes.position.array[i3 + 0];
@@ -195,3 +216,56 @@ function render(t) {
 }
 
 render();
+
+
+
+// if (partsPosArr[i3 + 0]) {
+//   xPositions.push(partsPosArr[i3 + 0])
+// }
+
+// let xPos1 = xPositions.slice(0, 3)
+// let xPos2 = xPositions.slice(3, 6)
+// let xPos3 = xPositions.slice(6, 9)
+
+// console.log(xPos1)
+// console.log(xPos2)
+// console.log(xPos3)
+// // console.log(`xPositions`, xPositions);
+// // console.log(` partsPosArr[i3 + 0] `, partsPosArr[i3 + 0]);
+
+// console.log(xPos1)
+// console.log(xPos2)
+// console.log(xPos3)
+// console.log(`partsPosArr[i3 + 2]`, partsPosArr[i3 + 2])
+
+// partsPosArr[i3 + 2] = 1; //z
+// partsPosArr.filter((vertexPos, index) => {
+//   console.log(partsPosArr[index]);
+//  if(partsPosArr[ index ] ===  partsPosArr[i3 + 0] ) {
+
+//  }
+
+// })
+// const newArray1 = partsPosArr.subarray(0, 3)
+// const newArray2 = partsPosArr.subarray(3, 6)
+// const newArray3 = partsPosArr.subarray(6, 6)
+// newArray1.forEach((item, index) => {
+//   if (index === 2) {
+//     console.log(item);
+
+//     return 2
+//   }
+// })
+// newArray2.map((item, index) => {
+//   if (index === 2) {
+//     return item = 10
+//   }
+// })
+// newArray3.map((item, index) => {
+//   if (index === 2) {
+//     return item = 2
+//   }
+// })
+// partsPosArr = [...newArray1, newArray2, newArray3]
+// newArray2.splice(2, 0, Math.sin(Math.random) * 5)
+// newArray3.splice(2, 0, Math.sin(Math.random) * 5)
