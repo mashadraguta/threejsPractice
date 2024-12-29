@@ -2,7 +2,6 @@ import * as THREE from "three";
 import { camera, scene, canvas, renderer } from "./basics";
 import { changeObjPos } from "./utils";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { VertexNormalsHelper } from "three/examples/jsm/helpers/VertexNormalsHelper.js";
 import { GUI } from "dat.gui";
 
 /* HELPERS */
@@ -24,13 +23,7 @@ const initParamsALight = {
   },
   intensity: 0.5,
 };
-const initParamsBMesh = {
-  position: {
-    x: 3,
-    y: 3,
-    z: 15,
-  },
-};
+
 
 /* TEXTURES */
 
@@ -78,67 +71,90 @@ covrig.position.set(0, 2, 2);
 // GALAXY
 
 const GParams = {
-  count: 30,
+  count: 1000,
   size: 0.5,
   color: false,
-  radius: 2,
-  branches: 2,
+  radius: 5,
+  branches: 3,
+  spin: 2,
+  randomness: 0.1
 };
 
 let stars;
-let starMat;
-let bufferGeometry;
-let numOfBranches = 3;
+let bufferGeometry
 
-// let partsPosArr;
-// let partsPosColorArr;
-function fibonacci(num) {
-  if (num < 2) {
-    return num;
-  } else {
-    return fibonacci(num - 1) + fibonacci(num - 2);
-  }
+
+const size = 10;
+const divisions = 10;
+
+const gridHelper = new THREE.GridHelper(size, divisions);
+//scene.add(gridHelper);
+
+const initParamsMesh = {
+  x: .5,
+  y: 0,
+  z: .5
 }
+const mesh = new THREE.Mesh(
+  new THREE.BoxGeometry(1, 1, 1),
+  new THREE.MeshBasicMaterial()
+)
 
-const generateGalaxy = (starNum, starSize, starColor) => {
+
+mesh.position.set(.5, 0, .5)
+
+//scene.add(mesh)
+const cubeFolder = gui.addFolder('cube control')
+
+cubeFolder.add(initParamsMesh, 'x').min(-10).max(10).onChange(() => {
+  mesh.position.set(initParamsMesh.x, initParamsMesh.y, initParamsMesh.z)
+})
+cubeFolder.add(initParamsMesh, 'y').min(-10).max(10).onChange(() => {
+  mesh.position.set(initParamsMesh.x, initParamsMesh.y, initParamsMesh.z)
+})
+cubeFolder.add(initParamsMesh, 'z').min(-10).max(10).onChange(() => {
+  mesh.position.set(initParamsMesh.x, initParamsMesh.y, initParamsMesh.z)
+})
+
+const generateGalaxy = () => {
   if (stars) {
-    bufferGeometry.dispose();
-    starMat.dispose();
     scene.remove(stars);
   }
+
+  let starMat;
   bufferGeometry = new THREE.BufferGeometry();
-  let partsPosArr = new Float32Array(3 * starNum);
+  let partsPosArr = new Float32Array(3 * GParams.count);
+  let partsPosColorArr = new Float32Array(3 * GParams.count);
 
-  let partsPosColorArr = new Float32Array(3 * starNum);
+  for (let i = 0; i < 3 * GParams.count; i++) {
+    partsPosColorArr[i] = Math.random()
+    let i3 = i * 3
 
-  function partition(arr, length) {
-    let rest = arr.length % length;
-    let size = Math.floor(arr.length / length);
-    let j = 0;
-    return Array.from({ length }, (_, i) =>
-      arr.slice(j, (j += size + (i < rest)))
-    );
+    // radius is a changing value , populating the branches
+
+    let radius = Math.random() * GParams.radius
+    let spin = GParams.spin * radius
+    let randomX = (Math.random() - .5) * GParams.randomness
+    let randomY = (Math.random() - .5) * GParams.randomness
+    let randomZ = (Math.random() - .5) * GParams.randomness
+    // let randomX = Math.random() * GParams.randomness
+    // let randomY = Math.random() * GParams.randomness
+    // let randomZ = Math.random() * GParams.randomness
+    // branchAngle values does NOT change, remains the same
+    let branchAngle = (i % GParams.branches) / GParams.branches * Math.PI * 2
+
+    // sin(branchAngle) and cos(branchAngle) are positive and negative values
+    // if we multiply by radius that was multiplied by Math.random,
+    // we will have a value between -n.abcdefgh ... n.abcdefgh
+    //Math.cos(branchAngle + spin) * radius
+    //Math.sin(branchAngle + spin) * radius
+    partsPosArr[i3] = THREE.MathUtils.randFloatSpread(Math.cos(branchAngle + spin) * radius)
+    // partsPosArr[i3 + 1] = + Math.sin(partsPosArr[i3] + 1) * (Math.random() - .5)
+    partsPosArr[i3 + 1] = 0
+    partsPosArr[i3 + 2] = THREE.MathUtils.randFloatSpread(Math.sin(branchAngle + spin) * radius)
+
   }
 
-  for (let i = 0; i < 3 * starNum; i++) {
-    const i3 = i * 3;
-    //  starNum / numOfBranches -> length of a branch
-    let lengthOfBranch = starNum / numOfBranches;
-    partsPosArr
-      .subarray(0, 30)
-      .fill(THREE.MathUtils.randFloat(-GParams.radius, 0), i3, i3 + 1);
-    partsPosArr
-      .subarray(30, 60)
-      .fill(THREE.MathUtils.randFloat(0, GParams.radius), i3, i3 + 1);
-    partsPosArr
-      .subarray(60, 90)
-      .fill(THREE.MathUtils.randFloat(-GParams.radius, 0), i3, i3 + 1);
-    partsPosArr.subarray(0, 30).fill(partsPosArr[i3], i3 + 2, i3 + 3);
-    partsPosArr
-      .subarray(30, 60)
-      .fill(Math.tan(partsPosArr[i3 + 1]), i3 + 2, i3 + 3);
-    partsPosArr.subarray(60, 90).fill(-partsPosArr[i3 + 1], i3 + 2, i3 + 3);
-  }
   bufferGeometry.setAttribute(
     "position",
     new THREE.BufferAttribute(partsPosArr, 3)
@@ -150,10 +166,10 @@ const generateGalaxy = (starNum, starSize, starColor) => {
 
   starMat = new THREE.PointsMaterial({
     alphaMap: mat4,
-    vertexColors: starColor,
+    vertexColors: GParams.color,
     sizeAttenuation: true,
     depthWrite: false,
-    size: starSize,
+    size: GParams.size,
     transparent: true,
   });
 
@@ -161,53 +177,24 @@ const generateGalaxy = (starNum, starSize, starColor) => {
   scene.add(stars);
 };
 
-generateGalaxy(GParams.count, GParams.size, GParams.color, GParams.radius);
-const material = new THREE.LineBasicMaterial({
-  color: 0x0000ff,
-});
+generateGalaxy();
 
-const points = [];
-points.push(new THREE.Vector3(-5, 0, 0));
-points.push(new THREE.Vector3(0, 0, 0));
-points.push(new THREE.Vector3(5, 0, 0));
-points.push(new THREE.Vector3(0, 0, 0));
-points.push(new THREE.Vector3(0, 0, -5));
-points.push(new THREE.Vector3(0, 0, 0));
-points.push(new THREE.Vector3(0, 0, 5));
-points.push(new THREE.Vector3(0, 0, 0));
-points.push(new THREE.Vector3(1, 0, 5));
-points.push(new THREE.Vector3(0, 0, 0));
-points.push(new THREE.Vector3(2, 0, 5));
-points.push(new THREE.Vector3(0, 0, 0));
-points.push(new THREE.Vector3(3, 0, 5));
-points.push(new THREE.Vector3(0, 0, 0));
-points.push(new THREE.Vector3(4, 0, 5));
-points.push(new THREE.Vector3(0, 0, 0));
-points.push(new THREE.Vector3(5, 0, 5));
-points.push(new THREE.Vector3(0, 0, 0));
-points.push(new THREE.Vector3(6, 0, 5));
-points.push(new THREE.Vector3(0, 0, 0));
-points.push(new THREE.Vector3(7, 0, 5));
-points.push(new THREE.Vector3(0, 0, 0));
-points.push(new THREE.Vector3(8, 0, 5));
-
-const geometry = new THREE.BufferGeometry().setFromPoints(points);
-
-const line = new THREE.Line(geometry, material);
-//scene.add(line);
 
 const numberOfStars = gui.addFolder("stars number");
 const sizeOfStars = gui.addFolder("stars size");
 const colorOfStars = gui.addFolder("color");
 const radiusOfStars = gui.addFolder("radius");
 
+const branches = gui.addFolder("branches");
+const spin = gui.addFolder("spin");
+const randomness = gui.addFolder("randomness");
 numberOfStars
   .add(GParams, "count")
   .min(10)
   .max(100000)
   .step(10)
   .onChange(() => {
-    generateGalaxy(GParams.count, GParams.size, GParams.color, GParams.radius);
+    generateGalaxy();
   });
 sizeOfStars
   .add(GParams, "size")
@@ -215,7 +202,7 @@ sizeOfStars
   .max(2)
   .step(0.01)
   .onChange(() => {
-    generateGalaxy(GParams.count, GParams.size, GParams.color, GParams.radius);
+    generateGalaxy();
   });
 radiusOfStars
   .add(GParams, "radius")
@@ -223,10 +210,34 @@ radiusOfStars
   .max(100)
   .step(0.1)
   .onChange(() => {
-    generateGalaxy(GParams.count, GParams.size, GParams.color, GParams.radius);
+    generateGalaxy();
+  });
+branches
+  .add(GParams, "branches")
+  .min(2)
+  .max(10)
+  .step(1)
+  .onChange(() => {
+    generateGalaxy();
+  });
+spin
+  .add(GParams, "spin")
+  .min(-5)
+  .max(5)
+  .step(1)
+  .onChange(() => {
+    generateGalaxy();
+  });
+randomness
+  .add(GParams, "randomness")
+  .min(0)
+  .max(5)
+  .step(0.01)
+  .onChange(() => {
+    generateGalaxy();
   });
 colorOfStars.add(GParams, "color").onChange(() => {
-  generateGalaxy(GParams.count, GParams.size, GParams.color);
+  generateGalaxy();
 });
 window.addEventListener("resize", (e) => {
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -255,188 +266,3 @@ function render(t) {
 
 render();
 
-// if (partsPosArr[i3 + 0]) {
-//   xPositions.push(partsPosArr[i3 + 0])
-// }
-
-// let xPos1 = xPositions.slice(0, 3)
-// let xPos2 = xPositions.slice(3, 6)
-// let xPos3 = xPositions.slice(6, 9)
-
-// console.log(xPos1)
-// console.log(xPos2)
-// console.log(xPos3)
-// // console.log(`xPositions`, xPositions);
-// // console.log(` partsPosArr[i3 + 0] `, partsPosArr[i3 + 0]);
-
-// console.log(xPos1)
-// console.log(xPos2)
-// console.log(xPos3)
-// console.log(`partsPosArr[i3 + 2]`, partsPosArr[i3 + 2])
-
-// partsPosArr[i3 + 2] = 1; //z
-// partsPosArr.filter((vertexPos, index) => {
-//   console.log(partsPosArr[index]);
-//  if(partsPosArr[ index ] ===  partsPosArr[i3 + 0] ) {
-
-//  }
-
-// })
-
-// newArray1.forEach((item, index) => {
-//   if (index === 2) {
-//     console.log(item);
-
-//     return 2
-//   }
-// })
-// newArray2.map((item, index) => {
-//   if (index === 2) {
-//     return item = 10
-//   }
-// })
-// newArray3.map((item, index) => {
-//   if (index === 2) {
-//     return item = 2
-//   }
-// })
-// partsPosArr = [...newArray1, newArray2, newArray3]
-// newArray2.splice(2, 0, Math.sin(Math.random) * 5)
-// newArray3.splice(2, 0, Math.sin(Math.random) * 5)
-
-// const newArray1 = bufferGeometry.attributes.position.array.subarray(0, 3);
-// const newArray2 = bufferGeometry.attributes.position.array.subarray(3, 6);
-// const newArray3 = bufferGeometry.attributes.position.array.subarray(6, 6);
-// xPositions.fromBufferAttribute(bufferGeometry.attributes.position, 3);
-// console.log(xPositions);
-// //x
-// bufferGeometry.attributes.position.array[i3 + 0] = partsPosArr[i3 + 0];
-// //z
-// bufferGeometry.attributes.position.array[i3 + 2] =
-//   bufferGeometry.attributes.position.array[i3 + 0] + 0.5;
-//
-// console.log(`newArray1 FIRST`, newArray1);
-// //x => i3, i3 - 2
-// newArray1.fill(
-//   bufferGeometry.attributes.position.array[i3 + 0] + 1,
-//   i3 - 1,
-//   i3
-// );
-// newArray2.fill(
-//   bufferGeometry.attributes.position.array[i3 + 0] + 2,
-//   i3 - 1,
-//   i3
-// );
-// newArray3.fill(
-//   bufferGeometry.attributes.position.array[i3 + 0] + 3,
-//   i3 - 1,
-//   i3
-// );
-
-// console.log(`newArray1 SECOND`, newArray1);
-// // newArray2.fill(2, 3, Math.sin(Math.random) * 5);
-// // newArray3.fill(2, 0, Math.sin(Math.random) * 5);
-
-// newArray3.fill(partsPosArr[i3 + 0] + 1, i3 - 1, i3);
-// bufferGeometry.attributes.position.needsUpdate = true;
-// // console.log(partsPosArr);
-//    X
-//partsPosArr.fill( partsPosArr[i3 + 0] + 0.01, i3, i3 + 1);
-
-//    Y
-
-///partsPosArr.fill(1, i3 + 1, i3 + 2);
-//  partsPosArr.fill(1, i3 + 1, i3 + 2);
-//    Z
-
-// partsPosArr.fill(partsPosArr[i3 + 0] + 0.01, i3 + 2, i3 + 3);
-
-// //   partsPosArr.fill(100, i3, i3 - 2);
-// console.log(partsPosArr);
-
-// // partsPosArr[i3 + 1] = 0; //y
-
-// // partsPosColorArr[i] = THREE.MathUtils.randFloatSpread(10);
-
-// bufferGeometry.setAttribute(
-//   "position",
-//   new THREE.BufferAttribute(partsPosArr, 3)
-// );
-
-// const newArray1 = partsPosArr.subarray(0, 10);
-// const newArray2 = partsPosArr.subarray(10, 20);
-// const newArray3 = partsPosArr.subarray(20, 30);
-
-// newArray1.fill(newArray1[i3 + 0] + 1, i3, i3 + 1);
-// newArray2.fill(newArray2[i3 + 0] + 1, i3, i3 + 1);
-// newArray3.fill(newArray3[i3 + 0] + 1, i3, i3 + 1);
-
-// newArray1.fill(newArray1[i3 + 1] + 1, i3 + 2, i3 + 3);
-// newArray2.fill(newArray2[i3 + 1] + 1, i3 + 2, i3 + 3);
-// newArray3.fill(newArray3[i3 + 1] + 1, i3 + 2, i3 + 3);
-// bufferGeometry.attributes.position.needsUpdate = true;
-
-// console.log(`partsPosArr`, partsPosArr);
-// // console.log(`II`, newArray2);
-// // console.log(`III`, newArray3);
-// for (let j = 0; j < lengthOfBranch; j++) {
-//   console.log(partsPosArr[i][j]);
-// }
-
-// partsPosArr[i3 + 0] = THREE.MathUtils.randFloat(0, -3); //x
-
-//  partsPosArr[i3 + 0] = THREE.MathUtils.randFloatSpread(GParams.radius * 10); //x
-console.log(3 * starNum - 1 / 2);
-console.log(partsPosArr.length / numOfBranches);
-
-// const newArray1 = partsPosArr.subarray(0, 15); // 5 vs
-// const newArray2 = partsPosArr.subarray(15, 30); // 5 vs
-// const newArray3 = partsPosArr.subarray(30, 60); // 10 vs
-// const newArray4 = partsPosArr.subarray(60, 90); //10vs
-// const newArray5 = partsPosArr.subarray(60, 70);
-// const newArray6 = partsPosArr.subarray(80, 89);
-//THREE.MathUtils.randFloat(-3, 0)
-// newArray1.fill(THREE.MathUtils.randFloat(-2, 0), i3, i3 + 1);
-// newArray2.fill(THREE.MathUtils.randFloat(0, 2), i3, i3 + 1);
-// newArray3.fill(THREE.MathUtils.randFloat(-4, 0), i3, i3 + 1);
-// newArray4.fill(THREE.MathUtils.randFloat(0, 4), i3, i3 + 1);
-
-// newArray1.fill(newArray1[i3], i3 + 2, i3 + 3);
-// newArray2.fill(newArray2[i3], i3 + 2, i3 + 3);
-// newArray3.fill(-newArray3[i3], i3 + 2, i3 + 3);
-// newArray4.fill(-newArray4[i3], i3 + 2, i3 + 3);
-
-// console.log(newArray1.length);
-// console.log(newArray2.length);
-// console.log(newArray3.length);
-// console.log(newArray4.length);
-
-// newArray2.fill(1, i3, i3 + 1);
-// newArray3.fill(1, i3, i3 + 1);
-
-// console.log(`newArray1`, newArray1);
-// console.log(`newArray2`, newArray2);
-// console.log(`newArray3`, newArray3);
-
-// partsPosArr[i3 + 1] = 0; //y
-// if (partsPosArr[i3 + 0] > 0) {
-//   partsPosArr[i3 + 2] = Math.sin(partsPosArr[i3 + 0]); //z
-// } else {
-//   partsPosArr[i3 + 2] = Math.sin(partsPosArr[i3 + 0]); //z
-// }
-
-//newArray3[i3] * Math.sin(newArray3[i3])
-// newArray5.fill(THREE.MathUtils.randFloat(-2, 0), i3, i3 + 1);
-// newArray6.fill(THREE.MathUtils.randFloat(2, 0), i3, i3 + 1);
-
-// const newArray1 = partsPosArr.subarray(0, 30); // 10 vx
-//const newArray2 = partsPosArr.subarray(30, 60); // 10 vx
-// const newArray3 = partsPosArr.subarray(60, 90); // 10 vx
-
-// newArray1.fill(THREE.MathUtils.randFloat(-4, 0), i3, i3 + 1);
-// newArray2.fill(THREE.MathUtils.randFloat(0, 4), i3, i3 + 1);
-//newArray3.fill(THREE.MathUtils.randFloat(-4, 0), i3, i3 + 1);
-
-// newArray1.fill(newArray1[i3], i3 + 2, i3 + 3);
-//newArray2.fill(newArray2[i3], i3 + 2, i3 + 3);
-//newArray3.fill(-newArray3[i3], i3 + 2, i3 + 3);

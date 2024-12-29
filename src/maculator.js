@@ -945,4 +945,252 @@
 
 
 // scene.add(newMeshRandom);
+      // if (partsPosArr[i3 + 0]) {
+//   xPositions.push(partsPosArr[i3 + 0])
+// }
+
+// let xPos1 = xPositions.slice(0, 3)
+// let xPos2 = xPositions.slice(3, 6)
+// let xPos3 = xPositions.slice(6, 9)
+
+// console.log(xPos1)
+// console.log(xPos2)
+// console.log(xPos3)
+// // console.log(`xPositions`, xPositions);
+// // console.log(` partsPosArr[i3 + 0] `, partsPosArr[i3 + 0]);
+
+// console.log(xPos1)
+// console.log(xPos2)
+// console.log(xPos3)
+// console.log(`partsPosArr[i3 + 2]`, partsPosArr[i3 + 2])
+
+// partsPosArr[i3 + 2] = 1; //z
+// partsPosArr.filter((vertexPos, index) => {
+//   console.log(partsPosArr[index]);
+//  if(partsPosArr[ index ] ===  partsPosArr[i3 + 0] ) {
+
+//  }
+
+// })
+
+// newArray1.forEach((item, index) => {
+//   if (index === 2) {
+//     console.log(item);
+
+//     return 2
+//   }
+// })
+// newArray2.map((item, index) => {
+//   if (index === 2) {
+//     return item = 10
+//   }
+// })
+// newArray3.map((item, index) => {
+//   if (index === 2) {
+//     return item = 2
+//   }
+// })
+// partsPosArr = [...newArray1, newArray2, newArray3]
+// newArray2.splice(2, 0, Math.sin(Math.random) * 5)
+// newArray3.splice(2, 0, Math.sin(Math.random) * 5)
+
+// const newArray1 = bufferGeometry.attributes.position.array.subarray(0, 3);
+// const newArray2 = bufferGeometry.attributes.position.array.subarray(3, 6);
+// const newArray3 = bufferGeometry.attributes.position.array.subarray(6, 6);
+// xPositions.fromBufferAttribute(bufferGeometry.attributes.position, 3);
+// console.log(xPositions);
+// //x
+// bufferGeometry.attributes.position.array[i3 + 0] = partsPosArr[i3 + 0];
+// //z
+// bufferGeometry.attributes.position.array[i3 + 2] =
+//   bufferGeometry.attributes.position.array[i3 + 0] + 0.5;
+//
+// console.log(`newArray1 FIRST`, newArray1);
+// //x => i3, i3 - 2
+// newArray1.fill(
+//   bufferGeometry.attributes.position.array[i3 + 0] + 1,
+//   i3 - 1,
+//   i3
+// );
+// newArray2.fill(
+//   bufferGeometry.attributes.position.array[i3 + 0] + 2,
+//   i3 - 1,
+//   i3
+// );
+// newArray3.fill(
+//   bufferGeometry.attributes.position.array[i3 + 0] + 3,
+//   i3 - 1,
+//   i3
+// );
+
+// console.log(`newArray1 SECOND`, newArray1);
+// // newArray2.fill(2, 3, Math.sin(Math.random) * 5);
+// // newArray3.fill(2, 0, Math.sin(Math.random) * 5);
+
+// newArray3.fill(partsPosArr[i3 + 0] + 1, i3 - 1, i3);
+// bufferGeometry.attributes.position.needsUpdate = true;
+// // console.log(partsPosArr);
+//    X
+//partsPosArr.fill( partsPosArr[i3 + 0] + 0.01, i3, i3 + 1);
+
+//    Y
+
+///partsPosArr.fill(1, i3 + 1, i3 + 2);
+//  partsPosArr.fill(1, i3 + 1, i3 + 2);
+//    Z
+
+// partsPosArr.fill(partsPosArr[i3 + 0] + 0.01, i3 + 2, i3 + 3);
+
+// //   partsPosArr.fill(100, i3, i3 - 2);
+// console.log(partsPosArr);
+
+// // partsPosArr[i3 + 1] = 0; //y
+
+// // partsPosColorArr[i] = THREE.MathUtils.randFloatSpread(10);
+
+// bufferGeometry.setAttribute(
+//   "position",
+//   new THREE.BufferAttribute(partsPosArr, 3)
+// );
+
+// const newArray1 = partsPosArr.subarray(0, 10);
+// const newArray2 = partsPosArr.subarray(10, 20);
+// const newArray3 = partsPosArr.subarray(20, 30);
+
+// newArray1.fill(newArray1[i3 + 0] + 1, i3, i3 + 1);
+// newArray2.fill(newArray2[i3 + 0] + 1, i3, i3 + 1);
+// newArray3.fill(newArray3[i3 + 0] + 1, i3, i3 + 1);
+
+// newArray1.fill(newArray1[i3 + 1] + 1, i3 + 2, i3 + 3);
+// newArray2.fill(newArray2[i3 + 1] + 1, i3 + 2, i3 + 3);
+// newArray3.fill(newArray3[i3 + 1] + 1, i3 + 2, i3 + 3);
+// bufferGeometry.attributes.position.needsUpdate = true;
+
+// console.log(`partsPosArr`, partsPosArr);
+// // console.log(`II`, newArray2);
+// // console.log(`III`, newArray3);
+// for (let j = 0; j < lengthOfBranch; j++) {
+//   console.log(partsPosArr[i][j]);
+// }
+
+// partsPosArr[i3 + 0] = THREE.MathUtils.randFloat(0, -3); //x
+
+//  partsPosArr[i3 + 0] = THREE.MathUtils.randFloatSpread(GParams.radius * 10); //x
+
+
+// const newArray1 = partsPosArr.subarray(0, 15); // 5 vs
+// const newArray2 = partsPosArr.subarray(15, 30); // 5 vs
+// const newArray3 = partsPosArr.subarray(30, 60); // 10 vs
+// const newArray4 = partsPosArr.subarray(60, 90); //10vs
+// const newArray5 = partsPosArr.subarray(60, 70);
+// const newArray6 = partsPosArr.subarray(80, 89);
+//THREE.MathUtils.randFloat(-3, 0)
+// newArray1.fill(THREE.MathUtils.randFloat(-2, 0), i3, i3 + 1);
+// newArray2.fill(THREE.MathUtils.randFloat(0, 2), i3, i3 + 1);
+// newArray3.fill(THREE.MathUtils.randFloat(-4, 0), i3, i3 + 1);
+// newArray4.fill(THREE.MathUtils.randFloat(0, 4), i3, i3 + 1);
+
+// newArray1.fill(newArray1[i3], i3 + 2, i3 + 3);
+// newArray2.fill(newArray2[i3], i3 + 2, i3 + 3);
+// newArray3.fill(-newArray3[i3], i3 + 2, i3 + 3);
+// newArray4.fill(-newArray4[i3], i3 + 2, i3 + 3);
+
+// console.log(newArray1.length);
+// console.log(newArray2.length);
+// console.log(newArray3.length);
+// console.log(newArray4.length);
+
+// newArray2.fill(1, i3, i3 + 1);
+// newArray3.fill(1, i3, i3 + 1);
+
+// console.log(`newArray1`, newArray1);
+// console.log(`newArray2`, newArray2);
+// console.log(`newArray3`, newArray3);
+
+// partsPosArr[i3 + 1] = 0; //y
+// if (partsPosArr[i3 + 0] > 0) {
+//   partsPosArr[i3 + 2] = Math.sin(partsPosArr[i3 + 0]); //z
+// } else {
+//   partsPosArr[i3 + 2] = Math.sin(partsPosArr[i3 + 0]); //z
+// }
+
+//newArray3[i3] * Math.sin(newArray3[i3])
+// newArray5.fill(THREE.MathUtils.randFloat(-2, 0), i3, i3 + 1);
+// newArray6.fill(THREE.MathUtils.randFloat(2, 0), i3, i3 + 1);
+
+// const newArray1 = partsPosArr.subarray(0, 30); // 10 vx
+//const newArray2 = partsPosArr.subarray(30, 60); // 10 vx
+// const newArray3 = partsPosArr.subarray(60, 90); // 10 vx
+
+// newArray1.fill(THREE.MathUtils.randFloat(-4, 0), i3, i3 + 1);
+// newArray2.fill(THREE.MathUtils.randFloat(0, 4), i3, i3 + 1);
+//newArray3.fill(THREE.MathUtils.randFloat(-4, 0), i3, i3 + 1);
+
+// newArray1.fill(newArray1[i3], i3 + 2, i3 + 3);
+//newArray2.fill(newArray2[i3], i3 + 2, i3 + 3);
+//newArray3.fill(-newArray3[i3], i3 + 2, i3 + 3);
+// if (xPos1[i3]) {
+
+
+//   xPos1.fill(Math.sin(xPos1[i3]) * -GParams.radius, i3 + 2, i3 + 3)
+// }
+// if (xPos2[i3]) {
+
+//   xPos2.fill(Math.sin(xPos2[i3] * GParams.radius), i3 + 2, i3 + 3)
+// }
+// if (xPos3[i3]) {
+//   xPos3.fill(-Math.sin(xPos3[i3] * GParams.radius), i3 + 2, i3 + 3)
+// }
+
+
+// // console.log(`PARTSPOSARR======>`, partsPosArr);
+// console.log(` xPos1[i3]`, xPos1[i3]);
+// function partition(arr, length) {
+//   let rest = arr.length % length;
+//   let size = Math.floor(arr.length / length);
+//   let j = 0;
+//   return Array.from({ length }, (_, i) =>
+//     arr.slice(j, (j += size + (i < rest)))
+//   );
+// }
+// function fibonacci(num) {
+//   if (num < 2) {
+//     return num;
+//   } else {
+//     return fibonacci(num - 1) + fibonacci(num - 2);
+//   }
+// }
+
+// const material = new THREE.LineBasicMaterial({
+//         color: 0x0000ff,
+//       });
       
+//       const points = [];
+//       points.push(new THREE.Vector3(-5, 0, 0));
+//       points.push(new THREE.Vector3(0, 0, 0));
+//       points.push(new THREE.Vector3(5, 0, 0));
+//       points.push(new THREE.Vector3(0, 0, 0));
+//       points.push(new THREE.Vector3(0, 0, -5));
+//       points.push(new THREE.Vector3(0, 0, 0));
+//       points.push(new THREE.Vector3(0, 0, 5));
+//       points.push(new THREE.Vector3(0, 0, 0));
+//       points.push(new THREE.Vector3(1, 0, 5));
+//       points.push(new THREE.Vector3(0, 0, 0));
+//       points.push(new THREE.Vector3(2, 0, 5));
+//       points.push(new THREE.Vector3(0, 0, 0));
+//       points.push(new THREE.Vector3(3, 0, 5));
+//       points.push(new THREE.Vector3(0, 0, 0));
+//       points.push(new THREE.Vector3(4, 0, 5));
+//       points.push(new THREE.Vector3(0, 0, 0));
+//       points.push(new THREE.Vector3(5, 0, 5));
+//       points.push(new THREE.Vector3(0, 0, 0));
+//       points.push(new THREE.Vector3(6, 0, 5));
+//       points.push(new THREE.Vector3(0, 0, 0));
+//       points.push(new THREE.Vector3(7, 0, 5));
+//       points.push(new THREE.Vector3(0, 0, 0));
+//       points.push(new THREE.Vector3(8, 0, 5));
+      
+//       const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      
+//       const line = new THREE.Line(geometry, material);
+//       //scene.add(line);
