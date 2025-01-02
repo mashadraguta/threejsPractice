@@ -877,7 +877,8 @@
 // const torusG = new THREE.TorusGeometry();
 // const boxGeo = new THREE.BoxGeometry(5, 5, 5);
 
-
+// const size = 10;
+// const divisions = 10;
 // scene.add(new THREE.GridHelper(10, 10));
 // bufferGeom.computeVertexNormals()
 // const vertHelper1 = new VertexNormalsHelper(newMeshRandom, 0.5, 0x00ff00);
@@ -1194,3 +1195,96 @@
       
 //       const line = new THREE.Line(geometry, material);
 //       //scene.add(line);
+
+
+// PARTICLES POSITIONING
+// HELPER CODE
+
+// flower effect
+
+// partsPosArr[i3] = Math.sin(branchAngle + spin * randomX) * radius
+//     // partsPosArr[i3 + 1] = + Math.sin(partsPosArr[i3] + 1) * (Math.random() - .5)
+//     partsPosArr[i3 + 1] = randomY
+//     partsPosArr[i3 + 2] = Math.cos(branchAngle + spin * randomZ) * radius
+// sin(branchAngle) and cos(branchAngle) are positive and negative values
+// if we multiply by radius that was multiplied by Math.random,
+// we will have a value between -n.abcdefgh ... n.abcdefgh
+
+
+//blue
+//  partsPosColorArr[i3] = 0.61
+//  partsPosColorArr[i3 + 1] = 0.13
+//  partsPosColorArr[i3 + 2] = 0.21
+// const cubeFolder = gui.addFolder('cube control')
+
+// cubeFolder.add(initParamsMesh, 'x').min(-10).max(10).onChange(() => {
+//   mesh.position.set(initParamsMesh.x, initParamsMesh.y, initParamsMesh.z)
+// })
+// cubeFolder.add(initParamsMesh, 'y').min(-10).max(10).onChange(() => {
+//   mesh.position.set(initParamsMesh.x, initParamsMesh.y, initParamsMesh.z)
+// })
+// cubeFolder.add(initParamsMesh, 'z').min(-10).max(10).onChange(() => {
+//   mesh.position.set(initParamsMesh.x, initParamsMesh.y, initParamsMesh.z)
+// })
+
+
+// const initParamsMesh = {
+//   x: .5,
+//   y: 0,
+//   z: .5
+// }
+// const mesh = new THREE.Mesh(
+//   new THREE.BoxGeometry(1, 1, 1),
+//   new THREE.MeshBasicMaterial()
+// )
+
+
+// mesh.position.set(.5, 0, .5)
+
+
+
+// const mat1 = loader.load("1.png");
+// const mat2 = loader.load("2.png");
+// const mat3 = loader.load("3.png");
+// const mat5 = loader.load("5.png");
+// const mat6 = loader.load("6.png");
+// const mat7 = loader.load("7.png");
+// const mat8 = loader.load("8.png");
+// const mat9 = loader.load("9.png");
+// const mat10 = loader.load("10.png");
+// const mat11 = loader.load("11.png");
+// const mat12 = loader.load("12.png");
+//const ambientLight = new THREE.PointLight("yellow", initParamsALight.intensity);
+// ambientLight.position.set(
+//   initParamsALight.position.x,
+//   initParamsALight.position.y,
+//   initParamsALight.position.z
+// );
+// //changeObjPos(ambientLight, initParamsALight, gui, "point Light");
+// scene.add(ambientLight);
+/* OBJECTS */
+
+// const covrig = new THREE.Mesh(
+//   new THREE.TorusGeometry(),
+//   new THREE.MeshToonMaterial({
+//     alphaMap: cartoonMat,
+//     color: "green",
+//   })
+// );
+
+// covrig.position.set(0, 2, 2);
+
+
+//const gridHelper = new THREE.GridHelper(size, divisions);
+//scene.add(gridHelper);
+
+
+// stars.rotateY(Math.sin(elapsedTime / 1000))
+//   for (let i = 0; i < GParams.count; i++) {
+//     let i3 = i * 3;
+//     let x = stars.geometry.attributes.position.array[i3 + 0];
+//     stars.geometry.attributes.position.array[i3 + 1] = Math.sin(
+//       elapsedTime - x
+//     );
+//     stars.geometry.attributes.position.needsUpdate = true;
+//   }
