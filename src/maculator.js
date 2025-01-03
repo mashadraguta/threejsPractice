@@ -1288,3 +1288,42 @@
 //     );
 //     stars.geometry.attributes.position.needsUpdate = true;
 //   }
+
+
+
+// const RgbToCmyk = (R, G, B) => {
+//       if ((R == 0) && (G == 0) && (B == 0)) {
+//         return [0, 0, 0];
+//       } else {
+//         let calcR = 1 - (R / 255),
+//           calcG = 1 - (G / 255),
+//           calcB = 1 - (B / 255);
+    
+//         let K = Math.min(calcR, Math.min(calcG, calcB)),
+//           C = (calcR - K) / (1 - K),
+//           M = (calcG - K) / (1 - K),
+//           Y = (calcB - K) / (1 - K);
+    
+//         return [C, M, Y, K];
+//       }
+//     }
+
+//i t's simply a case of dividing your RGB value
+// rgbValue / 255 -> num from 0 ... 1
+
+
+// let x = partsPosArr[i3]
+    // let z = partsPosArr[i3 + 2]
+
+    // if (x < .5 &&
+    //   x > -.5 &&
+    //   z < .5
+    //   && z > -.5) {
+    //   partsPosColorArr[i3] = palette.middle[0] / 255
+    //   partsPosColorArr[i3 + 1] = palette.middle[1] / 255
+    //   partsPosColorArr[i3 + 2] = palette.middle[2] / 255
+    // } else {
+    //   partsPosColorArr[i3] = palette.border[0] / 255
+    //   partsPosColorArr[i3 + 1] = palette.border[1] / 255
+    //   partsPosColorArr[i3 + 2] = palette.border[2] / 255
+    // }
