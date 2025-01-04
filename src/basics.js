@@ -2,7 +2,7 @@ import * as THREE from "three";
 
 const scene = new THREE.Scene();
 //scene.background = new THREE.Color("black");
-//scene.background = new THREE.Color("#f5deb3");
+scene.background = new THREE.Color("#f5deb3");
 //0xff6F21 ->orange
 // const pointLight = new THREE.PointLight(0xffffff, 1, 100);
 // const posX = -10;
