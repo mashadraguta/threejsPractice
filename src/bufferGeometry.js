@@ -66,51 +66,64 @@ const vertices = [
 
 //24 vertices without repeating ones
 
-let posArr = [];
-let normArr = [];
-let uvArr = [];
+// let posArr = [];
+// let normArr = [];
+// let uvArr = [];
+let posArr = new Float32Array(vertices.length * 3);
+let normArr = new Float32Array(vertices.length * 3);
+let uvArr = new Float32Array(vertices.length * 2);
 
-for (let i = 0; i < vertices.length; i++) {
-  posArr.push(...vertices[i].pos);
-  normArr.push(...vertices[i].norm);
-  uvArr.push(...vertices[i].uv);
+const posNumComponents = 3
+const normalNumComponents = 3
+const uvNumComponents = 2
+
+let posNdx = 0
+let normNdx = 0
+let uvNdx = 0
+
+// for (let i = 0; i < vertices.length; i++) {
+//   posArr.push(...vertices[i].pos);
+//   normArr.push(...vertices[i].norm);
+//   uvArr.push(...vertices[i].uv);
+// }
+
+for (const vertex of vertices) {
+  posArr.set(vertex.pos, posNdx)
+  normArr.set(vertex.norm, normNdx)
+  uvArr.set(vertex.uv, uvNdx)
+  posNdx += posNumComponents
+  normNdx += normalNumComponents
+  uvNdx += uvNumComponents
 }
+console.log(posArr);
+
 
 // prettier-ignore
 const newIndexes = [
-  0,1,2 ,2,1,3, //front,
-  4,5,6, 6,5,7, //right,
-  8,9,10, 10,9,11, //back,
-  12,13,14, 14,13,15, //left
-  16,17,18, 18, 17,19, // top
-  20,21,22, 22, 21, 23  //bottom
+  0, 1, 2, 2, 1, 3, //front,
+  4, 5, 6, 6, 5, 7, //right,
+  8, 9, 10, 10, 9, 11, //back,
+  12, 13, 14, 14, 13, 15, //left
+  16, 17, 18, 18, 17, 19, // top
+  20, 21, 22, 22, 21, 23  //bottom
 
 ]
 
 const bufferGeom = new THREE.BufferGeometry();
 bufferGeom.setIndex(newIndexes);
-const posTypedArr = new Float32Array(posArr);
-const normTypedArr = new Float32Array(normArr);
-const uvTypedArr = new Float32Array(uvArr);
 
-const posNrComponents = 3;
-const normNrComponents = 3;
-const uvNrComponents = 2;
-
-const posAttribute = new THREE.BufferAttribute(posTypedArr, posNrComponents);
+const posAttribute = new THREE.BufferAttribute(posArr, posNumComponents);
 const normalAttribute = new THREE.BufferAttribute(
-  normTypedArr,
-  normNrComponents
+  normArr,
+  normalNumComponents
 );
-const uvAttribute = new THREE.BufferAttribute(uvTypedArr, uvNrComponents);
+const uvAttribute = new THREE.BufferAttribute(uvArr, uvNumComponents);
 
 bufferGeom.setAttribute("position", posAttribute);
 bufferGeom.setAttribute("normal", normalAttribute);
 bufferGeom.setAttribute("uv", uvAttribute);
-//bufferGeom.computeVertexNormals();
-console.log(bufferGeom);
-console.log(normArr.length / 3);
-console.log(uvArr.length / 2);
+
+console.log(`bufferGeom from cube====>`, bufferGeom)
 
 const material = new THREE.MeshBasicMaterial({ wireframe: true });
 
@@ -121,9 +134,14 @@ const cube3 = cube.clone();
 cube.position.set(-5, 0, 0);
 cube2.position.set(0, 0, 0);
 cube3.position.set(5, 0, 0);
-//scene.add(cube, cube2, cube3);
 
-function makeSpherePositions(segmentsAround, segmentsDown) {
+// scene.add(cube, cube2, cube3);
+
+
+function makeSpherePositions(segmentsAround, segmentsDown, time) {
+  // if (positions !== undefined) {
+  //   positions = null
+  // }
   const numVertices = segmentsAround * segmentsDown * 6;
   const numComponents = 3;
   const positions = new Float32Array(numVertices * numComponents);
@@ -132,9 +150,13 @@ function makeSpherePositions(segmentsAround, segmentsDown) {
   const longHelper = new THREE.Object3D();
   const latHelper = new THREE.Object3D();
   const pointHelper = new THREE.Object3D();
-  longHelper.add(latHelper);
-  latHelper.add(pointHelper);
 
+  longHelper.add(latHelper)
+  latHelper.add(pointHelper)
+  // longHelper.color = new THREE.Color('green')
+  // latHelper.color = new THREE.Color('green')
+  // pointHelper.color = new THREE.Color('green')
+  // scene.add(longHelper, latHelper, pointHelper)
   pointHelper.position.z = 1;
 
   const temp = new THREE.Vector3();
@@ -143,6 +165,8 @@ function makeSpherePositions(segmentsAround, segmentsDown) {
     latHelper.rotation.x = lat;
     longHelper.rotation.y = long;
     longHelper.updateMatrixWorld(true);
+
+
     return pointHelper.getWorldPosition(temp).toArray();
   }
 
@@ -171,101 +195,52 @@ function makeSpherePositions(segmentsAround, segmentsDown) {
       posIndex += numComponents;
 
       indexes.push(
-        index,    index + 1,    index + 2,
-        index + 2, index + 1,   index + 3
+        index, index + 1, index + 2,
+        index + 2, index + 1, index + 3
       );
       index += 4;
     }
   }
+
   return { positions, indexes };
 }
 
-console.log(makeSpherePositions(24, 24).indexes);
-//console.log(makeSpherePositions(24, 24).positions);
 
-const positions = makeSpherePositions(24, 24).positions;
-const indexes = makeSpherePositions(24, 24).indexes;
+const positions = makeSpherePositions(12, 12).positions;
+const indexes = makeSpherePositions(12, 12).indexes;
+const colors = makeSpherePositions(12, 12).positions;
 const sphereBufferGeometry = new THREE.BufferGeometry();
+
+const verticesSphere = new Float32Array(positions)
 
 sphereBufferGeometry.setAttribute(
   "position",
   new THREE.BufferAttribute(positions, 3)
 );
+sphereBufferGeometry.setAttribute(
+  "color",
+  new THREE.BufferAttribute(positions, 3)
+);
 sphereBufferGeometry.setIndex(indexes);
+
+
+material.vertexColors = true
+console.log(`sphereBufferGeometry`, sphereBufferGeometry);
 
 const sphere = new THREE.Mesh(sphereBufferGeometry, material);
 scene.add(sphere);
+console.log(`sphereBufferGeometry=====>`, sphereBufferGeometry);
 function render(t) {
-  controls.update();
 
-  // sphere.rotateX(0.05);
-  // cube2.rotateX(-0.05);
-  // cube3.rotateX(0.05);
-  sphereBufferGeometry.attributes.position.needsUpdate = true;
+  //  makeSpherePositions(12, 12, t)
+  // console.log(`positions====>`, positions);
+  // console.log(`indexes=====>`, indexes);
+
+  sphereBufferGeometry.attributes.position.needsUpdate = true
+  controls.update();
   window.requestAnimationFrame(render);
   renderer.render(scene, camera);
 }
 
 render();
 
-// const mesh = new THREE.Mesh(
-//     new THREE.BoxGeometry(0.3, 0.3, 0.3),
-//     new THREE.MeshBasicMaterial({ wireframe: true, color: "green" })
-//   );
-//   mesh.position.set(1, 1, 1);
-
-//   boxPos.add(mesh.position, "x").min(-10).max(10).step(0.01);
-//   boxPos.add(mesh.position, "y").min(-10).max(10).step(0.01);
-//   boxPos.add(mesh.position, "z").min(-10).max(10).step(0.01);
-
-//   scene.add(mesh);
-
-// const count = 100;
-// const sphereMat = new THREE.MeshBasicMaterial({
-//   // color: "green",
-// });
-// sphereMat.side = THREE.DoubleSide;
-// sphereMat.vertexColors = true;
-// const sphereVPositions = new Float32Array(count * 3);
-// const sphereVColors = new Float32Array(count * 3);
-// const sphereVNormals = new Float32Array(count * 3);
-// const sphereVUV = new Float32Array(count);
-
-// const sphereBufferGeom = new THREE.BufferGeometry();
-
-// for (let i = 0; i < count * 3; i++) {
-//   let i3 = i * 3;
-//   //sphereVPositions[i] = Math.random();
-//   sphereVPositions[i3] = 1 - Math.random() * 15;
-//   sphereVPositions[i3 + 1] = 1 - Math.random() * 7;
-//   sphereVPositions[i3 + 2] = 1 - Math.random() * 7;
-
-//   sphereVColors[i3] = Math.random();
-//   sphereVColors[i3 + 1] = Math.random();
-//   sphereVColors[i3 + 2] = Math.random();
-
-//   sphereVNormals[i3] = Math.random();
-//   sphereVNormals[i3 + 1] = Math.random();
-//   sphereVNormals[i3 + 2] = Math.random();
-// }
-// for (let i = 0; i < count; i++) {
-//   sphereVUV[i] = Math.random();
-// }
-
-// const spherePosAtt = new THREE.BufferAttribute(sphereVPositions, 3);
-// const sphereColorAtt = new THREE.BufferAttribute(sphereVColors, 3);
-// const sphereNormalAtt = new THREE.BufferAttribute(sphereVNormals, 3, {
-//   normalized: true,
-// });
-// const sphereUVAtt = new THREE.BufferAttribute(sphereVUV, 2);
-
-// sphereBufferGeom.setAttribute("position", spherePosAtt);
-// sphereBufferGeom.setAttribute("color", sphereColorAtt);
-// sphereBufferGeom.setAttribute("normal", sphereNormalAtt);
-// sphereBufferGeom.setAttribute("uv", sphereUVAtt);
-
-// console.log(`sphereBufferGeom`, sphereBufferGeom.attributes);
-
-// const sphere = new THREE.Mesh(sphereBufferGeom, sphereMat);
-// sphere.position.set(7, 3, 2);
-// scene.add(sphere);
