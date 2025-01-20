@@ -125,7 +125,7 @@ bufferGeom.setAttribute("uv", uvAttribute);
 
 console.log(`bufferGeom from cube====>`, bufferGeom)
 
-const material = new THREE.MeshBasicMaterial({ wireframe: true });
+const material = new THREE.MeshBasicMaterial();
 
 const cube = new THREE.Mesh(bufferGeom, material);
 const cube2 = cube.clone();
@@ -208,33 +208,51 @@ function makeSpherePositions(segmentsAround, segmentsDown, time) {
 
 const positions = makeSpherePositions(12, 12).positions;
 const indexes = makeSpherePositions(12, 12).indexes;
-const colors = makeSpherePositions(12, 12).positions;
 const sphereBufferGeometry = new THREE.BufferGeometry();
+const segmentsAround = 12
+const sphereAttributePoses = new THREE.BufferAttribute(positions, 3)
 
-const verticesSphere = new Float32Array(positions)
-
+const normals = positions.slice();
+const colors = positions.slice();
+const sphereAttributeColors = new THREE.BufferAttribute(colors, 3)
 sphereBufferGeometry.setAttribute(
   "position",
-  new THREE.BufferAttribute(positions, 3)
+  sphereAttributePoses
 );
 sphereBufferGeometry.setAttribute(
+  "normal",
+  new THREE.BufferAttribute(normals, 3)
+);
+
+sphereAttributePoses.setUsage(THREE.DynamicDrawUsage)
+sphereBufferGeometry.setAttribute(
   "color",
-  new THREE.BufferAttribute(positions, 3)
+  sphereAttributeColors
 );
 sphereBufferGeometry.setIndex(indexes);
 
-
 material.vertexColors = true
-console.log(`sphereBufferGeometry`, sphereBufferGeometry);
 
 const sphere = new THREE.Mesh(sphereBufferGeometry, material);
 scene.add(sphere);
-console.log(`sphereBufferGeometry=====>`, sphereBufferGeometry);
-function render(t) {
+function render(time) {
+  time *= 0.001;
+  const temp = new THREE.Vector3();
 
-  //  makeSpherePositions(12, 12, t)
-  // console.log(`positions====>`, positions);
-  // console.log(`indexes=====>`, indexes);
+
+  for (let i = 0; i < positions.length; i += 3) {
+    const quad = (i / 6 | 0);
+    const ringId = quad / segmentsAround | 0;
+    const ringQuadId = quad % segmentsAround;
+    const ringU = ringQuadId / segmentsAround;
+    const angle = ringU * Math.PI * 2;
+    temp.fromArray(normals, i);
+    console.log(ringId)
+    temp.multiplyScalar(THREE.MathUtils.lerp(1, 1.4, Math.sin(time + ringId + angle) * .5 + .5));
+    temp.toArray(positions, i);
+  }
+  sphereAttributePoses.needsUpdate = true;
+  sphereAttributeColors.needsUpdate = true;
 
   sphereBufferGeometry.attributes.position.needsUpdate = true
   controls.update();
