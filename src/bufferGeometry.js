@@ -119,7 +119,6 @@ bufferGeom.setAttribute("position", posAttribute);
 bufferGeom.setAttribute("normal", normalAttribute);
 bufferGeom.setAttribute("uv", uvAttribute);
 
-//console.log(`bufferGeom from cube====>`, bufferGeom);
 
 const material = new THREE.MeshBasicMaterial();
 
@@ -132,16 +131,15 @@ cube2.position.set(0, 0, 0);
 cube3.position.set(5, 0, 0);
 
 // scene.add(cube, cube2, cube3);
+// .set() method of Float32Array
 const array32Ex = new Float32Array(9);
 array32Ex.set([1, 2, 3], 0);
 array32Ex.set([4, 5, 6], 3);
 array32Ex.set([6, 7, 8], 6);
-console.log(`array32Ex=====>`, array32Ex);
+
 
 function makeSpherePositions(segmentsAround, segmentsDown, time) {
-  // if (positions !== undefined) {
-  //   positions = null
-  // }
+
   const numVertices = segmentsAround * segmentsDown * 6;
   const numComponents = 3;
   const positions = new Float32Array(numVertices * numComponents);
@@ -153,26 +151,14 @@ function makeSpherePositions(segmentsAround, segmentsDown, time) {
 
   longHelper.add(latHelper);
   latHelper.add(pointHelper);
-  // longHelper.color = new THREE.Color('green')
-  // latHelper.color = new THREE.Color('green')
-  // pointHelper.color = new THREE.Color('green')
-  // scene.add(longHelper, latHelper, pointHelper)
   pointHelper.position.z = 1;
 
   const temp = new THREE.Vector3();
 
   function getPoint(lat, long) {
-    // console.log(`lat====>`, lat);
-    // console.log(`long====>`, long);
-
     latHelper.rotation.x = lat;
     longHelper.rotation.y = long;
     longHelper.updateMatrixWorld(true);
-    // console.log(
-    //   `pointHelper.getWorldPosition(temp).toArray();`,
-    //   pointHelper.getWorldPosition(temp).toArray()
-    // );
-
     return pointHelper.getWorldPosition(temp).toArray();
   }
 
@@ -211,8 +197,8 @@ function makeSpherePositions(segmentsAround, segmentsDown, time) {
   return { positions, indexes };
 }
 
-const positions = makeSpherePositions(12, 12).positions;
-const indexes = makeSpherePositions(12, 12).indexes;
+const positions = makeSpherePositions(36, 36).positions;
+const indexes = makeSpherePositions(36, 36).indexes;
 const sphereBufferGeometry = new THREE.BufferGeometry();
 const segmentsAround = 36;
 const sphereAttributePoses = new THREE.BufferAttribute(positions, 3);
@@ -239,14 +225,14 @@ function render(time) {
   const temp = new THREE.Vector3();
 
   for (let i = 0; i < positions.length; i += 3) {
-    const quad = (i / 6) | 0;
+    const quad = (i / 12) | 0;
     const ringId = (quad / segmentsAround) | 0;
     const ringQuadId = quad % segmentsAround;
     const ringU = ringQuadId / segmentsAround;
-    const angle = ringU * Math.PI * 2;
+    const angle = ringU * Math.PI
     temp.fromArray(normals, i);
     temp.multiplyScalar(
-      THREE.MathUtils.lerp(1, 1.4, Math.sin(time + ringId + angle) + 0.5)
+      THREE.MathUtils.lerp(1, 1.4, Math.sin(time + ringId + angle) * .5 + .5)
     );
 
     temp.toArray(positions, i);
@@ -254,7 +240,7 @@ function render(time) {
   sphereAttributePoses.needsUpdate = true;
   sphereAttributeColors.needsUpdate = true;
 
-  sphereBufferGeometry.attributes.position.needsUpdate = true;
+  // sphereBufferGeometry.attributes.position.needsUpdate = true;
   controls.update();
   window.requestAnimationFrame(render);
   renderer.render(scene, camera);
