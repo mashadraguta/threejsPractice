@@ -1390,3 +1390,48 @@
 // const sphere = new THREE.Mesh(sphereBufferGeom, sphereMat);
 // sphere.position.set(7, 3, 2);
 // scene.add(sphere);
+
+
+
+// RAYCASTER CHAPETER
+
+// const rayOrigin = new THREE.Vector3(3, 0, 0)
+// const rayDirection = new THREE.Vector3(-0.1, 0, 0)
+
+// rayDirection.normalize()
+// console.log(`raycaster.ray.direction`, raycaster.ray.direction);
+
+// raycaster.set(rayOrigin, rayDirection)
+
+// dir?: THREE.Vector3, origin?: THREE.Vector3, length?: number, 
+// color?: THREE.ColorRepresentation, headLength?: number, headWidth?: number
+
+
+// detecting hover on the cubes
+    // let hoveredObj
+    // if (!intersectedObjs.length) {
+    //     if (!hoveredObj) {
+    //         hoveredObj = null
+    //         //  console.log(`mouse leave`);
+    //     }
+    // } else {
+    //     if (!hoveredObj) {
+    //         hoveredObj = intersectedObjs[0]
+    //         // console.log(`mouse enter`);
+    //     }
+    // }
+
+    // arrow helper
+// if (arrowHelper) {
+//     scene.remove(arrowHelper)
+// }
+// arrowHelper.setDirection(raycaster.ray.direction)
+// arrowHelper.origin = raycaster.ray.origin
+// arrowHelper.setLength(10)
+// arrowHelper.setColor('red')
+//   scene.add(arrowHelper);
+
+
+// cubes[0].position.y = Math.sin(t * .001) * 2
+// cubes[1].position.y = -Math.sin(t * .001) * 3
+// cubes[2].position.y = Math.sin(t * .0001) * 5

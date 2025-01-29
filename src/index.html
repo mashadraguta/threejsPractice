@@ -9,29 +9,41 @@
         box-sizing: border-box;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        overflow: hidden;
       }
       html,
       body {
-        height: 100%;
-        margin: 0px;
-        overflow: hidden;
-        outline: none;
+        margin: 0;
+        background-color: #030303;
+        color: #fff;
+        font-family: Monospace;
+        font-size: 13px;
+        line-height: 24px;
+        overscroll-behavior: none;
+      }
+      #info {
+        top: 0px;
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        text-align: center;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        pointer-events: none;
+        z-index: 1;
       }
     </style>
   </head>
 
   <body>
+    <div id="info">
+      <strong>CLICK</strong>-> select |  
+      <strong>RIGHT CLICK</strong>-> make appear
+      again<strong>
+    </div>
     <canvas id="webgl"></canvas>
-    <!-- <script type="importmap">
-      {
-        "imports": {
-          "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
-          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
-        }
-      }
-    </script> -->
-
-    <script src="bufferGeometry.js" type="module"></script>
-    <!-- <script src="script.js" type="module"></script> -->
+    <script src="raycasting.js" type="module"></script>
   </body>
 </html>
