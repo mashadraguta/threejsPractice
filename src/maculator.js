@@ -821,3 +821,164 @@
 //       gui.addColor(params, "color").onChange(() => {
 //         material.color = new THREE.Color(params.color);
 //       });
+
+
+/**
+ * 3D TEXT
+ */
+
+// const loader = new FontLoader();
+// let geometry
+// loader.load("fonts/Oswald_Regular.json", function (font) {
+//     console.log(font);
+
+//     geometry = new TextGeometry(`
+//         HERE WE GO AGAIN
+//         ON OUR OWN  
+//         `,
+//         {
+//             font,
+//             size: 2,
+//             height: 1,
+
+//         });
+//     geometry.computeBoundingBox();
+//     geometry.translate(-15, 6, 0);
+//     const txt3D = new THREE.Mesh(
+//         geometry,
+//         texture
+//     )
+
+//     console.log(`txt geometry`, geometry);
+//     scene.add(txt3D)
+
+// });
+
+// style="background-color: rgb(255, 140, 0)" style="background-color: rgb(6, 25,
+// 63)" style="background-color: rgb(48, 98, 21)"
+
+
+// let initialScrollPos = 0;
+// const elements = document.querySelectorAll('.section')
+// const lastEl = [].slice.call(elements).pop();
+// const lengthOfEls = elements.length
+
+// covrig.visible = true
+// cone.visible = false
+// torusKnot.visible = false
+
+
+
+// const elements = document.querySelectorAll('.section')
+//0...842
+//842...1122
+//1122...1685
+
+//                       offsetTop======> 0
+// scrollAnimation.js:45 offsetTop======> 842
+// scrollAnimation.js:45 offsetTop======> 1685
+// scrollAnimation.js:45 offsetTop======> 2527
+
+
+
+
+// console.log(`scroll position`, scrollPos)
+// if (scrollPos < 561) {
+//     covrig.visible = false
+//     cone.visible = false
+// }
+// if (scrollPos < 1122) {
+//     covrig.visible = false
+//     torusKnot.visible = false
+// }
+
+
+
+// if (scrollPos < coneTop) {
+//     covrig.visible = true
+//     cone.visible = false
+//     torusKnot.visible = false
+//     return
+// } if (scrollPos > coneTop) {
+//     cone.visible = true
+//     covrig.visible = false
+//     torusKnot.visible = false
+//     return
+// } if (scrollPos < torusKnotTop) {
+//     torusKnot.visible = true
+//     cone.visible = false
+//     covrig.visible = false
+//     return
+// }
+// return
+
+//console.log(`should be a fixed value ???`, window.scrollY);
+// console.log(`window====>`, window);
+// console.log(`document====>`, document);
+// console.log(initialScrollPos);
+
+
+
+// for (const el of elements) {
+//     console.log(`element======>`, el.offsetTop);
+//     if(initialScrollPos < )
+
+// }
+
+
+// function placeObjects(scrollPos) {
+//     console.log(`scrollPos`, scrollPos);
+
+//     // covrig.visible = true
+//     // cone.visible = false
+//     // torusKnot.visible = false
+//     let heightOfOneEl = lastEl.offsetTop / 3 | 0
+//     console.log(`heightOfOneEl=====>`, heightOfOneEl);
+//     let covrigPos = {
+//         x: 0,
+//         y: 0,
+//         z: 0
+//     }
+//     let conePos = {
+//         x: 0,
+//         y: 0,
+//         z: 0
+//     }
+//     let torusKnotPos = {
+//         x: 0,
+//         y: 0,
+//         z: 0
+//     }
+//     console.log(`poses objs`, covrigPos, conePos, torusKnotPos);
+
+//     covrig.position.set(0, covrigPos.y, 0)
+//     cone.position.set(0, conePos.y, 0)
+//     torusKnot.position.set(0, torusKnotPos.y, 0)
+//     switch (true) {
+//         case scrollPos < heightOfOneEl:
+//             // covrig.visible = true
+//             covrig.position.set(0, covrigPos.y, 0)
+//             cone.position.set(0, conePos.y, 0)
+//             torusKnot.position.set(0, torusKnotPos.y, 0)
+//             covrigPos.y = 15
+//             covrig.position.set(0, covrigPos.y, 0)
+//             break
+//         case scrollPos < heightOfOneEl * (lengthOfEls - 1):
+//             // covrig.position.set(0, 15, 0)
+//             torusKnotPos.y = -15
+//             cone.position.set(0, 0, 0)
+//             torusKnot.position.set(0, torusKnotPos.y, 0)
+//             break
+//         case scrollPos > heightOfOneEl * (lengthOfEls - 2):
+//             //torusKnot.visible = true
+//             torusKnot.position.set(0, -15, 0)
+//             // cone.visible = false
+//             break
+//         default:
+//             return
+//     }
+
+// }
+
+
+// height of all document = offsetTop of last element

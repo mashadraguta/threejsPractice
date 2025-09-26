@@ -1,7 +1,9 @@
 import * as THREE from "three";
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color("black");
+// scene.background = new THREE.Color("black");
+// dark grey
+//scene.background = new THREE.Color("#636363");
 //0xff6F21 ->orange
 // const pointLight = new THREE.PointLight(0xffffff, 1, 100);
 // const posX = -10;
@@ -51,7 +53,9 @@ const far = 2000;
 const aspectRatio = sizes.width / sizes.height;
 const camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, near, far);
 
-camera.position.set(-9, 5, 10);
+//camera.position.set(-1, 0.5, 10);
+camera.position.set(0, 0, 0);
+console.log(`sizes.height=====>`, sizes.height);
 
 export { camera };
 
@@ -61,7 +65,9 @@ export { canvas };
 const renderer = new THREE.WebGLRenderer({
   antialias: true,
   canvas,
+  alpha: true
 });
+renderer.setClearAlpha(0)
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 export { renderer };
